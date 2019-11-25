@@ -10,8 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>task01mvc</module>
-        <module>junitfromvideo</module>
+        <module>task01-mvc</module>
+        <module>block02-junit-from-video</module>
+        <module>task02-more-or-less-game</module>
     </modules>
 
     <properties>
