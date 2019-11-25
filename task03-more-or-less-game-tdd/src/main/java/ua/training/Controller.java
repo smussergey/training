@@ -1,5 +1,7 @@
 package ua.training;
 
+import java.util.Scanner;
+
 public class Controller {
 
     private Model model;
@@ -11,6 +13,11 @@ public class Controller {
     }
 
     public void processUser() {
+        model.setPrimaryBarrier(GlobalConstants.PRIMARY_MIN_BARRIER,
+                GlobalConstants.PRIMARY_MAX_BARRIER);
 
+        model.setSecretNumber();
+
+        Scanner scanner = new Scanner(System.in);
     }
 }

@@ -6,28 +6,28 @@ public class Model {
     private int maxBarrier;
     private int secretNumber;
 
-    public int getMinBarrier() {
-        return minBarrier;
+
+    public void setPrimaryBarrier(int minBarrier, int maxBarrier){
+        this.minBarrier = minBarrier;
+        this.maxBarrier = maxBarrier;
     }
 
-    public void setMinBarrier(int minBarrier) {
-        this.minBarrier = minBarrier;
+    public void setSecretNumber() {
+        secretNumber = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
+    }
+
+    public int getMinBarrier() {
+        return minBarrier;
     }
 
     public int getMaxBarrier() {
         return maxBarrier;
     }
 
-    public void setMaxBarrier(int maxBarrier) {
-        this.maxBarrier = maxBarrier;
-    }
-
     public int getSecretNumber() {
         return secretNumber;
     }
 
-    public void setSecretNumber() {
-        secretNumber = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
-    }
+
 
 }
