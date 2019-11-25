@@ -34,6 +34,7 @@ public class Model {
 
     public void initializeSecretValue() {
         secretValue = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
+        System.out.println("secret value = " + secretValue);
     }
 
     public int getMinBarrier() {
