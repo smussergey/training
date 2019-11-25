@@ -20,4 +20,24 @@ public class Controller {
 
         Scanner scanner = new Scanner(System.in);
     }
+
+    private int inputValueWithScanner(Scanner scanner) {
+        view.printMessage(getInputIntMessage());
+        while (true) {
+            if (scanner.hasNextInt()) {
+                return scanner.nextInt();
+            } else {
+                view.printMessage(View.INCORRECT_INPUT_DATA + getInputIntMessage());
+                scanner.next();
+            }
+        }
+    }
+
+    private String getInputIntMessage() {
+        return view.concatenateStrings(View.INPUT_INT_DATA,
+                String.valueOf(model.getMinBarrier()),
+                View.HYPHEN_SING,
+                String.valueOf(model.getMaxBarrier()));
+
+    }
 }

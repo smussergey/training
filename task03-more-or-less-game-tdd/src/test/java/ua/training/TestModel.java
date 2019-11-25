@@ -19,7 +19,7 @@ public class TestModel {
     public void testSecretNumber_isInRangeOfPrimaryMinBarrierAndPrimaryMaxBarrierExclusively() {
         for (int i = 0; i <= 10000; i++) {
             model.setPrimaryBarrier(GlobalConstants.PRIMARY_MIN_BARRIER,
-                                    GlobalConstants.PRIMARY_MAX_BARRIER);
+                    GlobalConstants.PRIMARY_MAX_BARRIER);
 
             model.setSecretNumber();
 
@@ -28,6 +28,13 @@ public class TestModel {
             Assert.assertTrue(secretNumber > GlobalConstants.PRIMARY_MIN_BARRIER
                     && secretNumber < GlobalConstants.PRIMARY_MAX_BARRIER);
         }
+    }
+
+    @Test
+    public void testIsSecretNumberGuessed() {
+        model.setSecretNumber();
+        int secretNumber = model.getSecretNumber();
+        Assert.assertTrue(model.isSecretNumberGuessed(secretNumber));
     }
 }
 

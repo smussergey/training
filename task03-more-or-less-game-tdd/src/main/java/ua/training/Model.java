@@ -6,8 +6,11 @@ public class Model {
     private int maxBarrier;
     private int secretNumber;
 
+    public boolean isSecretNumberGuessed(int inputValue) {
+        return secretNumber == inputValue;
+    }
 
-    public void setPrimaryBarrier(int minBarrier, int maxBarrier){
+    public void setPrimaryBarrier(int minBarrier, int maxBarrier) {
         this.minBarrier = minBarrier;
         this.maxBarrier = maxBarrier;
     }
@@ -15,6 +18,7 @@ public class Model {
     public void setSecretNumber() {
         secretNumber = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
     }
+
 
     public int getMinBarrier() {
         return minBarrier;
@@ -27,7 +31,6 @@ public class Model {
     public int getSecretNumber() {
         return secretNumber;
     }
-
 
 
 }
