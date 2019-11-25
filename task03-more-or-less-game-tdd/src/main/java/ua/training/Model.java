@@ -4,33 +4,54 @@ public class Model {
 
     private int minBarrier;
     private int maxBarrier;
-    private int secretNumber;
+    private int secretValue;
 
     public boolean isSecretNumberGuessed(int inputValue) {
-        return secretNumber == inputValue;
+        if (secretValue == inputValue) {
+            return true;
+        } else {
+            changeBarrier(inputValue);
+            return false;
+        }
     }
 
-    public void setPrimaryBarrier(int minBarrier, int maxBarrier) {
+    private void changeBarrier(int inputValue) {
+        if (inputValue < secretValue) {
+            setMinBarrier(inputValue);
+        } else setMaxBarrier(inputValue);
+
+    }
+
+    public void setPrimaryBarriers(int minBarrier, int maxBarrier) {
         this.minBarrier = minBarrier;
         this.maxBarrier = maxBarrier;
     }
 
-    public void setSecretNumber() {
-        secretNumber = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
+    public void initializeSecretValue() {
+        secretValue = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
     }
-
 
     public int getMinBarrier() {
         return minBarrier;
+    }
+
+    public void setMinBarrier(int minBarrier) {
+        this.minBarrier = minBarrier;
     }
 
     public int getMaxBarrier() {
         return maxBarrier;
     }
 
-    public int getSecretNumber() {
-        return secretNumber;
+    public void setMaxBarrier(int maxBarrier) {
+        this.maxBarrier = maxBarrier;
     }
 
+    public int getSecretValue() {
+        return secretValue;
+    }
 
+    public void setSecretValue(int secretValue) {
+        this.secretValue = secretValue;
+    }
 }

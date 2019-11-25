@@ -13,10 +13,10 @@ public class Controller {
     }
 
     public void processUser() {
-        model.setPrimaryBarrier(GlobalConstants.PRIMARY_MIN_BARRIER,
+        model.setPrimaryBarriers(GlobalConstants.PRIMARY_MIN_BARRIER,
                 GlobalConstants.PRIMARY_MAX_BARRIER);
 
-        model.setSecretNumber();
+        model.initializeSecretValue();
 
         Scanner scanner = new Scanner(System.in);
     }

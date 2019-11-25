@@ -18,12 +18,12 @@ public class TestModel {
     @Test
     public void testSecretNumber_isInRangeOfPrimaryMinBarrierAndPrimaryMaxBarrierExclusively() {
         for (int i = 0; i <= 10000; i++) {
-            model.setPrimaryBarrier(GlobalConstants.PRIMARY_MIN_BARRIER,
+            model.setPrimaryBarriers(GlobalConstants.PRIMARY_MIN_BARRIER,
                     GlobalConstants.PRIMARY_MAX_BARRIER);
 
-            model.setSecretNumber();
+            model.initializeSecretValue();
 
-            int secretNumber = model.getSecretNumber();
+            int secretNumber = model.getSecretValue();
 
             Assert.assertTrue(secretNumber > GlobalConstants.PRIMARY_MIN_BARRIER
                     && secretNumber < GlobalConstants.PRIMARY_MAX_BARRIER);
@@ -32,9 +32,36 @@ public class TestModel {
 
     @Test
     public void testIsSecretNumberGuessed() {
-        model.setSecretNumber();
-        int secretNumber = model.getSecretNumber();
-        Assert.assertTrue(model.isSecretNumberGuessed(secretNumber));
+        model.setSecretValue(50);
+        int secretValue = model.getSecretValue();
+        Assert.assertTrue(model.isSecretNumberGuessed(secretValue));
     }
+
+    @Test
+    public void testNewMinBarrierIsSet_IfInputValueIsNotGuessed() {
+        model.setSecretValue(50);
+        int inputValue = 40;
+        int secretValue = model.getSecretValue();
+
+        System.out.println("secretValue = " + secretValue + " inputValue = " + inputValue);
+        model.isSecretNumberGuessed(inputValue);
+
+        Assert.assertTrue(model.getMinBarrier() == inputValue);
+
+
+    }
+
+    @Test
+    public void testNewMaxBarrierIsSet_IfInputValueIsNotGuessed() {
+        model.setSecretValue(50);
+        int inputValue = 60;
+        int secretValue = model.getSecretValue();
+
+        System.out.println("secretValue = " + secretValue + " inputValue = " + inputValue);
+        model.isSecretNumberGuessed(inputValue);
+
+        Assert.assertTrue(model.getMaxBarrier() == inputValue);
+    }
+
 }
 
