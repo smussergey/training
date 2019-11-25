@@ -23,32 +23,38 @@ public class Controller {
         while (true) {
             if (model.isSecretNumberGuessed(inputValueWithScanner(scanner))) {
                 view.printMessage(view.concatenateStrings(View.CONGRATULATION,
-                        String.valueOf(model.getAttempts().size())));
+                        View.SECRET_VAlUE,
+                        String.valueOf(model.getSecretValue()),
+                        View.SPACE_SING,
+                        View.NUMBER_OF_ATTEMPTS,
+                        String.valueOf(model.getAttempts().size()),
+                        View.SPACE_SING,
+                        View.ATTEMPTS_VALUES,
+                        String.valueOf(model.getAttempts())));
                 break;
             }
         }
     }
 
     private int inputValueWithScanner(Scanner scanner) {
-        int inputValue;
+        int inputIntValue;
         view.printMessage(getInputIntMessage());
-
 
         while (true) {
             while (!scanner.hasNextInt()) {
                 view.printMessage(View.INCORRECT_INPUT_DATA + getInputIntMessage());
                 scanner.next();
             }
-            inputValue = scanner.nextInt();
-            if (inputValue > model.getMinBarrier() && inputValue < model.getMaxBarrier()) {
-                return inputValue;
+
+            inputIntValue = scanner.nextInt();
+
+            if (inputIntValue > model.getMinBarrier() && inputIntValue < model.getMaxBarrier()) {
+                return inputIntValue;
 
             } else {
                 view.printMessage(View.INCORRECT_INPUT_DATA + getInputIntMessage());
-                scanner.next();
             }
         }
-
     }
 
     private String getInputIntMessage() {
@@ -56,6 +62,5 @@ public class Controller {
                 String.valueOf(model.getMinBarrier()),
                 View.HYPHEN_SING,
                 String.valueOf(model.getMaxBarrier()));
-
     }
 }

@@ -4,22 +4,20 @@ import org.junit.*;
 
 public class TestModel {
 
-    private static Model model;
+    private Model model;
 
     @Before
     public void initModel() {
         model = new Model();
     }
 
-    @Ignore
+    //@Ignore
     @Test
     public void testSecretNumber_isInRangeOfPrimaryMinBarrierAndPrimaryMaxBarrierExclusively() {
         for (int i = 0; i <= 10000; i++) {
             model.setPrimaryBarriers(GlobalConstants.PRIMARY_MIN_BARRIER,
                     GlobalConstants.PRIMARY_MAX_BARRIER);
-
             model.initializeSecretValue();
-
             int secretNumber = model.getSecretValue();
 
             Assert.assertTrue(secretNumber > GlobalConstants.PRIMARY_MIN_BARRIER
@@ -31,33 +29,28 @@ public class TestModel {
     public void testIsSecretNumberGuessed() {
         int secretValue = 50;
         model.setSecretValue(secretValue);
+
         Assert.assertTrue(model.isSecretNumberGuessed(secretValue));
     }
 
     @Test
-    public void testNewMinBarrierIsSet_IfInputValueIsNotGuessed() {
+    public void testNewMinBarrierIsSet_IfInputValueIsLessThanSecretValue() {
         int secretValue = 50;
         model.setSecretValue(secretValue);
-
         int inputValue = 40;
-
-        System.out.println("secretValue = " + secretValue + " inputValue = " + inputValue);
         model.isSecretNumberGuessed(inputValue);
 
-        Assert.assertTrue(model.getMinBarrier() == inputValue);
+        Assert.assertEquals(inputValue, model.getMinBarrier());
     }
 
     @Test
-    public void testNewMaxBarrierIsSet_IfInputValueIsNotGuessed() {
+    public void testNewMaxBarrierIsSet_IfInputValueIsGreaterThanSecretValue () {
         int secretValue = 50;
         model.setSecretValue(secretValue);
-
         int inputValue = 60;
-
-        System.out.println("secretValue = " + secretValue + " inputValue = " + inputValue);
         model.isSecretNumberGuessed(inputValue);
 
-        Assert.assertTrue(model.getMaxBarrier() == inputValue);
+        Assert.assertEquals(inputValue, model.getMaxBarrier());
     }
 
     @Test

@@ -10,6 +10,15 @@ public class Model {
     private int secretValue;
     private List<Integer> attempts = new ArrayList<>();
 
+    public void setPrimaryBarriers(int minBarrier, int maxBarrier) {
+        this.minBarrier = minBarrier;
+        this.maxBarrier = maxBarrier;
+    }
+
+    public void initializeSecretValue() {
+        secretValue = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
+    }
+
     public boolean isSecretNumberGuessed(int inputValue) {
         attempts.add(inputValue);
         if (secretValue == inputValue) {
@@ -24,17 +33,6 @@ public class Model {
         if (inputValue < secretValue) {
             setMinBarrier(inputValue);
         } else setMaxBarrier(inputValue);
-
-    }
-
-    public void setPrimaryBarriers(int minBarrier, int maxBarrier) {
-        this.minBarrier = minBarrier;
-        this.maxBarrier = maxBarrier;
-    }
-
-    public void initializeSecretValue() {
-        secretValue = (int) Math.ceil(Math.random() * (maxBarrier - minBarrier - 1) + minBarrier);
-        System.out.println("secret value = " + secretValue);
     }
 
     public int getMinBarrier() {
@@ -64,5 +62,4 @@ public class Model {
     public List<Integer> getAttempts() {
         return attempts;
     }
-
 }
