@@ -11,7 +11,7 @@ public class TestModel {
         model = new Model();
     }
 
-    //@Ignore
+    @Ignore
     @Test
     public void testSecretNumber_isInRangeOfPrimaryMinBarrierAndPrimaryMaxBarrierExclusively() {
         for (int i = 0; i <= 10000; i++) {
