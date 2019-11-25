@@ -1,16 +1,13 @@
 package ua.training;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 public class TestModel {
 
     private static Model model;
 
-    @BeforeClass
-    public static void initModel() {
+    @Before
+    public void initModel() {
         model = new Model();
     }
 
@@ -32,30 +29,30 @@ public class TestModel {
 
     @Test
     public void testIsSecretNumberGuessed() {
-        model.setSecretValue(50);
-        int secretValue = model.getSecretValue();
+        int secretValue = 50;
+        model.setSecretValue(secretValue);
         Assert.assertTrue(model.isSecretNumberGuessed(secretValue));
     }
 
     @Test
     public void testNewMinBarrierIsSet_IfInputValueIsNotGuessed() {
-        model.setSecretValue(50);
+        int secretValue = 50;
+        model.setSecretValue(secretValue);
+
         int inputValue = 40;
-        int secretValue = model.getSecretValue();
 
         System.out.println("secretValue = " + secretValue + " inputValue = " + inputValue);
         model.isSecretNumberGuessed(inputValue);
 
         Assert.assertTrue(model.getMinBarrier() == inputValue);
-
-
     }
 
     @Test
     public void testNewMaxBarrierIsSet_IfInputValueIsNotGuessed() {
-        model.setSecretValue(50);
+        int secretValue = 50;
+        model.setSecretValue(secretValue);
+
         int inputValue = 60;
-        int secretValue = model.getSecretValue();
 
         System.out.println("secretValue = " + secretValue + " inputValue = " + inputValue);
         model.isSecretNumberGuessed(inputValue);
@@ -63,5 +60,11 @@ public class TestModel {
         Assert.assertTrue(model.getMaxBarrier() == inputValue);
     }
 
+    @Test
+    public void testCheckNumberOfAttemptsAreIncrementedByOne() {
+        model.isSecretNumberGuessed(50);
+
+        Assert.assertEquals(1, model.getAttempts().size());
+    }
 }
 

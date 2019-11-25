@@ -1,12 +1,17 @@
 package ua.training;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Model {
 
     private int minBarrier;
     private int maxBarrier;
     private int secretValue;
+    private List<Integer> attempts = new ArrayList<>();
 
     public boolean isSecretNumberGuessed(int inputValue) {
+        attempts.add(inputValue);
         if (secretValue == inputValue) {
             return true;
         } else {
@@ -54,4 +59,9 @@ public class Model {
     public void setSecretValue(int secretValue) {
         this.secretValue = secretValue;
     }
+
+    public List<Integer> getAttempts() {
+        return attempts;
+    }
+
 }
