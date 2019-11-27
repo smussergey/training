@@ -6,6 +6,7 @@ public class Entry {
     private String lastName;
     private String firstName;
     private String middleName;
+    private String lastNameFullFirstNameFirstLetter;
     private String nickName;
     private String comment;
     private MaritalStatus maritalStatus;
@@ -40,6 +41,15 @@ public class Entry {
 
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    public String getLastNameFullFirstNameFirstLetter() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder = stringBuilder.append(lastName)
+                .append(" ")
+                .append(firstName.charAt(0))
+                .append('.');
+        return stringBuilder.toString();
     }
 
     public String getNickName() {
@@ -132,21 +142,22 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "Entry{" +
-                "lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", comment='" + comment + '\'' +
-                ", maritalStatus=" + maritalStatus +
-                ", phoneNumberHome='" + phoneNumberHome + '\'' +
-                ", phoneNumberMobileMain='" + phoneNumberMobileMain + '\'' +
-                ", phoneNumberMobileAdditional='" + phoneNumberMobileAdditional + '\'' +
-                ", email='" + email + '\'' +
-                ", skype='" + skype + '\'' +
-                ", address='" + address + '\'' +
-                ", dateCreated=" + dateCreated +
-                ", dateUpdated=" + dateUpdated +
-                '}';
+        return "Entry: \n" +
+                "lastName=" + lastName + "\n" +
+                "firstName=" + firstName + "\n" +
+                "middleName=" + middleName + "\n" +
+                "middleName=" + middleName + "\n" +
+                "LastNameFullFirstNameFirstLetter=" + getLastNameFullFirstNameFirstLetter() + "\n" +
+                "nickName=" + nickName + "\n" +
+                "comment=" + comment + "\n" +
+                "maritalStatus=" + maritalStatus + "\n" +
+                "phoneNumberHome=" + phoneNumberHome + "\n" +
+                "phoneNumberMobileMain=" + phoneNumberMobileMain + "\n" +
+                "phoneNumberMobileAdditional=" + phoneNumberMobileAdditional + "\n" +
+                "email=" + email + "\n" +
+                "skype=" + skype + "\n" +
+                "address=" + address + "\n" +
+                "dateCreated=" + dateCreated + "\n" +
+                "dateUpdated=" + dateUpdated;
     }
 }
