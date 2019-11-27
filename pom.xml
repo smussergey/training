@@ -14,6 +14,7 @@
         <module>block02-junit-from-video</module>
         <module>task02-more-or-less-game</module>
         <module>task03-more-or-less-game-tdd</module>
+        <module>task03-notebook</module>
     </modules>
 
     <properties>
