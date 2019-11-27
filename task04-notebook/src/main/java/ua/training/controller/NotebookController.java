@@ -19,7 +19,7 @@ public class NotebookController {
         Scanner scanner = new Scanner(System.in);
         EntryInputController entryInputController = new EntryInputController(scanner, view);
         notebook.addEntry(entryInputController.processEntryInput());
-        System.out.println(notebook.getEntries().get(0).toString());
+        System.out.println("You entered: \n" + notebook.getEntries().get(0).toString());
     }
 
 }
