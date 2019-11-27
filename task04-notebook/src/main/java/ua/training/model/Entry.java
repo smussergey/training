@@ -146,7 +146,6 @@ public class Entry {
                 "lastName=" + lastName + "\n" +
                 "firstName=" + firstName + "\n" +
                 "middleName=" + middleName + "\n" +
-                "middleName=" + middleName + "\n" +
                 "LastNameFullFirstNameFirstLetter=" + getLastNameFullFirstNameFirstLetter() + "\n" +
                 "nickName=" + nickName + "\n" +
                 "comment=" + comment + "\n" +
