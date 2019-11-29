@@ -15,6 +15,7 @@
         <module>task02-more-or-less-game</module>
         <module>task03-more-or-less-game-tdd</module>
         <module>task04-notebook</module>
+        <module>task04-notebook-en_ua</module>
     </modules>
 
     <properties>
