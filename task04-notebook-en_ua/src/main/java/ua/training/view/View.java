@@ -18,14 +18,21 @@ public class View {
         System.out.println(message);
     }
 
-    public String concatenateStrings(String... messages) {
+    public void printWrongInputMessage(String inputMessage) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder = stringBuilder.
+                append(bundle.getString(TextConstant.INCORRECT_INPUT_DATA))
+                .append(inputMessage);
+        System.out.println(stringBuilder.toString());
+    }
+
+    public String concatenateBundleStrings(String... messages) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String v : messages) {
             stringBuilder = stringBuilder.append(bundle.getString(v));
         }
         return stringBuilder.toString();
     }
-
 
 
 }

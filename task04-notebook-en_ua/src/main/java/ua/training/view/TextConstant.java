@@ -17,5 +17,5 @@ public interface TextConstant {
 //    String DATE_CREATED = "date of creation, YYYY.MM.DD:";
 //    String DATE_UPDATED = "date when was updated, YYYY.MM.DD:";
     String INCORRECT_INPUT_DATA = "wrong.input";
-    String PRINT_INPUT_ENTRY = "you.entered";
+    String SAVED_ENTRY = "you.entered";
 }

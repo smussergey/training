@@ -20,8 +20,7 @@ public class EntryInputUtilityController {
 
         while (!(scanner.hasNext() &&
                 (result = scanner.next()).matches(regex))) {
-            view.printMessage(view.concatenateStrings(TextConstant.INCORRECT_INPUT_DATA,
-                    inputMessage));
+            view.printWrongInputMessage(inputMessage);
         }
 
         return result;

@@ -21,8 +21,8 @@ public class NotebookController {
         EntryInputController entryInputController = new EntryInputController(scanner, view);
         notebook.addEntry(entryInputController.processEntryInput());
 
-        view.printMessage(view.concatenateStrings(TextConstant.PRINT_INPUT_ENTRY
-                + notebook.getEntries().get(0).toString()));
+        view.printMessage(view.concatenateBundleStrings(TextConstant.SAVED_ENTRY)
+                + notebook.getEntries().get(0).toString());
     }
 
 }
