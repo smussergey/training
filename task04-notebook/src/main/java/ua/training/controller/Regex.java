@@ -14,6 +14,6 @@ public interface Regex {
     String REGEX_EMAIL = "^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
     String REGEX_SKYPE = "^\\w{0,}$"; //TODO check
     String REGEX_ADDRESS = "^\\w{0,}$";  //TODO correct
-    String REGEX_DATE_CREATED = "^\\d{4}+.{1}\\d{2}+.{1}\\d{2}$"; //TODO correct
-    String REGEX_DATE_UPDATED = "^\\d{4}+.{1}\\d{2}+.{1}\\d{2}$"; //TODO correct
+//    String REGEX_DATE_CREATED = "^\\d{4}+.{1}\\d{2}+.{1}\\d{2}$"; //TODO correct
+//    String REGEX_DATE_UPDATED = "^\\d{4}+.{1}\\d{2}+.{1}\\d{2}$"; //TODO correct
 }
