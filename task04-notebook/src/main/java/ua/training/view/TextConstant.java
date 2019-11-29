@@ -7,7 +7,7 @@ public interface TextConstant {
     String MIDDLE_NAME = "middle name:";
     String NICKNAME = "nick name:";
     String COMMENT = "comment:";
-    String MARITAL_STATUS = "marital status: Single or Married";
+    String MARITAL_STATUS = "marital status: Single or Married"; // TODO redo this
     String PHONE_NUMBER_HOME = "home phone number: +*****-***-**-**";
     String PHONE_NUMBER_MOBILE_MAIN = "mobile phone number: +*****-***-**-**";
     String PHONE_NUMBER_MOBILE_ADDITIONAL = "additional mobile phone number, in case you have: +*****-***-**-** or -"; //TODO correct "-"
