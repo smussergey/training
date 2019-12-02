@@ -16,6 +16,7 @@
         <module>task03-more-or-less-game-tdd</module>
         <module>task04-notebook</module>
         <module>task04-notebook-en_ua</module>
+        <module>control-task01-airline</module>
     </modules>
 
     <properties>
