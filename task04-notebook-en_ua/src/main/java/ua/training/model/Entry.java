@@ -19,30 +19,6 @@ public class Entry {
     private LocalDate dateCreated;
     private LocalDate dateUpdated;
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
     public String getLastNameFullFirstNameFirstLetter() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder = stringBuilder.append(lastName)
@@ -52,64 +28,44 @@ public class Entry {
         return stringBuilder.toString();
     }
 
-    public String getNickName() {
-        return nickName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public MaritalStatus getMaritalStatus() {
-        return maritalStatus;
     }
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
-    public String getPhoneNumberHome() {
-        return phoneNumberHome;
-    }
-
     public void setPhoneNumberHome(String phoneNumberHome) {
         this.phoneNumberHome = phoneNumberHome;
-    }
-
-    public String getPhoneNumberMobileMain() {
-        return phoneNumberMobileMain;
     }
 
     public void setPhoneNumberMobileMain(String phoneNumberMobileMain) {
         this.phoneNumberMobileMain = phoneNumberMobileMain;
     }
 
-    public String getPhoneNumberMobileAdditional() {
-        return phoneNumberMobileAdditional;
-    }
-
     public void setPhoneNumberMobileAdditional(String phoneNumberMobileAdditional) {
         this.phoneNumberMobileAdditional = phoneNumberMobileAdditional;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSkype() {
-        return skype;
     }
 
     public void setSkype(String skype) {
@@ -124,16 +80,9 @@ public class Entry {
         this.address = address;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
 
     public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public LocalDate getDateUpdated() {
-        return dateUpdated;
     }
 
     public void setDateUpdated(LocalDate dateUpdated) {
@@ -146,7 +95,7 @@ public class Entry {
                 "lastName=" + lastName + "\n" +
                 "firstName=" + firstName + "\n" +
                 "middleName=" + middleName + "\n" +
-                // "LastNameFullFirstNameFirstLetter=" + getLastNameFullFirstNameFirstLetter() + "\n" +
+                "LastNameFullFirstNameFirstLetter=" + getLastNameFullFirstNameFirstLetter() + "\n" +
                 "nickName=" + nickName + "\n" +
                 "comment=" + comment + "\n" +
                 "maritalStatus=" + maritalStatus + "\n" +

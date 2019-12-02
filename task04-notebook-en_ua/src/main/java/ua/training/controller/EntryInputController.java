@@ -27,53 +27,57 @@ public class EntryInputController {
         String inputMessage;
         String inputRegex;
 
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.LAST_NAME);
-//        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-//                ? REGEX_LAST_NAME_UKR : REGEX_LAST_NAME_LAT;
-//        entry.setLastName(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.FIRST_NAME);
-//        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-//                ? REGEX_FIRST_NAME_UKR : REGEX_FIRST_NAME_LAT;
-//        entry.setFirstName(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.MIDDLE_NAME);
-//        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-//                ? REGEX_MIDDLE_NAME_UKR : REGEX_MIDDLE_NAME_LAT;
-//        entry.setMiddleName(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.NICKNAME);
-//        inputRegex = REGEX_NICKNAME;
-//        entry.setNickName(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.COMMENT);
-//        inputRegex = REGEX_COMMENT;
-//        entry.setComment(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.MARITAL_STATUS);
-//        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-//                ? REGEX_MARITAL_STATUS_UKR : REGEX_MARITAL_STATUS_LAT;
-//        entry.setMaritalStatus(MaritalStatus.valueOf(eiuc.processInputWithScanner(inputMessage, inputRegex)));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.PHONE_NUMBER_HOME);
-//        inputRegex = REGEX_PHONE_NUMBER_HOME_OR_MOBILE;
-//        entry.setPhoneNumberHome(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.PHONE_NUMBER_MOBILE_MAIN);
-//        inputRegex = REGEX_PHONE_NUMBER_HOME_OR_MOBILE;
-//        entry.setPhoneNumberMobileMain(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.PHONE_NUMBER_MOBILE_ADDITIONAL);
-//        inputRegex = REGEX_PHONE_NUMBER_MOBILE_ADDITIONAL;
-//        entry.setPhoneNumberMobileAdditional(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.EMAIL);
-//        inputRegex = REGEX_EMAIL;
-//        entry.setEmail(eiuc.processInputWithScanner(inputMessage, inputRegex));
-//
-//        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.SKYPE);
-//        inputRegex =REGEX_SKYPE;
-//        entry.setSkype(eiuc.processInputWithScanner(inputMessage, inputRegex));
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.LAST_NAME);
+        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
+                ? REGEX_LAST_NAME_UKR : REGEX_LAST_NAME_LAT;
+        entry.setLastName(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.FIRST_NAME);
+        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
+                ? REGEX_FIRST_NAME_UKR : REGEX_FIRST_NAME_LAT;
+        entry.setFirstName(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.MIDDLE_NAME);
+        inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
+                ? REGEX_MIDDLE_NAME_UKR : REGEX_MIDDLE_NAME_LAT;
+        entry.setMiddleName(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.NICKNAME);
+        inputRegex = REGEX_NICKNAME;
+        entry.setNickName(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.COMMENT);
+        inputRegex = REGEX_COMMENT;
+        entry.setComment(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.MARITAL_STATUS);
+        inputRegex = REGEX_MARITAL_STATUS;
+        String maritalStatus = eiuc.processInputWithScanner(inputMessage, inputRegex);
+        if (maritalStatus.equals("0")) {
+            entry.setMaritalStatus(MaritalStatus.SINGLE);
+        } else if (maritalStatus.equals("1")) {
+            entry.setMaritalStatus(MaritalStatus.MARRIED);
+        }
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.PHONE_NUMBER_HOME);
+        inputRegex = REGEX_PHONE_NUMBER_HOME_OR_MOBILE;
+        entry.setPhoneNumberHome(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.PHONE_NUMBER_MOBILE_MAIN);
+        inputRegex = REGEX_PHONE_NUMBER_HOME_OR_MOBILE;
+        entry.setPhoneNumberMobileMain(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.PHONE_NUMBER_MOBILE_ADDITIONAL);
+        inputRegex = REGEX_PHONE_NUMBER_MOBILE_ADDITIONAL;
+        entry.setPhoneNumberMobileAdditional(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.EMAIL);
+        inputRegex = REGEX_EMAIL;
+        entry.setEmail(eiuc.processInputWithScanner(inputMessage, inputRegex));
+
+        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.SKYPE);
+        inputRegex = REGEX_SKYPE;
+        entry.setSkype(eiuc.processInputWithScanner(inputMessage, inputRegex));
 
         inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.ADDRESS, TextConstant.POST_CODE);
         inputRegex = REGEX_POST_CODE;
