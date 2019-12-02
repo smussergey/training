@@ -14,8 +14,12 @@ public interface TextConstant {
     String EMAIL = "email";
     String SKYPE = "skype";
     String ADDRESS = "address";
-//    String DATE_CREATED = "date of creation, YYYY.MM.DD:";
-//    String DATE_UPDATED = "date when was updated, YYYY.MM.DD:";
+    String POST_CODE = "post.code";
+    String CITY = "city";
+    String STREET = "street";
+    String BUILDING_NUMBER = "building.number";
+    String APARTMENT_NUMBER = "apartment.number";
+
     String INCORRECT_INPUT_DATA = "wrong.input";
     String SAVED_ENTRY = "you.entered";
 }

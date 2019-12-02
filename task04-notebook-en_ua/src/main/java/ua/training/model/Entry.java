@@ -15,7 +15,7 @@ public class Entry {
     private String phoneNumberMobileAdditional;
     private String email;
     private String skype;
-    private String address;
+    private Address address;
     private LocalDate dateCreated;
     private LocalDate dateUpdated;
 
@@ -116,11 +116,11 @@ public class Entry {
         this.skype = skype;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -146,7 +146,7 @@ public class Entry {
                 "lastName=" + lastName + "\n" +
                 "firstName=" + firstName + "\n" +
                 "middleName=" + middleName + "\n" +
-                "LastNameFullFirstNameFirstLetter=" + getLastNameFullFirstNameFirstLetter() + "\n" +
+                // "LastNameFullFirstNameFirstLetter=" + getLastNameFullFirstNameFirstLetter() + "\n" +
                 "nickName=" + nickName + "\n" +
                 "comment=" + comment + "\n" +
                 "maritalStatus=" + maritalStatus + "\n" +
@@ -155,7 +155,7 @@ public class Entry {
                 "phoneNumberMobileAdditional=" + phoneNumberMobileAdditional + "\n" +
                 "email=" + email + "\n" +
                 "skype=" + skype + "\n" +
-                "address=" + address + "\n" +
+                "address=" + this.getAddress().getFullAddress() + "\n" +
                 "dateCreated=" + dateCreated + "\n" +
                 "dateUpdated=" + dateUpdated;
     }

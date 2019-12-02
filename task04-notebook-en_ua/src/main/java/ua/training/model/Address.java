@@ -7,6 +7,10 @@ public class Address {
     private String buildingNumber;
     private String apartmentNumber;
 
+    public String getFullAddress() {
+        return this.toString();
+    }
+
     public String getPostCode() {
         return postCode;
     }
@@ -49,12 +53,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "postCode='" + postCode + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", buildingNumber='" + buildingNumber + '\'' +
-                ", apartmentNumber='" + apartmentNumber + '\'' +
-                '}';
+        return postCode + ", " + city + ", " + street + ", " + buildingNumber + ", " + apartmentNumber;
     }
 }

@@ -10,8 +10,8 @@ public class View {
     public static final ResourceBundle bundle =
             ResourceBundle.getBundle(
                     MESSAGES_BUNDLE_NAME,
-                    new Locale("ua", "UA"), new UTF8Control());  // Ukrainian
-//                    new Locale("en"));        // English
+//                    new Locale("ua", "UA"), new UTF8Control());  // Ukrainian
+                   new Locale("en"));        // English
 
     public void printMessage(String message) {
         System.out.println(message);
@@ -33,5 +33,8 @@ public class View {
         return stringBuilder.toString();
     }
 
+    public void printEnteredEntry (){
+
+    }
 
 }
