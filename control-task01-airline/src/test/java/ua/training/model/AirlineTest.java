@@ -28,7 +28,7 @@ public class AirlineTest {
     }
 
     @Test
-    void testFindAircraftByAverageFuelConsumptionPerKm() {
+    void testFindAircraftByAverageFuelConsumptionLiterPerKm() {
 
     }
 }

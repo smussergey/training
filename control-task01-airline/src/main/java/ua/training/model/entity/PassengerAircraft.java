@@ -6,11 +6,22 @@ import java.util.Map;
 public class PassengerAircraft extends Aircraft {
     private Map<PassengerClass, Integer> seatsByClass = new HashMap<>();
 
+
+    public PassengerAircraft(String manufacturer, String model, double maximumRangeInKm,
+                             double averageFuelConsumptionLiterPerKm, double cargoCapacityInKilo,
+                             Map<PassengerClass, Integer> seatsByClass) {
+        super(manufacturer, model, maximumRangeInKm, averageFuelConsumptionLiterPerKm, cargoCapacityInKilo);
+        this.seatsByClass = seatsByClass;
+    }
+
     public void addSeatsByClass(PassengerClass passengerClass, int seatsCapacity) {
         seatsByClass.put(passengerClass, seatsCapacity);
     }
 
-//    public int getTotalSeatsCapacity() {
-//        return ;
-//    }
+    @Override
+    public int getSeatingCapacity() {
+        return seatsByClass.values()
+                .stream()
+                .reduce(0, Integer::sum);
+    }
 }
