@@ -16,6 +16,7 @@ public class FreighterAircraft extends Aircraft {
 
     @Override
     public int getSeatingCapacity() {
-        return seatingCapacity;
+        System.out.println("seatingCapacity:" + this.seatingCapacity);
+        return this.seatingCapacity;
     }
 }

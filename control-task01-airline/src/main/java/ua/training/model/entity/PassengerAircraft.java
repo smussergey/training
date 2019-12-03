@@ -20,8 +20,10 @@ public class PassengerAircraft extends Aircraft {
 
     @Override
     public int getSeatingCapacity() {
-        return seatsByClass.values()
+        int seatingCapacity = seatsByClass.values()
                 .stream()
                 .reduce(0, Integer::sum);
+        System.out.println("seatingCapacity:" + seatingCapacity);
+        return seatingCapacity;
     }
 }

@@ -8,11 +8,11 @@ public abstract class Aircraft {
     private double cargoCapacityInKilo;
 
     public Aircraft(String manufacturer, String model, double maximumRangeInKm,
-                    double averageFuelConsumptionLiterPerKm, double cargoCapacityInKilo) {
+                    double averageFuelConsumptionInLiterPerKm, double cargoCapacityInKilo) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.maximumRangeInKm = maximumRangeInKm;
-        this.averageFuelConsumptionInLiterPerKm = averageFuelConsumptionLiterPerKm;
+        this.averageFuelConsumptionInLiterPerKm = averageFuelConsumptionInLiterPerKm;
         this.cargoCapacityInKilo = cargoCapacityInKilo;
     }
 
