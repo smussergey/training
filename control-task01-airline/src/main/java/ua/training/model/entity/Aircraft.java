@@ -3,12 +3,12 @@ package ua.training.model.entity;
 public abstract class Aircraft {
     private String manufacturer;
     private String model;
-    private double maximumRangeInKm;
+    private int maximumRangeInKm;
     private double averageFuelConsumptionInLiterPerKm;
-    private double cargoCapacityInKilo;
+    private int cargoCapacityInKilo;
 
-    public Aircraft(String manufacturer, String model, double maximumRangeInKm,
-                    double averageFuelConsumptionInLiterPerKm, double cargoCapacityInKilo) {
+    public Aircraft(String manufacturer, String model, int maximumRangeInKm,
+                    double averageFuelConsumptionInLiterPerKm, int cargoCapacityInKilo) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.maximumRangeInKm = maximumRangeInKm;
@@ -24,7 +24,7 @@ public abstract class Aircraft {
         return model;
     }
 
-    public double getMaximumRangeInKm() {
+    public int getMaximumRangeInKm() {
         return maximumRangeInKm;
     }
 
@@ -32,7 +32,7 @@ public abstract class Aircraft {
         return averageFuelConsumptionInLiterPerKm;
     }
 
-    public double getCargoCapacityInKilo() {
+    public int getCargoCapacityInKilo() {
         return cargoCapacityInKilo;
     }
 

@@ -7,8 +7,8 @@ public class PassengerAircraft extends Aircraft {
     private Map<PassengerClass, Integer> seatsByClass = new HashMap<>();
 
 
-    public PassengerAircraft(String manufacturer, String model, double maximumRangeInKm,
-                             double averageFuelConsumptionLiterPerKm, double cargoCapacityInKilo,
+    public PassengerAircraft(String manufacturer, String model, int maximumRangeInKm,
+                             double averageFuelConsumptionLiterPerKm, int cargoCapacityInKilo,
                              Map<PassengerClass, Integer> seatsByClass) {
         super(manufacturer, model, maximumRangeInKm, averageFuelConsumptionLiterPerKm, cargoCapacityInKilo);
         this.seatsByClass = seatsByClass;
@@ -23,7 +23,6 @@ public class PassengerAircraft extends Aircraft {
         int seatingCapacity = seatsByClass.values()
                 .stream()
                 .reduce(0, Integer::sum);
-        System.out.println("seatingCapacity:" + seatingCapacity);
         return seatingCapacity;
     }
 }
