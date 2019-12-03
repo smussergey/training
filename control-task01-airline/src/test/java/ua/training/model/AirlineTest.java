@@ -55,17 +55,10 @@ public class AirlineTest {
 
     @Test
     public void testSortAircraftsByMaximumRangeInKm() {
-        for (Aircraft aircraft : airline.getAircrafts()) {
-            System.out.println("Before sorting Range = " + aircraft.getMaximumRangeInKm());
-        }
-
         List<Aircraft> sortedAircrafts = airline.SortAircraftsByMaximumRangeInKm();
-        for (Aircraft aircraft : sortedAircrafts) {
-            System.out.println("After sorting Range = " + aircraft.getMaximumRangeInKm());
-        }
 
-        for (Aircraft aircraft : airline.getAircrafts()) {
-            System.out.println("Original Range = " + aircraft.getMaximumRangeInKm());
+        for (int i = 0; i < sortedAircrafts.size() - 1; i++) {
+            Assert.assertTrue(sortedAircrafts.get(i).getMaximumRangeInKm() <= sortedAircrafts.get(i + 1).getMaximumRangeInKm());
         }
     }
 
