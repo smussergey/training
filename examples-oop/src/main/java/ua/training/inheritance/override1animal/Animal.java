@@ -1,4 +1,4 @@
-package ua.training.inheritance;
+package ua.training.inheritance.override1animal;
 
 public abstract class Animal {
     public String type = "Animal type object field";

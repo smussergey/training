@@ -1,7 +1,6 @@
-package ua.training.inheritance;
+package ua.training.inheritance.override1animal;
 
 public class AnimalApp {
-
     public static void main(String[] args) {
         Animal catByAnimalReference = new Cat();
         Cat catByCatReference = new Cat();

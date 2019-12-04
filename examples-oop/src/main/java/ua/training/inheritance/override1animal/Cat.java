@@ -1,4 +1,4 @@
-package ua.training.inheritance;
+package ua.training.inheritance.override1animal;
 
 public class Cat extends Animal {
     public String type = "Cat type object field";
