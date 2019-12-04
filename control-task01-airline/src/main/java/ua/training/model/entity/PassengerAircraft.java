@@ -25,4 +25,12 @@ public class PassengerAircraft extends Aircraft {
                 .reduce(0, Integer::sum);
         return seatingCapacity;
     }
+
+    @Override
+    public String toString() {
+        return "\n" + "PassengerAircraft{" +
+                super.toString() +
+                "seatsByClass=" + seatsByClass +
+                '}';
+    }
 }

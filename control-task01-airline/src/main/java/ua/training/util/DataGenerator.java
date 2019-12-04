@@ -21,7 +21,7 @@ public class DataGenerator {
         FreighterAircraft ruslan = new FreighterAircraft("Antonov", "An-124 Ruslan", 4800,
                 28, 120000, 900, 36);
 
-        FreighterAircraft boeing737 = new FreighterAircraft("Boeing ", "Boeing 737", 4300,
+        FreighterAircraft boeing737 = new FreighterAircraft("Boeing ", "Boeing 737-200С", 4300,
                 3.9, 15000, 100, 22);
 
         Map<PassengerClass, Integer> boeing777SeatsByClass = new HashMap<>();

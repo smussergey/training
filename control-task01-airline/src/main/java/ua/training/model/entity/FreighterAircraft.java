@@ -18,4 +18,13 @@ public class FreighterAircraft extends Aircraft {
     public int getSeatingCapacity() {
         return this.seatingCapacity;
     }
+
+    @Override
+    public String toString() {
+        return "\n" + "FreighterAircraft{" +
+                super.toString() +
+                "cargoCompartmentInCubicMetre=" + cargoCompartmentInCubicMetre +
+                ", seatingCapacity=" + seatingCapacity +
+                '}';
+    }
 }

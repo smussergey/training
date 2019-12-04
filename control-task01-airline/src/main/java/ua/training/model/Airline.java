@@ -41,12 +41,12 @@ public class Airline {
                 .collect(Collectors.toList());
     }
 
-    public List<Aircraft> findAircraftByAverageFuelConsumptionLiterPerKm(List<Aircraft> aircraftList, double min, double max) {
+    public List<Aircraft> findAircraftsByAverageFuelConsumptionLiterPerKmInclusively(List<Aircraft> aircraftList, double min, double max) {
         List<Aircraft> result = new ArrayList<>();
 
         for (Aircraft aircraft : aircraftList) {
-            if (aircraft.getAverageFuelConsumptionInLiterPerKm() >= min
-                    && aircraft.getAverageFuelConsumptionInLiterPerKm() <= max) {
+            if (aircraft.getFuelConsumptionInLiterPerKm() >= min
+                    && aircraft.getFuelConsumptionInLiterPerKm() <= max) {
                 result.add(aircraft);
             }
         }
