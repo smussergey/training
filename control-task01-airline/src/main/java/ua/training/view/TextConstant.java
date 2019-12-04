@@ -3,6 +3,7 @@ package ua.training.view;
 public interface TextConstant {
     String SPACE_SING = " ";
     String COLON_SING = ":";
+    String NEW_LINE = "\n";
     String TAB_SING = "\t";
     String AIRCRAFTS_LIST = "aircrafts.list";
     String AIRCRAFT = "aircraft";

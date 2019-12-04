@@ -28,18 +28,21 @@ public class Controller {
     private void getTotalListOfAircrafts() {
         List<Aircraft> aircrafts = airline.getAircrafts();
         view.printMessages(view.concatenateBundleStrings(TextConstant.AIRCRAFTS_LIST));
-        view.printMessages(aircrafts.toString());
+
+        for (Aircraft aircraft : aircrafts) {
+            view.printMessages(aircraft.toString());
+        }
     }
 
     private void getTotalSeatingCapacity() {
         List<Aircraft> aircrafts = airline.getAircrafts();
-        view.printMessages(view.concatenateBundleStrings(TextConstant.TOTAL_SEATING_CAPACITY),
+        view.printMessages(TextConstant.NEW_LINE, view.concatenateBundleStrings(TextConstant.TOTAL_SEATING_CAPACITY),
                 String.valueOf(airline.getTotalSeatingCapacity(aircrafts)));
     }
 
     private void getTotalCargoCapacity() {
         List<Aircraft> aircrafts = airline.getAircrafts();
-        view.printMessages(view.concatenateBundleStrings(TextConstant.TOTAL_CARGO_CAPACITY_IN_KILO),
+        view.printMessages(TextConstant.NEW_LINE, view.concatenateBundleStrings(TextConstant.TOTAL_CARGO_CAPACITY_IN_KILO),
                 String.valueOf(airline.getTotalCargoCapacityInKg(aircrafts)));
     }
 
@@ -47,7 +50,7 @@ public class Controller {
         List<Aircraft> aircrafts = airline.getAircrafts();
         List<Aircraft> sortedAircrafts = airline.SortAircraftsByMaximumRangeInKm(aircrafts);
 
-        view.printMessages(view.concatenateBundleStrings(TextConstant.SORTED_AIRCRAFTS_BY, TextConstant.MAXIMUM_RANGE_IN_KM));
+        view.printMessages(TextConstant.NEW_LINE, view.concatenateBundleStrings(TextConstant.SORTED_AIRCRAFTS_BY, TextConstant.MAXIMUM_RANGE_IN_KM));
 
         for (Aircraft aircraft : sortedAircrafts) {
             view.printMessages(TextConstant.TAB_SING,
@@ -63,13 +66,13 @@ public class Controller {
         List<Aircraft> resultAircrafts = airline.findAircraftsByAverageFuelConsumptionLiterPerKmInclusively(aircrafts, min, max);
         int resultQuantity = resultAircrafts.size();
 
-        String message = view.concatenateStrings(view.concatenateBundleStrings(TextConstant.WITH_A_GIVEN_FUEL_CONSUMPTION_RANGE,
+        String message = view.concatenateStrings(TextConstant.NEW_LINE, view.concatenateBundleStrings(TextConstant.WITH_A_GIVEN_FUEL_CONSUMPTION_RANGE,
                 TextConstant.FROM),
                 TextConstant.SPACE_SING, String.valueOf(min), TextConstant.SPACE_SING,
                 view.concatenateBundleStrings(TextConstant.TO),
                 TextConstant.SPACE_SING, String.valueOf(max), TextConstant.SPACE_SING,
                 view.concatenateBundleStrings(TextConstant.LITRES_PER_1_KILOMETRE, TextConstant.INCLUSIVELY, TextConstant.WAS_FOUND),
-                TextConstant.SPACE_SING, String.valueOf(resultQuantity),TextConstant.SPACE_SING,
+                TextConstant.SPACE_SING, String.valueOf(resultQuantity), TextConstant.SPACE_SING,
                 view.concatenateBundleStrings(TextConstant.AIRCRAFT));
         view.printMessages(message);
     }

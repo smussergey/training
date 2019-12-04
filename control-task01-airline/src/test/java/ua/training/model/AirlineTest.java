@@ -40,7 +40,7 @@ public class AirlineTest {
         aircrafts.add(boeing777);
         aircrafts.add(airbusA320);
 
-        airline = new Airline("KiyAvia", aircrafts);
+        airline = new Airline(aircrafts);
     }
 
     @Test
@@ -69,6 +69,4 @@ public class AirlineTest {
         Assert.assertEquals(1, aircrafts.size());
         Assert.assertTrue(aircrafts.get(0).getModel().equals("Boeing 777"));
     }
-
-
 }

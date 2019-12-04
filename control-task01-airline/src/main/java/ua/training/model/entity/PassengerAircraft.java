@@ -28,9 +28,9 @@ public class PassengerAircraft extends Aircraft {
 
     @Override
     public String toString() {
-        return "\n" + "PassengerAircraft{" +
+        return "PassengerAircraft{" +
                 super.toString() +
-                "seatsByClass=" + seatsByClass +
+                ", seatsByClass=" + seatsByClass +
                 '}';
     }
 }

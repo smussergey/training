@@ -7,7 +7,7 @@ import ua.training.view.View;
 
 public class AirlineApp {
     public static void main(String[] args) {
-        Airline airline = new Airline("KPIAvia", DataGenerator.getInitialData());
+        Airline airline = new Airline(DataGenerator.getInitialData());
         View view = new View();
 
         Controller controller = new Controller(airline, view);

@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Airline {
-    private String name;
     private List<Aircraft> aircrafts;
 
-    public Airline(String name, List<Aircraft> aircrafts) {
-        this.name = name;
+    public Airline(List<Aircraft> aircrafts) {
         this.aircrafts = aircrafts;
     }
 

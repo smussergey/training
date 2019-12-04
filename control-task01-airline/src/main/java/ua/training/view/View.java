@@ -17,16 +17,8 @@ public class View {
         for (String message : messages) {
             System.out.print(message);
         }
-        System.out.println();
+        System.out.print("\n");
     }
-
-//    public void printWrongInputMessage(String inputMessage) {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder = stringBuilder.
-//                append(bundle.getString(TextConstant.INCORRECT_INPUT_DATA))
-//                .append(inputMessage);
-//        System.out.println(stringBuilder.toString());
-//    }
 
     public String concatenateStrings(String... messages) {
         StringBuilder stringBuilder = new StringBuilder();

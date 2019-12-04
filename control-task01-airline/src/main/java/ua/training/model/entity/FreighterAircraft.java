@@ -21,9 +21,9 @@ public class FreighterAircraft extends Aircraft {
 
     @Override
     public String toString() {
-        return "\n" + "FreighterAircraft{" +
+        return "FreighterAircraft{" +
                 super.toString() +
-                "cargoCompartmentInCubicMetre=" + cargoCompartmentInCubicMetre +
+                ", cargoCompartmentInCubicMetre=" + cargoCompartmentInCubicMetre +
                 ", seatingCapacity=" + seatingCapacity +
                 '}';
     }
