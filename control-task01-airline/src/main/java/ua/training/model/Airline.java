@@ -16,35 +16,35 @@ public class Airline {
         this.aircrafts = aircrafts;
     }
 
-    public int getTotalSeatingCapacity() {
+    public int getTotalSeatingCapacity(List<Aircraft> aircraftList) {
         int totalSeatingCapacity = 0;
 
-        for (Aircraft aircraft : this.aircrafts) {
+        for (Aircraft aircraft : aircraftList) {
             totalSeatingCapacity = totalSeatingCapacity + aircraft.getSeatingCapacity();
         }
         return totalSeatingCapacity;
     }
 
-    public int getTotalCargoCapacityInKg() {
+    public int getTotalCargoCapacityInKg(List<Aircraft> aircraftList) {
         int totalCargoCapacityInKg = 0;
 
-        for (Aircraft aircraft : this.aircrafts) {
+        for (Aircraft aircraft : aircraftList) {
             totalCargoCapacityInKg = totalCargoCapacityInKg + aircraft.getCargoCapacityInKilo();
         }
         return totalCargoCapacityInKg;
     }
 
-    public List<Aircraft> SortAircraftsByMaximumRangeInKm() {
-        return this.aircrafts
+    public List<Aircraft> SortAircraftsByMaximumRangeInKm(List<Aircraft> aircraftList) {
+        return aircraftList
                 .stream()
                 .sorted(Comparator.comparing(Aircraft::getMaximumRangeInKm))
                 .collect(Collectors.toList());
     }
 
-    public List<Aircraft> findAircraftByAverageFuelConsumptionLiterPerKm(double min, double max) {
+    public List<Aircraft> findAircraftByAverageFuelConsumptionLiterPerKm(List<Aircraft> aircraftList, double min, double max) {
         List<Aircraft> result = new ArrayList<>();
 
-        for (Aircraft aircraft : this.aircrafts) {
+        for (Aircraft aircraft : aircraftList) {
             if (aircraft.getAverageFuelConsumptionInLiterPerKm() >= min
                     && aircraft.getAverageFuelConsumptionInLiterPerKm() <= max) {
                 result.add(aircraft);

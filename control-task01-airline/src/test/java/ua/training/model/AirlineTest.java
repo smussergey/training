@@ -45,17 +45,17 @@ public class AirlineTest {
 
     @Test
     public void testGetTotalSeatingCapacity() {
-        Assert.assertEquals(412, airline.getTotalSeatingCapacity());
+        Assert.assertEquals(412, airline.getTotalSeatingCapacity(airline.getAircrafts()));
     }
 
     @Test
     public void testGetTotalCargoCapacityInKg() {
-        Assert.assertEquals(272000, airline.getTotalCargoCapacityInKg());
+        Assert.assertEquals(272000, airline.getTotalCargoCapacityInKg(airline.getAircrafts()));
     }
 
     @Test
     public void testSortAircraftsByMaximumRangeInKm() {
-        List<Aircraft> sortedAircrafts = airline.SortAircraftsByMaximumRangeInKm();
+        List<Aircraft> sortedAircrafts = airline.SortAircraftsByMaximumRangeInKm(airline.getAircrafts());
 
         for (int i = 0; i < sortedAircrafts.size() - 1; i++) {
             Assert.assertTrue(sortedAircrafts.get(i).getMaximumRangeInKm() <= sortedAircrafts.get(i + 1).getMaximumRangeInKm());
@@ -64,8 +64,10 @@ public class AirlineTest {
 
     @Test
     public void testFindAircraftByAverageFuelConsumptionLiterPerKm() {
-        List<Aircraft> aircrafts = airline.findAircraftByAverageFuelConsumptionLiterPerKm(5.00, 15.00);
+        List<Aircraft> aircraftsToProcess = airline.getAircrafts();
+        List<Aircraft> aircrafts = airline.findAircraftByAverageFuelConsumptionLiterPerKm(aircraftsToProcess, 5.00, 15.00);
         Assert.assertEquals(1, aircrafts.size());
+        Assert.assertTrue(aircrafts.get(0).getModel().equals("Boeing 777"));
     }
 
 
