@@ -14,5 +14,13 @@ public class AnimalApp {
         System.out.println("Cat by CAt reference:");
         System.out.println(catByCatReference.type);
         catByCatReference.say();
+        System.out.println("");
+
+        System.out.println("catByAnimalReference instanceof Animal = " + (catByAnimalReference instanceof Animal));
+        System.out.println("catByAnimalReference instanceof Cat = " + (catByAnimalReference instanceof Cat));
+
+        System.out.println("catByAnimalReference.getClass()) = " + (catByAnimalReference.getClass()));
+        System.out.println("catByCatReference.getClass()) = " + (catByCatReference.getClass()));
+
     }
 }
