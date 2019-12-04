@@ -17,6 +17,7 @@
         <module>task04-notebook</module>
         <module>task04-notebook-en_ua</module>
         <module>control-task01-airline</module>
+        <module>examples-oop</module>
     </modules>
 
     <properties>
