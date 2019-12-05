@@ -8,12 +8,12 @@ import java.util.ResourceBundle;
 public class View {
 
     // Resource Bundle Installation's
-    static String MESSAGES_BUNDLE_NAME = "messages";
-    public static final ResourceBundle bundle =
+    private static String MESSAGES_BUNDLE_NAME = "messages";
+    private static final ResourceBundle bundle =
             ResourceBundle.getBundle(
                     MESSAGES_BUNDLE_NAME,
-//                    new Locale("ua", "UA"), new UTF8Control());  // Ukrainian
-                    new Locale("en"));        // English
+                    new Locale("ua", "UA"), new UTF8Control());  // Ukrainian
+//                    new Locale("en"));        // English
 
     public void printMessages(String... messages) {
         for (String message : messages) {

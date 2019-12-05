@@ -28,7 +28,7 @@ public class Controller {
     }
 
     private void getTotalListOfAircrafts() {
-        view.printMessages(view.getBundleString(TextConstant.AIRCRAFTS_LIST));
+        view.printMessages(view.getBundleString(TextConstant.AIRCRAFTS_LIST), TextConstant.COLON_SING);
         List<Aircraft> aircrafts = airline.getAircrafts();
 
         for (Aircraft aircraft : aircrafts) {
@@ -60,7 +60,7 @@ public class Controller {
                     TextConstant.COLON_SING, aircraft.getManufacturer(), TextConstant.COMMA_SING, TextConstant.SPACE_SING,
                     view.getBundleString(TextConstant.MODEL),
                     TextConstant.COLON_SING, aircraft.getModel(), TextConstant.COMMA_SING, TextConstant.SPACE_SING,
-                    view.getBundleString(TextConstant.MAXIMUM_RANGE_IN_KILOMENTRES),
+                    view.getBundleString(TextConstant.MAXIMUM_RANGE_IN_KILOMETRES),
                     TextConstant.COLON_SING, String.valueOf(aircraft.getMaximumRangeInKm()), TextConstant.COMMA_SING, TextConstant.SPACE_SING,
                     view.getBundleString(TextConstant.FUEL_CONSUMPTION_IN_LITERS_PER_1_KILOMETRE),
                     TextConstant.COLON_SING, String.valueOf(aircraft.getFuelConsumptionInLitersPerKm()), TextConstant.COMMA_SING, TextConstant.SPACE_SING,
@@ -72,13 +72,17 @@ public class Controller {
 
     private void getTotalSeatingCapacity() {
         List<Aircraft> aircrafts = airline.getAircrafts();
-        view.printMessages(TextConstant.NEW_LINE_SING, view.getBundleString(TextConstant.TOTAL_SEATING_CAPACITY),
+        view.printMessages(TextConstant.NEW_LINE_SING,
+                view.getBundleString(TextConstant.TOTAL_SEATING_CAPACITY),
+                TextConstant.COLON_SING, TextConstant.SPACE_SING,
                 String.valueOf(airline.getTotalSeatingCapacity(aircrafts)));
     }
 
     private void getTotalCargoCapacity() {
         List<Aircraft> aircrafts = airline.getAircrafts();
-        view.printMessages(TextConstant.NEW_LINE_SING, view.getBundleString(TextConstant.TOTAL_CARGO_CAPACITY_IN_KILOS),
+        view.printMessages(TextConstant.NEW_LINE_SING,
+                view.getBundleString(TextConstant.TOTAL_CARGO_CAPACITY_IN_KILOS),
+                TextConstant.COLON_SING, TextConstant.SPACE_SING,
                 String.valueOf(airline.getTotalCargoCapacityInKg(aircrafts)));
     }
 
@@ -86,9 +90,9 @@ public class Controller {
         List<Aircraft> aircrafts = airline.getAircrafts();
         List<Aircraft> sortedAircrafts = airline.SortAircraftsByMaximumRangeInKm(aircrafts);
 
-        view.printMessages(TextConstant.NEW_LINE_SING, view.getBundleString(TextConstant.SORTED_AIRCRAFTS_BY),
+        view.printMessages(TextConstant.NEW_LINE_SING, view.getBundleString(TextConstant.SORTED_AIRCRAFTS),
                 TextConstant.SPACE_SING,
-                view.getBundleString(TextConstant.MAXIMUM_RANGE_IN_KILOMENTRES),
+                view.getBundleString(TextConstant.BY_MAXIMUM_RANGE_IN_KILOMETRES),
                 TextConstant.COLON_SING);
 
         for (Aircraft aircraft : sortedAircrafts) {
@@ -112,7 +116,8 @@ public class Controller {
                 TextConstant.SPACE_SING, String.valueOf(max), TextConstant.SPACE_SING,
                 view.getBundleString(TextConstant.LITRES_PER_1_KILOMETRE_INCLUSIVELY_WAS_FOUND),
                 TextConstant.SPACE_SING, String.valueOf(resultQuantity), TextConstant.SPACE_SING,
-                view.getBundleString(TextConstant.AIRCRAFT));
+                view.getBundleString(TextConstant.AIRCRAFT),
+                TextConstant.COLON_SING);
         view.printMessages(message);
 
         for (Aircraft aircraft : resultAircrafts) {
