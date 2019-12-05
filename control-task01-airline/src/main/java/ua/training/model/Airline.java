@@ -27,7 +27,7 @@ public class Airline {
         int totalCargoCapacityInKg = 0;
 
         for (Aircraft aircraft : aircraftList) {
-            totalCargoCapacityInKg = totalCargoCapacityInKg + aircraft.getCargoCapacityInKilo();
+            totalCargoCapacityInKg = totalCargoCapacityInKg + aircraft.getCargoCapacityInKilos();
         }
         return totalCargoCapacityInKg;
     }
@@ -39,12 +39,12 @@ public class Airline {
                 .collect(Collectors.toList());
     }
 
-    public List<Aircraft> findAircraftsByAverageFuelConsumptionLiterPerKmInclusively(List<Aircraft> aircraftList, double min, double max) {
+    public List<Aircraft> findAircraftsByFuelConsumptionLiterPerKmInclusively(List<Aircraft> aircraftList, double min, double max) {
         List<Aircraft> result = new ArrayList<>();
 
         for (Aircraft aircraft : aircraftList) {
-            if (aircraft.getFuelConsumptionInLiterPerKm() >= min
-                    && aircraft.getFuelConsumptionInLiterPerKm() <= max) {
+            if (aircraft.getFuelConsumptionInLitersPerKm() >= min
+                    && aircraft.getFuelConsumptionInLitersPerKm() <= max) {
                 result.add(aircraft);
             }
         }

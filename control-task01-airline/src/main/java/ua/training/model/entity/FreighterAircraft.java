@@ -1,16 +1,14 @@
 package ua.training.model.entity;
 
-import ua.training.model.entity.Aircraft;
-
 public class FreighterAircraft extends Aircraft {
-    private int cargoCompartmentInCubicMetre;
+    private int cargoCompartmentInCubicMetres;
     private int seatingCapacity;
 
     public FreighterAircraft(String manufacturer, String model, int maximumRangeInKm,
                              double averageFuelConsumptionLiterPerKm, int cargoCapacityInKg,
-                             int cargoCompartmentInCubicMetre, int seatingCapacity) {
+                             int cargoCompartmentInCubicMetres, int seatingCapacity) {
         super(manufacturer, model, maximumRangeInKm, averageFuelConsumptionLiterPerKm, cargoCapacityInKg);
-        this.cargoCompartmentInCubicMetre = cargoCompartmentInCubicMetre;
+        this.cargoCompartmentInCubicMetres = cargoCompartmentInCubicMetres;
         this.seatingCapacity = seatingCapacity;
     }
 
@@ -19,12 +17,7 @@ public class FreighterAircraft extends Aircraft {
         return this.seatingCapacity;
     }
 
-    @Override
-    public String toString() {
-        return "FreighterAircraft{" +
-                super.toString() +
-                ", cargoCompartmentInCubicMetre=" + cargoCompartmentInCubicMetre +
-                ", seatingCapacity=" + seatingCapacity +
-                '}';
+    public int getCargoCompartmentInCubicMetres() {
+        return cargoCompartmentInCubicMetres;
     }
 }

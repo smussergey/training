@@ -1,5 +1,7 @@
 package ua.training.view;
 
+import ua.training.view.util.UTF8Control;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -28,12 +30,8 @@ public class View {
         return stringBuilder.toString();
     }
 
-    public String concatenateBundleStrings(String... messages) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String v : messages) {
-            stringBuilder = stringBuilder.append(bundle.getString(v));
-        }
-        return stringBuilder.toString();
+    public String getBundleString(String message) {
+        return bundle.getString(message);
     }
 
 }

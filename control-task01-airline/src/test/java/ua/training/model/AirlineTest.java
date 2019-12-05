@@ -65,7 +65,7 @@ public class AirlineTest {
     @Test
     public void testFindAircraftByAverageFuelConsumptionLiterPerKmInclusively() {
         List<Aircraft> aircraftsToProcess = airline.getAircrafts();
-        List<Aircraft> aircrafts = airline.findAircraftsByAverageFuelConsumptionLiterPerKmInclusively(aircraftsToProcess, 5.00, 15.00);
+        List<Aircraft> aircrafts = airline.findAircraftsByFuelConsumptionLiterPerKmInclusively(aircraftsToProcess, 5.00, 15.00);
         Assert.assertEquals(1, aircrafts.size());
         Assert.assertTrue(aircrafts.get(0).getModel().equals("Boeing 777"));
     }

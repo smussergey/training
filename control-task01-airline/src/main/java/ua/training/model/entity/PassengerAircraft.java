@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PassengerAircraft extends Aircraft {
-    private Map<PassengerClass, Integer> seatsByClass = new HashMap<>();
+    private Map<PassengerClass, Integer> seatsByClass;
 
 
     public PassengerAircraft(String manufacturer, String model, int maximumRangeInKm,
@@ -12,10 +12,6 @@ public class PassengerAircraft extends Aircraft {
                              Map<PassengerClass, Integer> seatsByClass) {
         super(manufacturer, model, maximumRangeInKm, averageFuelConsumptionLiterPerKm, cargoCapacityInKilo);
         this.seatsByClass = seatsByClass;
-    }
-
-    public void addSeatsByClass(PassengerClass passengerClass, int seatsCapacity) {
-        seatsByClass.put(passengerClass, seatsCapacity);
     }
 
     @Override
@@ -26,11 +22,7 @@ public class PassengerAircraft extends Aircraft {
         return seatingCapacity;
     }
 
-    @Override
-    public String toString() {
-        return "PassengerAircraft{" +
-                super.toString() +
-                ", seatsByClass=" + seatsByClass +
-                '}';
+    public Map<PassengerClass, Integer> getSeatsByClass() {
+        return seatsByClass;
     }
 }

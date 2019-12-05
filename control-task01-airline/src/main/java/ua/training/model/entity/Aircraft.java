@@ -4,16 +4,16 @@ public abstract class Aircraft {
     private String manufacturer;
     private String model;
     private int maximumRangeInKm;
-    private double fuelConsumptionInLiterPerKm;
-    private int cargoCapacityInKilo;
+    private double fuelConsumptionInLitersPerKm;
+    private int cargoCapacityInKilos;
 
     public Aircraft(String manufacturer, String model, int maximumRangeInKm,
-                    double fuelConsumptionInLiterPerKm, int cargoCapacityInKilo) {
+                    double fuelConsumptionInLitersPerKm, int cargoCapacityInKilos) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.maximumRangeInKm = maximumRangeInKm;
-        this.fuelConsumptionInLiterPerKm = fuelConsumptionInLiterPerKm;
-        this.cargoCapacityInKilo = cargoCapacityInKilo;
+        this.fuelConsumptionInLitersPerKm = fuelConsumptionInLitersPerKm;
+        this.cargoCapacityInKilos = cargoCapacityInKilos;
     }
 
     public String getManufacturer() {
@@ -28,22 +28,13 @@ public abstract class Aircraft {
         return maximumRangeInKm;
     }
 
-    public double getFuelConsumptionInLiterPerKm() {
-        return fuelConsumptionInLiterPerKm;
+    public double getFuelConsumptionInLitersPerKm() {
+        return fuelConsumptionInLitersPerKm;
     }
 
-    public int getCargoCapacityInKilo() {
-        return cargoCapacityInKilo;
+    public int getCargoCapacityInKilos() {
+        return cargoCapacityInKilos;
     }
 
     public abstract int getSeatingCapacity();
-
-    @Override
-    public String toString() {
-        return "manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                ", maximumRangeInKm=" + maximumRangeInKm +
-                ", fuelConsumptionInLiterPerKm=" + fuelConsumptionInLiterPerKm +
-                ", cargoCapacityInKilo=" + cargoCapacityInKilo;
-    }
 }
