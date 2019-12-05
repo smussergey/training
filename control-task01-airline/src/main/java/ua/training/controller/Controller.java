@@ -5,9 +5,11 @@ import ua.training.model.entity.Aircraft;
 import ua.training.model.entity.FreighterAircraft;
 import ua.training.model.entity.PassengerAircraft;
 import ua.training.model.entity.PassengerClass;
+import ua.training.util.DataGenerator;
 import ua.training.view.View;
-import ua.training.view.TextConstant;
+import ua.training.view.util.TextConstant;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Controller {

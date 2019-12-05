@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AirlineTest {
-    private Airline airline;
+    private Airline airline = new Airline();
 
     @Before
     public void setUp() {
@@ -40,7 +40,7 @@ public class AirlineTest {
         aircrafts.add(boeing777);
         aircrafts.add(airbusA320);
 
-        airline = new Airline(aircrafts);
+        airline.setAircrafts(aircrafts);
     }
 
     @Test

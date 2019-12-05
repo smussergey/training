@@ -7,8 +7,12 @@ import ua.training.view.View;
 
 public class AirlineApp {
     public static void main(String[] args) {
-        Airline airline = new Airline(DataGenerator.getInitialData());
         View view = new View();
+        Airline airline = new Airline();
+
+        if (View.getBundle().getLocale().getDisplayLanguage().equals(View.LOCALE_LANGUAGE_UA)) {
+            airline.setAircrafts(DataGenerator.getInitialDataUa());
+        } else airline.setAircrafts(DataGenerator.getInitialDataEn());
 
         Controller controller = new Controller(airline, view);
         controller.startApplication();

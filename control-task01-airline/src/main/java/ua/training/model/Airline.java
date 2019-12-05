@@ -10,10 +10,6 @@ import java.util.stream.Collectors;
 public class Airline {
     private List<Aircraft> aircrafts;
 
-    public Airline(List<Aircraft> aircrafts) {
-        this.aircrafts = aircrafts;
-    }
-
     public int getTotalSeatingCapacity(List<Aircraft> aircraftList) {
         int totalSeatingCapacity = 0;
 
@@ -53,5 +49,9 @@ public class Airline {
 
     public List<Aircraft> getAircrafts() {
         return aircrafts;
+    }
+
+    public void setAircrafts(List<Aircraft> aircrafts) {
+        this.aircrafts = aircrafts;
     }
 }

@@ -6,14 +6,16 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class View {
+    public static String LOCALE_LANGUAGE_UA = "ua";
+    public static String LOCALE_LANGUAGE_EN = "en";
 
     // Resource Bundle Installation's
     private static String MESSAGES_BUNDLE_NAME = "messages";
     private static final ResourceBundle bundle =
             ResourceBundle.getBundle(
                     MESSAGES_BUNDLE_NAME,
-                    new Locale("ua", "UA"), new UTF8Control());  // Ukrainian
-//                    new Locale("en"));        // English
+                    new Locale(LOCALE_LANGUAGE_UA, "UA"), new UTF8Control());  // Ukrainian
+//                    new Locale(LOCALE_LANGUAGE_EN));        // English
 
     public void printMessages(String... messages) {
         for (String message : messages) {
@@ -34,4 +36,7 @@ public class View {
         return bundle.getString(message);
     }
 
+    public static ResourceBundle getBundle() {
+        return bundle;
+    }
 }
