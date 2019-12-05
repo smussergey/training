@@ -5,11 +5,8 @@ import ua.training.model.entity.Aircraft;
 import ua.training.model.entity.FreighterAircraft;
 import ua.training.model.entity.PassengerAircraft;
 import ua.training.model.entity.PassengerClass;
-import ua.training.util.DataGenerator;
 import ua.training.view.View;
 import ua.training.view.util.TextConstant;
-
-import java.util.Collections;
 import java.util.List;
 
 public class Controller {
@@ -108,7 +105,7 @@ public class Controller {
 
     private void getAircraftsByFuelConsumptionLiterPerKmInclusively(Double min, Double max) {
         List<Aircraft> aircrafts = airline.getAircrafts();
-        List<Aircraft> resultAircrafts = airline.findAircraftsByFuelConsumptionLiterPerKmInclusively(aircrafts, min, max);
+        List<Aircraft> resultAircrafts = airline.findAircraftsByFuelConsumptionInLitersPer1Kilometre(aircrafts, min, max);
         int resultQuantity = resultAircrafts.size();
 
         String message = view.concatenateStrings(TextConstant.NEW_LINE_SING,
