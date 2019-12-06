@@ -18,6 +18,7 @@
         <module>task04-notebook-en_ua</module>
         <module>control-task01-airline</module>
         <module>examples-oop</module>
+        <module>block06-golovach-exceptions</module>
     </modules>
 
     <properties>
