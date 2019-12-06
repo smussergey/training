@@ -1,4 +1,4 @@
-package ua.training;
+package ua.training.part1;
 
 public class WithoutReturnStatementApp {
     public static void main(String[] args) {
