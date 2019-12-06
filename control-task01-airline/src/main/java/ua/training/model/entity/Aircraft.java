@@ -1,5 +1,7 @@
 package ua.training.model.entity;
 
+import java.util.Objects;
+
 public abstract class Aircraft {
     private String manufacturer;
     private String model;
@@ -37,4 +39,26 @@ public abstract class Aircraft {
     }
 
     public abstract int getSeatingCapacity();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Aircraft)) return false;
+        Aircraft aircraft = (Aircraft) o;
+        return manufacturer.equals(aircraft.manufacturer) &&
+                model.equals(aircraft.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(manufacturer, model);
+    }
+
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                '}';
+    }
 }

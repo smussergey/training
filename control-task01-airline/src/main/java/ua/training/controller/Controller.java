@@ -7,6 +7,7 @@ import ua.training.model.entity.PassengerAircraft;
 import ua.training.model.entity.PassengerClass;
 import ua.training.view.View;
 import ua.training.view.util.TextConstant;
+
 import java.util.List;
 
 public class Controller {
@@ -127,6 +128,4 @@ public class Controller {
                     String.valueOf(aircraft.getFuelConsumptionInLitersPerKm()));
         }
     }
-
-
 }
