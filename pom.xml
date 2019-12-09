@@ -19,6 +19,7 @@
         <module>control-task01-airline</module>
         <module>examples-oop</module>
         <module>block06-golovach-exceptions</module>
+        <module>block06-task-custom-exception</module>
     </modules>
 
     <properties>
