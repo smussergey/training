@@ -1,30 +1,41 @@
 package training.model;
 
+import java.util.Arrays;
+
 public class Entry {
-    private String lastName;
-    private String nickName;
+    private String name;
+    private String login;
 
-    public String getLastName() {
-        return lastName;
+    public Entry(String name, String login) {
+        if (Arrays.stream(EntryDataBase.values()).anyMatch(val -> val.isLoginExistInDb(login))) {
+            throw new DuplicateLoginException(login);
+        }
+
+        this.name = name;
+        this.login = login;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getName() {
+        return name;
     }
 
-    public String getNickName() {
-        return nickName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
     public String toString() {
         return "Entry{" +
-                "lastName='" + lastName + '\'' +
-                ", nickName='" + nickName + '\'' +
+                "name='" + name + '\'' +
+                ", login='" + login + '\'' +
                 '}';
     }
 }

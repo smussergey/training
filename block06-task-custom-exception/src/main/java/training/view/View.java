@@ -13,24 +13,22 @@ public class View {
                     new Locale("ua", "UA"), new UTF8Control());  // Ukrainian
 //                    new Locale("en"));        // English
 
-    public void printMessage(String message) {
-        System.out.println(message);
+    public void printMessages(String... messages) {
+        for (String message : messages) {
+            System.out.print(message);
+        }
+        System.out.print("\n");
     }
 
-    public void printWrongInputMessage(String inputMessage) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder = stringBuilder.
-                append(bundle.getString(TextConstant.INCORRECT_INPUT_DATA))
-                .append(inputMessage);
-        System.out.println(stringBuilder.toString());
-    }
-
-    public String concatenateBundleStrings(String... messages) {
+    public String concatenateStrings(String... messages) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String v : messages) {
-            stringBuilder = stringBuilder.append(bundle.getString(v));
+            stringBuilder = stringBuilder.append(v);
         }
         return stringBuilder.toString();
     }
 
+    public String getBundleMessage(String messages) {
+        return bundle.getString(messages);
+    }
 }

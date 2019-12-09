@@ -1,5 +1,6 @@
 package training.controller;
 
+import training.view.TextConstant;
 import training.view.View;
 
 import java.util.Scanner;
@@ -15,11 +16,12 @@ public class EntryInputUtilityController {
 
     public String processInputWithScanner(String inputMessage, String regex) {
         String result;
-        view.printMessage(inputMessage);
+        view.printMessages(inputMessage);
 
         while (!(scanner.hasNext() &&
                 (result = scanner.next()).matches(regex))) {
-            view.printWrongInputMessage(inputMessage);
+            view.printMessages(view.getBundleMessage(TextConstant.WRONG_INPUT),
+                    inputMessage);
         }
 
         return result;

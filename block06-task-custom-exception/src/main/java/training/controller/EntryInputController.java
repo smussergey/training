@@ -18,20 +18,25 @@ public class EntryInputController {
     }
 
     public Entry processEntryInput() {
-        Entry entry = new Entry();
+        String name;
+        String login;
         EntryInputUtilityController eiuc = new EntryInputUtilityController(scanner, view);
         String inputMessage;
         String inputRegex;
 
-        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.LAST_NAME);
+        inputMessage = view.concatenateStrings(view.getBundleMessage(TextConstant.INPUT_DATA),
+                TextConstant.SPACE_SING,
+                view.getBundleMessage(TextConstant.NAME));
         inputRegex = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-                ? REGEX_LAST_NAME_UKR : REGEX_LAST_NAME_LAT;
-        entry.setLastName(eiuc.processInputWithScanner(inputMessage, inputRegex));
+                ? NAME_UKR : NAME_LAT;
+        name = eiuc.processInputWithScanner(inputMessage, inputRegex);
 
-        inputMessage = view.concatenateBundleStrings(TextConstant.INPUT_DATA, TextConstant.NICKNAME);
-        inputRegex = REGEX_NICKNAME;
-        entry.setNickName(eiuc.processInputWithScanner(inputMessage, inputRegex));
+        inputMessage = view.concatenateStrings(view.getBundleMessage(TextConstant.INPUT_DATA),
+                TextConstant.SPACE_SING,
+                view.getBundleMessage(TextConstant.LOGIN));
+        inputRegex = LOGIN;
+        login = eiuc.processInputWithScanner(inputMessage, inputRegex);
 
-        return entry;
+        return new Entry(name, login);
     }
 }

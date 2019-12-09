@@ -1,9 +1,11 @@
 package training.view;
 
 public interface TextConstant {
+    String SPACE_SING = " ";
     String INPUT_DATA = "enter";
-    String LAST_NAME = "last.name";
-    String NICKNAME = "nick.name";
-    String INCORRECT_INPUT_DATA = "wrong.input";
-    String SAVED_ENTRY = "you.entered";
+    String NAME = "name";
+    String LOGIN = "login";
+    String WRONG_INPUT = "wrong.input";
+    String SUCH_LOGIN_ALREADY_EXISTS = "such.login.already.exists";
+    String ENTERED_ENTRY = "you.entered";
 }
