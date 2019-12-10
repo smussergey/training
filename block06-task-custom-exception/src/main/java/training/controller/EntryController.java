@@ -27,8 +27,9 @@ public class EntryController {
                     TextConstant.SPACE_SING,
                     view.getBundleMessage(TextConstant.SUCH_LOGIN_ALREADY_EXISTS));
             processUser();
+            return;
         }
-
         view.printMessages(view.getBundleMessage(TextConstant.ENTERED_ENTRY), newEntry.toString());
     }
+
 }
