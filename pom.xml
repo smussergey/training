@@ -20,6 +20,8 @@
         <module>examples-oop</module>
         <module>block06-golovach-exceptions</module>
         <module>block06-task-custom-exception</module>
+        <module>examples-disign-patterns</module>
+        <module>block07-springboot-helloworld</module>
     </modules>
 
     <properties>
@@ -30,6 +32,8 @@
     </properties>
 
     <dependencies>
+
+        <!--For testing-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
