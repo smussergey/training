@@ -22,6 +22,7 @@
         <module>block06-task-custom-exception</module>
         <module>examples-disign-patterns</module>
         <module>block07-springboot-helloworld</module>
+        <module>block08-springboot-pojo-user</module>
     </modules>
 
     <properties>
