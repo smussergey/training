@@ -9,6 +9,6 @@ public class UserConfig {
 
     @Bean(name = "user")
     public User getUser() {
-        return new User("Segey", "sergey@gmail.com", "Sergeypassword");
+        return new User(1L, "Segey", "sergey@gmail.com", "Sergeypassword");
     }
 }
