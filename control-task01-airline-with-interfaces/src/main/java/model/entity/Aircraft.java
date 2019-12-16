@@ -2,17 +2,17 @@ package model.entity;
 
 public interface Aircraft {
 
-    public String getManufacturer();
+    String getManufacturer();
 
-    public String getModel();
+    String getModel();
 
-    public int getMaximumRangeInKm();
+    int getMaximumRangeInKm();
 
-    public double getFuelConsumptionInLitersPerKm();
+    double getFuelConsumptionInLitersPerKm();
 
-    public int getCargoCapacityInKilos();
+    int getCargoCapacityInKilos();
 
-    public abstract int getSeatingCapacity();
+    int getSeatingCapacity();
 
 
 }
