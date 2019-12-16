@@ -23,6 +23,7 @@
         <module>examples-disign-patterns</module>
         <module>block07-springboot-helloworld</module>
         <module>block08-springboot-pojo-user</module>
+        <module>control-task01-airline-with-interfaces</module>
     </modules>
 
     <properties>
