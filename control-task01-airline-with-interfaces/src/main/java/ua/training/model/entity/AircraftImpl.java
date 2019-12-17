@@ -1,6 +1,4 @@
-package ua.training.model;
-
-import ua.training.model.entity.Aircraft;
+package ua.training.model.entity;
 
 import java.util.Objects;
 

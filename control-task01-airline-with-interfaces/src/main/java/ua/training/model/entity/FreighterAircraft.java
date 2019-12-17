@@ -1,7 +1,5 @@
 package ua.training.model.entity;
 
-import ua.training.model.AircraftImpl;
-
 public class FreighterAircraft extends AircraftImpl {
     private int cargoCompartmentInCubicMetres;
     private int seatingCapacity;

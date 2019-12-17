@@ -1,7 +1,5 @@
 package ua.training.model.entity;
 
-import ua.training.model.AircraftImpl;
-
 import java.util.Map;
 
 public class PassengerAircraft extends AircraftImpl {
