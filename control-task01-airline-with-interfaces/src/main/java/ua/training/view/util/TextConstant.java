@@ -1,4 +1,4 @@
-package view.util;
+package ua.training.view.util;
 
 public interface TextConstant {
     String SPACE_SING = " ";

@@ -1,4 +1,4 @@
-package view.util;
+package ua.training.view.util;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,9 +1,11 @@
-import controller.Controller;
-import model.Airline;
-import util.DataGenerator;
-import view.View;
+package ua.training;
 
-public class AirlineWithInterfacesApp {
+import ua.training.controller.Controller;
+import ua.training.model.Airline;
+import ua.training.util.DataGenerator;
+import ua.training.view.View;
+
+public class AirlineApp {
     public static void main(String[] args) {
         View view = new View();
         Airline airline = new Airline();

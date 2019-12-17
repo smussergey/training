@@ -2,9 +2,9 @@
  *This program is developed for educational purposes.
  */
 
-package model;
+package ua.training.model;
 
-import model.entity.Aircraft;
+import ua.training.model.entity.Aircraft;
 
 import java.util.ArrayList;
 import java.util.Comparator;

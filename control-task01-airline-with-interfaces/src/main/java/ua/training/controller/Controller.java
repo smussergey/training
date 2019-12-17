@@ -1,12 +1,12 @@
-package controller;
+package ua.training.controller;
 
-import model.Airline;
-import model.entity.Aircraft;
-import model.entity.FreighterAircraftImpl;
-import model.entity.PassengerAircraftImpl;
-import model.entity.PassengerClass;
-import view.View;
-import view.util.TextConstant;
+import ua.training.model.Airline;
+import ua.training.model.entity.Aircraft;
+import ua.training.model.entity.FreighterAircraft;
+import ua.training.model.entity.PassengerAircraft;
+import ua.training.model.entity.PassengerClass;
+import ua.training.view.View;
+import ua.training.view.util.TextConstant;
 
 import java.util.List;
 
@@ -35,15 +35,15 @@ public class Controller {
             String aircraftType = "";
             String specialCharacteristics = "";
 
-            if (aircraft instanceof FreighterAircraftImpl) {
-                FreighterAircraftImpl freighterAircraftImpl = (FreighterAircraftImpl) aircraft;
+            if (aircraft instanceof FreighterAircraft) {
+                FreighterAircraft freighterAircraftImpl = (FreighterAircraft) aircraft;
                 aircraftType = (view.getBundleString(TextConstant.FREIGHTER_AIRCRAFT));
                 specialCharacteristics = view.concatenateStrings(view.getBundleString(TextConstant.CARGO_COMPARTMENT_IN_CUBIC_METRES),
                         TextConstant.COLON_SING, String.valueOf(freighterAircraftImpl.getCargoCompartmentInCubicMetres()), TextConstant.COMMA_SING, TextConstant.SPACE_SING,
                         view.getBundleString(TextConstant.SEATING_CAPACITY),
                         TextConstant.COLON_SING, String.valueOf(freighterAircraftImpl.getSeatingCapacity()));
-            } else if (aircraft instanceof PassengerAircraftImpl) {
-                PassengerAircraftImpl passengerAircraftImpl = (PassengerAircraftImpl) aircraft;
+            } else if (aircraft instanceof PassengerAircraft) {
+                PassengerAircraft passengerAircraftImpl = (PassengerAircraft) aircraft;
                 aircraftType = (view.getBundleString(TextConstant.PASSENGER_AIRCRAFT));
                 specialCharacteristics = view.concatenateStrings(view.getBundleString(TextConstant.SEATING_CAPACITY),
                         TextConstant.COLON_SING, TextConstant.SPACE_SING,

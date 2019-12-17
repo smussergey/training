@@ -1,4 +1,4 @@
-package view;
+package ua.training.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
