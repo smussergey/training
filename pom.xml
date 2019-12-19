@@ -24,6 +24,8 @@
         <module>block07-springboot-helloworld</module>
         <module>block08-springboot-pojo-user</module>
         <module>control-task01-airline-with-interfaces</module>
+        <module>blockj08-task01-stream</module>
+        <module>block08-custom-collections</module>
     </modules>
 
     <properties>
