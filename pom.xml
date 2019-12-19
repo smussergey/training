@@ -26,6 +26,7 @@
         <module>control-task01-airline-with-interfaces</module>
         <module>blockj08-task01-stream</module>
         <module>block08-custom-collections</module>
+        <module>block08-task01-count-repeated-elements</module>
     </modules>
 
     <properties>
