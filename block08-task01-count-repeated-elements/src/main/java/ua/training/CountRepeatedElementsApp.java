@@ -23,7 +23,7 @@ public class CountRepeatedElementsApp {
         elements.add(5);
         elements.add(7);
 
-        Map<Integer, Long> repeatedElements = countRepeatedElements(elements);
+        Map<Integer, Long> repeatedElements = groupByValueAndCountOccurrence(elements);
 
         repeatedElements
                 .entrySet()
@@ -32,9 +32,8 @@ public class CountRepeatedElementsApp {
                 .forEach(entry -> System.out.println(entry.getKey() + "-" + entry.getValue()));
     }
 
-    private static Map<Integer, Long> countRepeatedElements(List<Integer> el) {
+    private static Map<Integer, Long> groupByValueAndCountOccurrence(List<Integer> el) {
         return el.stream()
-                .sorted()
                 .collect(groupingBy(Function.identity(), counting()));
     }
 }
