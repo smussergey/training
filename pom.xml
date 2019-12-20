@@ -27,6 +27,7 @@
         <module>blockj08-task01-stream</module>
         <module>block08-custom-collections</module>
         <module>block08-task01-count-repeated-elements</module>
+        <module>block08-task02-blocked-methods-in-arraylist</module>
     </modules>
 
     <properties>
