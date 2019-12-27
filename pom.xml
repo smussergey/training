@@ -28,6 +28,7 @@
         <module>block08-custom-collections</module>
         <module>block08-task01-count-repeated-elements</module>
         <module>block08-task02-blocked-methods-in-arraylist</module>
+        <module>final-project-system-what-where-when</module>
     </modules>
 
     <properties>
