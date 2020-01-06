@@ -1,4 +1,4 @@
-package ua.training;
+package ua.training.system_what_where_when;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
