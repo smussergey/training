@@ -8,18 +8,14 @@ import ua.training.system_what_where_when.model.User;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
     private Long id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private String nameUa;
+    private String nameEn;
 
     public User toUser(){
         User user = new User();
         user.setId(id);
-        user.setUsername(username);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
+        user.setNameUa(nameUa);
+        user.setNameEn(nameEn);
 
         return user;
     }
@@ -27,10 +23,8 @@ public class UserDto {
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setUsername(user.getUsername());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
+        userDto.setNameUa(user.getNameUa());
+        userDto.setNameEn(user.getNameEn());
 
         return userDto;
     }

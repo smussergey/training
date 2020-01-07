@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ua.training.system_what_where_when.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String name);
+    User findByEmail(String email);
 }

@@ -9,4 +9,19 @@ public class PageController {
     public String mainPage() {
         return "index.html";
     }
+
+    @RequestMapping("/login")
+    public String loginPage() {
+        return "login.html";
+    }
+
+    @RequestMapping("/user")
+    public String mainUserPage() {
+        return "index_user.html";
+    }
+
+    @RequestMapping("/admin")
+    public String mainAdminPage() {
+        return "index_admin.html";
+    }
 }

@@ -3,7 +3,6 @@ package ua.training.system_what_where_when.security.jwt;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ua.training.system_what_where_when.model.Role;
-import ua.training.system_what_where_when.model.Status;
 import ua.training.system_what_where_when.model.User;
 
 import java.util.ArrayList;
@@ -19,15 +18,11 @@ public final class JwtUserFactory {
     public static JwtUser create(User user) {
         return new JwtUser(
                 user.getId(),
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getNameUa(),
+                user.getNameEn(),
                 user.getEmail(),
                 user.getPassword(),
-                mapToGrantedAuthorities(new ArrayList<>(user.getRoles())),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getUpdated()
-        );
+                mapToGrantedAuthorities(new ArrayList<>(user.getRoles())));
     }
 
     private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {

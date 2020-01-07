@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.model.Role;
-import ua.training.system_what_where_when.model.Status;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.repository.RoleRepository;
 import ua.training.system_what_where_when.repository.UserRepository;
@@ -38,7 +37,6 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
 
         User registeredUser = userRepository.save(user);
 
@@ -55,9 +53,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        User result = userRepository.findByUsername(username);
-        log.info("IN findByUsername - user: {} found by username: {}", result, username);
+    public User findByEmail(String email) {
+        System.out.println("email = " + email);
+        User result = userRepository.findByEmail(email);
+        log.info("IN findByEmail - user: {} found by email: {}", result, email);
         return result;
     }
 

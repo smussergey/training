@@ -10,44 +10,29 @@ import java.util.Date;
 public class JwtUser implements UserDetails {
 
     private final Long id;
-    private final String username;
-    private final String firstName;
-    private final String lastName;
+    private final String nameUa;
+    private final String nameEn;
     private final String password;
     private final String email;
-    private final boolean enabled;
-    private final Date lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(
             Long id,
-            String username,
-            String firstName,
-            String lastName,
+            String nameUa,
+            String nameEn,
             String email,
-            String password, Collection<? extends GrantedAuthority> authorities,
-            boolean enabled,
-            Date lastPasswordResetDate
-    ) {
+            String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.nameUa = nameUa;
+        this.nameEn = nameEn;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
-        this.enabled = enabled;
-        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     @JsonIgnore
     public Long getId() {
         return id;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @JsonIgnore
@@ -68,12 +53,17 @@ public class JwtUser implements UserDetails {
         return true;
     }
 
-    public String getFirstname() {
-        return firstName;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public String getLastname() {
-        return lastName;
+    public String getNameUa() {
+        return nameUa;
+    }
+
+    public String getNameEn() {
+        return nameEn;
     }
 
     public String getEmail() {
@@ -87,17 +77,12 @@ public class JwtUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+    public String getUsername() {
+        return getEmail();
     }
 
     @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @JsonIgnore
-    public Date getLastPasswordResetDate() {
-        return lastPasswordResetDate;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 }

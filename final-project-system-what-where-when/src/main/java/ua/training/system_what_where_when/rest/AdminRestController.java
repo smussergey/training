@@ -13,12 +13,12 @@ import ua.training.system_what_where_when.service.UserService;
 
 @RestController
 @RequestMapping(value = "/api/admin/")
-public class AdminRestControllerV1 {
+public class AdminRestController {
 
     private final UserService userService;
 
     @Autowired
-    public AdminRestControllerV1(UserService userService) {
+    public AdminRestController(UserService userService) {
         this.userService = userService;
     }
 
