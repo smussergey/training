@@ -16,7 +16,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
     private static final String USER_ENDPOINT = "/user/**";
     private static final String ADMIN_ENDPOINT = "/admin/**";
-    private static final String LOGIN_ENDPOINT = "/login";
+    private static final String REGISTER_ENDPOINT = "/register.html";
+    private static final String LOGIN_ENDPOINT = "/login**";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -34,10 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .csrf().disable()
+                .cors()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", LOGIN_ENDPOINT).permitAll()
+                .antMatchers("/", REGISTER_ENDPOINT, LOGIN_ENDPOINT).permitAll()
                 .antMatchers(USER_ENDPOINT).hasRole("USER")
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
