@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
-    @RequestMapping("/")
-    public String getMainPage() {
-        return "index.html";
+    @GetMapping("/home")
+    public String getDefaultPage() {
+        return "home";
+    }
+
+    @GetMapping("/")
+    public String getHomePage() {
+        return "home";
     }
 
     @GetMapping("/registration")
@@ -18,28 +23,8 @@ public class PageController {
         return "registration";
     }
 
-    @RequestMapping("/login")
-    public String getLoginPage(@RequestParam(value = "error", required = false) String error,
-                           @RequestParam(value = "logout", required = false) String logout,
-                           Model model) {
-        model.addAttribute("error", error != null);
-        model.addAttribute("logout", logout != null);
-        return "login";
-    }
-
-    @RequestMapping("/user")
-    public String userPage() {
-        return "user.html";
-    }
-
-    @RequestMapping("/game")
-    public String gamePage() {
-        return "game.html";
-    }
-
-    @RequestMapping("/admin")
-    public String adminPage() {
-        return "admin.html";
+    @RequestMapping("/secured")
+    public String securedPage() {
+        return "secured";
     }
 }
-

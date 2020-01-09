@@ -22,7 +22,7 @@
     <h1 th:text="#{title.jumbotron}"></h1>
 </div>
 
-<p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+<p>Click <a th:href="@{/secured}">here</a> to see a secured page.</p>
 
 <nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
     <button
@@ -51,22 +51,13 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Login</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/register}">Register</a>
             </li>
 
-            Dropdown
-            <li v-if="userFirstName" class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        id="navbardrop"
-                        data-toggle="dropdown"
-                >{{userFirstName}}</a>
-                <div id="dropdown-menu" class="dropdown-menu">
-                    <router-link class="dropdown-item" to="/profile">Profile</router-link>
-                    <a class="dropdown-item" href="#" @click="logOut()">Logout</a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
             </li>
         </ul>
     </div>
