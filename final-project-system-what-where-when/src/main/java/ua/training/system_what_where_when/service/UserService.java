@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.UserRegisterDto;
+import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.repository.UserRepository;
@@ -93,5 +94,9 @@ public class UserService implements UserDetailsService {
 
         log.info("IN loadUserByUsername - user with username: {} successfully loaded", email);
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.singleton(user.getRole()));
+    }
+
+    public List<User> findAllUsersByRole(Role role) {
+        return userRepository.findByRole(role).orElseThrow(() -> new EntityNotFoundException("Can not fond users with role: " + role.name()));
     }
 }
