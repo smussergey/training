@@ -23,8 +23,21 @@ public class PageController {
         return "registration";
     }
 
-    @RequestMapping("/secured")
+    @GetMapping("/secured")
     public String securedPage() {
         return "secured";
+    }
+
+
+
+    @GetMapping("/user/userhome")
+    public String userPage() {
+        return "userhome";
+    }
+
+
+    @GetMapping("/admin/adminhome")
+    public String adminPage() {
+        return "adminhome";
     }
 }
