@@ -8,7 +8,7 @@ import javax.persistence.Column;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserRegisterDto {
+public class UserRegisterDTO {
     private String nameUa;
     private String nameEn;
     private String email;

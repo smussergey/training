@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;;
 import org.springframework.web.bind.annotation.PostMapping;
-import ua.training.system_what_where_when.dto.UserRegisterDto;
+import ua.training.system_what_where_when.dto.UserRegisterDTO;
 import ua.training.system_what_where_when.service.UserService;
 
 @Slf4j
@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String register(UserRegisterDto userRegisterDto, Model model) {
+    public String register(UserRegisterDTO userRegisterDto, Model model) {
         try {
             userService.register(userRegisterDto);
         } catch (Exception ex) {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
@@ -26,19 +27,19 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public ModelAndView getAllUsersWithRoleUser(ModelAndView modelAndView) {
-        List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);
-        System.out.println("------------size=" + users.size());
-        System.out.println("1t user name=" + users.get(0).getNameUa());
-        //  users.stream().forEach(user -> System.out.println(user.getNameUa()));
-        modelAndView.setViewName("adminhome");
-        modelAndView.addObject("users", users);
-        System.out.println("from getAllUsersWithRoleUser(Model model)");
-        return modelAndView;
-    }
+//    @GetMapping("/users")
+//    public ModelAndView getAllUsersWithRoleUser(ModelAndView modelAndView) {
+//        List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);
+//        System.out.println("------------size=" + users.size());
+//        System.out.println("1t user name=" + users.get(0).getNameUa());
+//        //  users.stream().forEach(user -> System.out.println(user.getNameUa()));
+//        modelAndView.setViewName("adminhome");
+//        modelAndView.addObject("users", users);
+//        System.out.println("from getAllUsersWithRoleUser(Model model)");
+//        return modelAndView;
+//    }
 
-    @GetMapping("/newgame")
+    @GetMapping("/users/teams")
     public ModelAndView getPreparedForNewGame(ModelAndView modelAndView) {
         List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);
         System.out.println("------------size=" + users.size());
@@ -50,12 +51,22 @@ public class AdminController {
         return modelAndView;
     }
 
-    @PostMapping("/newgame")
+    @PostMapping("/games/newgame")
     public ModelAndView startNewGame(ModelAndView modelAndView) {
         System.out.println("New game was started");
         modelAndView.setViewName("adminhome");
         System.out.println("New game was saved");
         gameService.saveGameTest();
+        return modelAndView;
+    }
+
+    @GetMapping("/games/statistics")
+    public ModelAndView getGamesStatistics(ModelAndView modelAndView) {
+        List<GameDTO> gameDTOs = gameService.getGameStatistics();
+        System.out.println("------------size=" + gameDTOs.size());
+        modelAndView.setViewName("adminhome");
+        modelAndView.addObject("gameDTOs", gameDTOs);
+        System.out.println("from getGamesStatistics(ModelAndView modelAndView)");
         return modelAndView;
     }
 }

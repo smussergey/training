@@ -25,8 +25,9 @@ public class Game {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JoinColumn(name = "appeal_is_enabled")
-    private boolean appealIsEnabled;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "appeal_stage")
+    private AppealStage appealStage;
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)

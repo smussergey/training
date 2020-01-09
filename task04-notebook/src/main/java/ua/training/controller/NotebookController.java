@@ -1,6 +1,5 @@
 package ua.training.controller;
 
-import ua.training.model.Entry;
 import ua.training.model.Notebook;
 import ua.training.view.TextConstant;
 import ua.training.view.View;

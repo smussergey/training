@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.training.system_what_where_when.dto.UserRegisterDto;
+import ua.training.system_what_where_when.dto.UserRegisterDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public User register(UserRegisterDto userRegisterDto) {
+    public User register(UserRegisterDTO userRegisterDto) {
 
         User user = new User();
         user.setNameUa(userRegisterDto.getNameUa());
