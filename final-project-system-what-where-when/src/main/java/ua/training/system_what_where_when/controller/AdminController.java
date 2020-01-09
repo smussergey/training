@@ -1,12 +1,10 @@
 package ua.training.system_what_where_when.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.Role;
@@ -51,14 +49,25 @@ public class AdminController {
         return modelAndView;
     }
 
-    @PostMapping("/games/newgame")
-    public ModelAndView startNewGame(ModelAndView modelAndView) {
+    @PostMapping("/games/play")
+    public ModelAndView playNewGame(
+            @RequestParam(value = "id", required = true) Long teamId,
+            ModelAndView modelAndView) {
         System.out.println("New game was started");
         modelAndView.setViewName("adminhome");
-        System.out.println("New game was saved");
-        gameService.saveGameTest();
+        System.out.println("New game was generated");
+        gameService.playAndSaveNewGame(teamId);
         return modelAndView;
     }
+
+//    @PostMapping("/games/save")
+//    public ModelAndView startNewGame(ModelAndView modelAndView) {
+//        System.out.println("New game was started");
+//        modelAndView.setViewName("adminhome");
+//        System.out.println("New game was saved");
+//        gameService.generateNewGameResults();
+//        return modelAndView;
+//    }
 
     @GetMapping("/games/statistics")
     public ModelAndView getGamesStatistics(ModelAndView modelAndView) {

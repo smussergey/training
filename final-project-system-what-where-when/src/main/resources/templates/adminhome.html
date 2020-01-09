@@ -66,9 +66,9 @@
 <div class="container" style="margin-top:30px">
     <ul class="navbar-nav my-2 my-lg-0">
 
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" th:href="@{/admin/users}">Get list of teams</a>-->
-<!--        </li>-->
+        <!--        <li class="nav-item">-->
+        <!--            <a class="nav-link" th:href="@{/admin/users}">Get list of teams</a>-->
+        <!--        </li>-->
         <li class="nav-item">
             <a class="nav-link" th:href="@{/admin/users/teams}"> Prepare for a new game</a>
         </li>
@@ -98,22 +98,24 @@
 </div>
 
 <div>
-    <form method="post" th:action="${'/admin/games/newgame'}">
+    <p> Select team to play the game</p>
+    <form method="post" th:action="${'/admin/games/play'}">
         <div>
             <label for="team">Teams:</label>
-            <select id="team" name="id">
+            <select id="team" th:name="id">
                 <option value="" selected="selected">-----</option>
                 <option th:each="user : ${users}"
-                        th:value="${user.id}" th:text="${user.nameUa}">Credit card
+                        th:value="${user.id}" th:text="${user.nameUa}">
                 </option>
             </select>
         </div>
-        <button type="submit">Start new game</button>
+        <button type="submit">Play the game</button>
     </form>
 </div>
 
 <div id="statistics">
     <table class="datatable">
+        <caption> Game statistics</caption>
         <thead>
         <tr>
             <!--            <th th:text="#{label.user.id}"></th>-->
@@ -127,9 +129,9 @@
         </thead>
 
         <tbody>
-<!--        <tr th:if="${gameDTOs.empty}">-->
-            <!--            <td colspan="2" th:text="#{message.users.empty}"> </td>-->
-            <td>The list of games is empty</td>
+        <!--        <tr th:if="${gameDTOs.empty}">-->
+        <!--            <td colspan="2" th:text="#{message.users.empty}"> </td>-->
+        <td>The list of games is empty</td>
         </tr>
         <tr th:each="gameDTO: ${gameDTOs}">
             <td><span th:text="${gameDTO.date}"> date </span></td>

@@ -7,12 +7,15 @@ import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Game;
+import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.repository.GameRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -26,32 +29,47 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public Game saveGameTest() {
+    public Game playAndSaveNewGame(Long teamId) {
+        return gameRepository.save(generateNewGameResults(teamId));
+    }
 
+    private Game generateNewGameResults(Long teamId) {
+        int teamCorrectAnswerCount = 0;
+        int teamWrongAnswerCount = 0;
         List<AnsweredQuestion> answeredQuestionList = new ArrayList<>();
-        AnsweredQuestion answeredQuestion1 = new AnsweredQuestion();
-        answeredQuestion1.setAppealStage(AppealStage.NOT_FILED);
-        answeredQuestion1.setUserWhoGotPoint(userService.findById(11L));
+        User playingTeam = userService.findById(teamId);
 
-        AnsweredQuestion answeredQuestion2 = new AnsweredQuestion();
-        answeredQuestion2.setAppealStage(AppealStage.NOT_FILED);
-        answeredQuestion2.setUserWhoGotPoint(null);
+        while (true) {
+            AnsweredQuestion answeredQuestion = generateAnsweredQuestion(playingTeam);
+            answeredQuestionList.add(answeredQuestion);
+            if (answeredQuestion.getUserWhoGotPoint() != null) {
+                teamCorrectAnswerCount++;
+            } else teamWrongAnswerCount++;
 
-        AnsweredQuestion answeredQuestion3 = new AnsweredQuestion();
-        answeredQuestion3.setAppealStage(AppealStage.NOT_FILED);
-        answeredQuestion3.setUserWhoGotPoint(null);
-
-        answeredQuestionList.add(answeredQuestion1);
-        answeredQuestionList.add(answeredQuestion2);
-        answeredQuestionList.add(answeredQuestion3);
+            if (teamCorrectAnswerCount == 6 || teamWrongAnswerCount == 6) { // TODO move "6" to properties
+                break;
+            }
+        }
 
         Game game = new Game();
         game.setDate(LocalDate.now());
-        game.setUser(userService.findById(11L));
+        game.setUser(playingTeam);
         game.setAppealStage(AppealStage.NOT_FILED);
         game.addAnsweredQuestions(answeredQuestionList);
 
-        return gameRepository.save(game);
+        return game;
+    }
+
+    private AnsweredQuestion generateAnsweredQuestion(User playingTeam) {
+        AnsweredQuestion answeredQuestion = new AnsweredQuestion();
+        answeredQuestion.setAppealStage(AppealStage.NOT_FILED);
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            answeredQuestion.setUserWhoGotPoint(playingTeam);
+        } else {
+            answeredQuestion.setUserWhoGotPoint(null);
+
+        }
+        return answeredQuestion;
     }
 
     public List<GameDTO> getGameStatistics() {
@@ -82,12 +100,6 @@ public class GameService {
         gameDTO.setScores(scores);
         return gameDTO;
     }
-
-    private Long id;
-    private LocalDate date;
-    private String userName;
-    private String scores;
-    private String appealStage;
 
     public List<Game> findAllGames() {
         return gameRepository.findAll();
