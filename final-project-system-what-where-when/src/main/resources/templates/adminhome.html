@@ -113,9 +113,39 @@
     </form>
 </div>
 
-<div id="statistics">
+<div>
     <table class="datatable">
         <caption> Game statistics</caption>
+        <thead>
+        <tr>
+            <!--            <th th:text="#{label.user.id}"></th>-->
+
+            <th>Date</th>
+            <th>Team</th>
+            <th>Scores</th>
+            <th>Appeal</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <!--        <tr th:if="${gameDTOs.empty}">-->
+        <!--            <td colspan="2" th:text="#{message.users.empty}"> </td>-->
+        <td>The list of games is empty</td>
+        </tr>
+        <tr th:each="gameDTO: ${gameDTO}">
+            <td><span th:text="${gameDTO.date}"> date </span></td>
+            <td><span th:text="${gameDTO.userName}">userName </span></td>
+            <td><span th:text="${gameDTO.scores}"> scores </span></td>
+            <td><span th:text="${gameDTO.appealStage}"> appealStage </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="statistics">
+    <table class="datatable">
+        <caption> Games statistics</caption>
         <thead>
         <tr>
             <!--            <th th:text="#{label.user.id}"></th>-->

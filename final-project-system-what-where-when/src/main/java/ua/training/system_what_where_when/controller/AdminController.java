@@ -50,13 +50,12 @@ public class AdminController {
     }
 
     @PostMapping("/games/play")
-    public ModelAndView playNewGame(
-            @RequestParam(value = "id", required = true) Long teamId,
-            ModelAndView modelAndView) {
-        System.out.println("New game was started");
+    public ModelAndView playNewGame(@RequestParam(value = "id", required = true) Long teamId,
+                                    ModelAndView modelAndView) {
+        GameDTO gameDTO = gameService.playAndSaveNewGame(teamId);
         modelAndView.setViewName("adminhome");
-        System.out.println("New game was generated");
-        gameService.playAndSaveNewGame(teamId);
+        modelAndView.addObject("gameDTO", gameDTO);
+
         return modelAndView;
     }
 

@@ -29,8 +29,10 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public Game playAndSaveNewGame(Long teamId) {
-        return gameRepository.save(generateNewGameResults(teamId));
+    public GameDTO playAndSaveNewGame(Long teamId) {
+        Game game = generateNewGameResults(teamId);
+        gameRepository.save(game);
+        return toGameDTO(game);
     }
 
     private Game generateNewGameResults(Long teamId) {
