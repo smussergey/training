@@ -77,25 +77,6 @@
         </li>
     </ul>
 </div>
-<div>
-    <table class="datatable">
-        <thead>
-        <tr>
-            <th>User name</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-        <!--        <tr th:if="${users.empty}">-->
-        <!--            <td colspan="2" th:text="#{message.users.empty}"></td>-->
-        <!--        </tr>-->
-        <tr th:each="user: ${users}">
-            <td><span th:text="${user.getNameUa()}"> nameUa </span></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
 <div>
     <p> Select team to play the game</p>

@@ -2,8 +2,11 @@ package ua.training.system_what_where_when.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.GameDTO;
+import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Game;
@@ -29,7 +32,7 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public GameDTO playAndSaveNewGame(Long teamId) {
+    public GameDTO runNewGame(Long teamId) {
         Game game = generateNewGameResults(teamId);
         gameRepository.save(game);
         return toGameDTO(game);
@@ -74,8 +77,15 @@ public class GameService {
         return answeredQuestion;
     }
 
-    public List<GameDTO> getGameStatistics() {
+    public List<GameDTO> getGameStatisticsByAllTeams() {
         List<Game> games = findAllGames();
+        return games.stream()
+                .map(GameService::toGameDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<GameDTO> getGameStatisticsByLoginedTeam() {
+        List<Game> games = findAllGamesByTeam(userService.findLoginedUser());
         return games.stream()
                 .map(GameService::toGameDTO)
                 .collect(Collectors.toList());
@@ -102,6 +112,12 @@ public class GameService {
         gameDTO.setScores(scores);
         return gameDTO;
     }
+
+    public List<Game> findAllGamesByTeam(User team) {
+        return gameRepository.findByUser(team)
+                .orElseThrow(() -> new EntityNotFoundException("Can not fond games with team: " + team.getEmail()));
+    }
+
 
     public List<Game> findAllGames() {
         return gameRepository.findAll();

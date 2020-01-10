@@ -3,6 +3,7 @@ package ua.training.system_what_where_when.service;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -98,5 +99,15 @@ public class UserService implements UserDetailsService {
 
     public List<User> findAllUsersByRole(Role role) {
         return userRepository.findByRole(role).orElseThrow(() -> new EntityNotFoundException("Can not fond users with role: " + role.name()));
+    }
+
+    public User findLoginedUser() {
+        UserDetails principal = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String username = principal.getUsername();
+        User loginedUser = findByEmail(username);
+        return loginedUser;
     }
 }

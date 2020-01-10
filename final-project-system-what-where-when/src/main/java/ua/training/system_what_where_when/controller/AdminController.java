@@ -1,5 +1,6 @@
 package ua.training.system_what_where_when.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import ua.training.system_what_where_when.service.UserService;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -52,7 +54,7 @@ public class AdminController {
     @PostMapping("/games/play")
     public ModelAndView playNewGame(@RequestParam(value = "id", required = true) Long teamId,
                                     ModelAndView modelAndView) {
-        GameDTO gameDTO = gameService.playAndSaveNewGame(teamId);
+        GameDTO gameDTO = gameService.runNewGame(teamId);
         modelAndView.setViewName("adminhome");
         modelAndView.addObject("gameDTO", gameDTO);
 
@@ -70,7 +72,7 @@ public class AdminController {
 
     @GetMapping("/games/statistics")
     public ModelAndView getGamesStatistics(ModelAndView modelAndView) {
-        List<GameDTO> gameDTOs = gameService.getGameStatistics();
+        List<GameDTO> gameDTOs = gameService.getGameStatisticsByAllTeams();
         System.out.println("------------size=" + gameDTOs.size());
         modelAndView.setViewName("adminhome");
         modelAndView.addObject("gameDTOs", gameDTOs);
