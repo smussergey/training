@@ -29,13 +29,6 @@ public class PageController {
     }
 
 
-
-    @GetMapping("/user/userhome")
-    public String userPage() {
-        return "userhome";
-    }
-
-
     @GetMapping("/admin/adminhome")
     public String adminPage() {
         return "adminhome";

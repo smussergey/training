@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public User findByEmail(String email) {
+    public User findUserByEmail(String email) {
         System.out.println("email = " + email);
         User result = userRepository.findByEmail(email);
         log.info("IN findByEmail - user: {} found by email: {}", result, email);
@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public User findById(Long id) {
+    public User findUserById(Long id) {
         User result = userRepository.findById(id).orElse(null);
 
         if (result == null) {
@@ -87,7 +87,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = findByEmail(email);
+        User user = findUserByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User with username: " + email + " not found");
@@ -107,7 +107,7 @@ public class UserService implements UserDetailsService {
                 .getAuthentication()
                 .getPrincipal();
         String username = principal.getUsername();
-        User loginedUser = findByEmail(username);
+        User loginedUser = findUserByEmail(username);
         return loginedUser;
     }
 }

@@ -2,10 +2,9 @@ package ua.training.system_what_where_when.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ua.training.system_what_where_when.dto.GameDTO;
+import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
+import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
 import ua.training.system_what_where_when.model.AppealStage;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -32,17 +30,17 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public GameDTO runNewGame(Long teamId) {
+    public GameWithoutAnsweredQuestionDTO runNewGame(Long teamId) {
         Game game = generateNewGameResults(teamId);
         gameRepository.save(game);
-        return toGameDTO(game);
+        return GameWithoutAnsweredQuestionDTO.toGameDTO(game);
     }
 
     private Game generateNewGameResults(Long teamId) {
         int teamCorrectAnswerCount = 0;
         int teamWrongAnswerCount = 0;
         List<AnsweredQuestion> answeredQuestionList = new ArrayList<>();
-        User playingTeam = userService.findById(teamId);
+        User playingTeam = userService.findUserById(teamId);
 
         while (true) {
             AnsweredQuestion answeredQuestion = generateAnsweredQuestion(playingTeam);
@@ -77,40 +75,28 @@ public class GameService {
         return answeredQuestion;
     }
 
-    public List<GameDTO> getGameStatisticsByAllTeams() {
+    public List<GameWithoutAnsweredQuestionDTO> getGameStatisticsByAllTeams() {
         List<Game> games = findAllGames();
         return games.stream()
-                .map(GameService::toGameDTO)
+                .map(GameWithoutAnsweredQuestionDTO::toGameDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<GameDTO> getGameStatisticsByLoginedTeam() {
+    public List<GameWithoutAnsweredQuestionDTO> getGameStatisticsByLoginedTeam() {
         List<Game> games = findAllGamesByTeam(userService.findLoginedUser());
         return games.stream()
-                .map(GameService::toGameDTO)
+                .map(GameWithoutAnsweredQuestionDTO::toGameDTO)
                 .collect(Collectors.toList());
     }
 
-    private static GameDTO toGameDTO(Game game) {
-        GameDTO gameDTO = new GameDTO();
-        gameDTO.setId(game.getId());
-        gameDTO.setDate(game.getDate());
-        gameDTO.setUserName(game.getUser().getNameUa()); //TODO correct for different locale
-        gameDTO.setAppealStage(game.getAppealStage().name());
+    public GameWithAnsweredQuestionDTO getGameFullStatisticsByLoginedTeam(Long id) {
+        Game game = findGameById(id); //TODO allow only user's games
+        return GameWithAnsweredQuestionDTO.toGameDTO(game);
+    }
 
-        int teamsCorrectAnswers = (int) game.getAnsweredQuestions()
-                .stream()
-                .filter(answeredQuestion -> answeredQuestion.getUserWhoGotPoint() != null)
-                .count();
-        int teamsWrongAnswers = game.getAnsweredQuestions().size() - teamsCorrectAnswers;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(teamsCorrectAnswers);
-        stringBuilder.append(':');//TODO move ":" to properties
-        stringBuilder.append(teamsWrongAnswers);
-        String scores = stringBuilder.toString();
-        gameDTO.setScores(scores);
-        return gameDTO;
+    public Game findGameById(Long id) {
+        return gameRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can not fond games with id: " + id));
     }
 
     public List<Game> findAllGamesByTeam(User team) {

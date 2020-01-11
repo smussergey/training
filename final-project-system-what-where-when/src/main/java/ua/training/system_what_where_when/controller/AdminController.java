@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.training.system_what_where_when.dto.GameDTO;
+import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
@@ -54,7 +54,7 @@ public class AdminController {
     @PostMapping("/games/play")
     public ModelAndView playNewGame(@RequestParam(value = "id", required = true) Long teamId,
                                     ModelAndView modelAndView) {
-        GameDTO gameDTO = gameService.runNewGame(teamId);
+        GameWithoutAnsweredQuestionDTO gameDTO = gameService.runNewGame(teamId);
         modelAndView.setViewName("adminhome");
         modelAndView.addObject("gameDTO", gameDTO);
 
@@ -72,7 +72,7 @@ public class AdminController {
 
     @GetMapping("/games/statistics")
     public ModelAndView getGamesStatistics(ModelAndView modelAndView) {
-        List<GameDTO> gameDTOs = gameService.getGameStatisticsByAllTeams();
+        List<GameWithoutAnsweredQuestionDTO> gameDTOs = gameService.getGameStatisticsByAllTeams();
         System.out.println("------------size=" + gameDTOs.size());
         modelAndView.setViewName("adminhome");
         modelAndView.addObject("gameDTOs", gameDTOs);

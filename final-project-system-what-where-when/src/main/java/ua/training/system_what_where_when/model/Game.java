@@ -29,8 +29,8 @@ public class Game {
     @Column(name = "appeal_stage")
     private AppealStage appealStage;
 
-    @Setter(AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @Setter(AccessLevel.PRIVATE) //TODO try to use fetch = FetchType.LAZY
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
 
     public void addAnsweredQuestion(AnsweredQuestion answeredQuestion) {
