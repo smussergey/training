@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .cors()
 //                .and()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/registration").permitAll()
+
+                .antMatchers("/", "/home", "/login", "/registration", "/css/*").permitAll()
                 .antMatchers(USER_ENDPOINT).hasRole("USER")
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -52,3 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 }
+
+//                .authorizeRequests()
+//                        .antMatchers("/js/*", "/login/**", "/css/*", "/registration/**").permitAll()
+//                        .anyRequest().authenticated()
+//                        .and()
+//                        .formLogin().loginPage("/login").permitAll()
+//                        .and()
+//                        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();

@@ -1,28 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
 <head>
-    <title>Welcome to What Where When game</title>
+    <title th:text="#{login.page.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <style>
-        .fakeimg {
-            height: 200px;
-            background: #aaa;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1 th:text="#{title.jumbotron}"></h1>
+    <h1 th:text="#{text.header}"></h1>
 </div>
-
-<p>Click <a th:href="@{/secured}">here</a> to see a secured page.</p>
 
 <nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
     <button
@@ -37,62 +30,82 @@
         <!-- Links -->
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/home}">Home</a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="?lang=en">en</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="?lang=ua">ua</a>
+                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/home}"></a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
+            <!--            TODO hide active language selector-->
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/login}">Login</a>
+                <a th:text="#{navbar.label.ua}" class="nav-link" href="?lang=ua"></a>
             </li>
-
+            |
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/registration}">Register</a>
+                <a th:text="#{navbar.label.en}" class="nav-link" href="?lang=en"></a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}">Logout</a>
+                <a th:text="#{navbar.label.register}" class="nav-link" th:href="@{/registration}"></a>
             </li>
         </ul>
     </div>
 </nav>
+
+<!--<div class="container">-->
+<!--    <div class="error" th:if="${error}" th:text="#{login.message.wrong.login.or.password}">-->
+<!--    </div>-->
+<!--    <div class="panel-heading">-->
+<!--        <h3 class="panel-title" th:text="#{login.page.title}"></h3>-->
+<!--    </div>-->
+<!--    <div class="panel-body">-->
+<!--        <form th:action="@{/login}" method="post">-->
+<!--            <div class="field">-->
+<!--                <label th:text="#{login.label.login}">-->
+<!--                </label>-->
+<!--                <input type="text" name="username" class="input"/>-->
+<!--            </div>-->
+<!--            <div class="field">-->
+<!--                <label th:text="#{login.label.password}">-->
+<!--                </label>-->
+<!--                <input type="password" name="password" class="input"/>-->
+<!--            </div>-->
+<!--            <div class="field"><input type="submit" th:value="#{login.label.button}" class="button"/></div>-->
+<!--        </form>-->
+<!--        <form class="register" th:action="@{/registration}" method="get">-->
+<!--            <div class="field"><input type="submit"  class="button"/>th:value="#{string.login.button.register}"</div>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+<!--</div>-->
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title" th:text="#{form.header.login}"></h3>
-                </div>
-                <div class="panel-body">
-                    <p th:if="${error}" th:text="#{alert.wrong.email.or.password}" class="alert alert-info"
-                       role="alert"></p>
-                    <p th:if="${logout}" th:text="#{alert.successful.logout}" class="alert alert-info" role="alert"></p>
-                    <form th:action="@{/login}" method="post">
-                        <!--                                        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">-->
-                        <div class="form-group">
-                            <label th:text="#{label.email}" for="username"></label>
-                            <input type="text" class="form-control" id="username" placeholder="Email"
-                                   name="username">
-                        </div>
-                        <div class="form-group">
-                            <label th:text="#{label.password}" for="password"></label>
-                            <input type="password" class="form-control" id="password" placeholder="Password"
-                                   name="password">
-                        </div>
-                        <a href="/registration" th:text="#{button.registration}"></a>
-                        <button type="submit" class="btn btn-default" th:text="#{button.login}"></button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <h2 class="panel-title" th:text="#{login.form.header}"></h2>
+    <div class="form-input-error">
+        <p th:if="${error}" th:text="#{login.message.wrong.login.or.password}"></p>
     </div>
+
+    <form th:action="@{/login}" method="post" class="was-validated">
+        <div class="form-group">
+            <label th:text="#{login.label.login}" for="username"></label>
+<!--            <input type="text" class="form-control" id="username" th:placeholder="#{login.label.login.placeholder}"-->
+<!--                   name="username">-->
+            <input type="text" class="form-control" id="username" th:placeholder="#{login.label.login.placeholder}"
+                   name="username" required>
+            <div class="invalid-feedback" th:text="#{login.message.invalid.feedback}"></div>
+        </div>
+
+        <div class=" form-group">
+            <label th:text="#{login.label.password}" for="password"></label>
+<!--            <input type="password" class="form-control" id="password"-->
+<!--                   th:placeholder="#{login.label.password.placeholder}" name="password">-->
+            <input type="password" class="form-control" id="password"
+                   th:placeholder="#{login.label.password.placeholder}" name="password" required>
+            <div class="invalid-feedback" th:text="#{login.message.invalid.feedback}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{login.label.button}"></button>
+    </form>
 </div>
+
 </body>
 </html>
 

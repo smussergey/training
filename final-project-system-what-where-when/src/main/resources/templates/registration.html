@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1 th:text="#{title.jumbotron}"></h1>
+    <h1 th:text="#{text.header}"></h1>
 </div>
 
 <p>Click <a th:href="@{/secured}">here</a> to see a secured page.</p>
@@ -85,12 +85,12 @@
                                    name="nameEn">
                         </div>
                         <div class="form-group">
-                            <label for="email" th:text="#{label.email}"></label>
+                            <label for="email" th:text="#{login.label.login}"></label>
                             <input type="text" class="form-control" id="email" placeholder="Email"
                                    name="email">
                         </div>
                         <div class="form-group">
-                            <label for="password" th:text="#{label.password}"></label>
+                            <label for="password" th:text="#{login.label.password}"></label>
                             <input type="password" class="form-control" id="password" placeholder="Password"
                                    name="password">
                         </div>
