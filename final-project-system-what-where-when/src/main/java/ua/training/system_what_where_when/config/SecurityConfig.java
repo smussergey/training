@@ -47,9 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
+                .successForwardUrl("/") // TODO check and correct
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
-                .logoutSuccessUrl("/home");
+                .logoutSuccessUrl("/");
 
     }
 }
