@@ -1,6 +1,7 @@
 package ua.training.system_what_where_when.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -27,7 +28,7 @@ public class AuthenticationController {
     @PostMapping("/registration") //TODO correct functionality of bindingResult
     public String registrer(@ModelAttribute("newuser") @Valid UserRegisterDTO userRegisterDTO,
                             Errors errors, Model model) {
-
+        setCurrentLocaleLanguage(model);
         if (!errors.hasErrors()) {
             try {
                 userService.register(userRegisterDTO);
@@ -48,8 +49,14 @@ public class AuthenticationController {
     public String getLogin(@RequestParam(value = "error", required = false) String error,
                            @RequestParam(value = "logout", required = false) String logout,
                            Model model) {
-        model.addAttribute("error", error != null);
-        model.addAttribute("logout", logout != null);
+        model.addAttribute("error", error != null); //TODO check why to use this
+        model.addAttribute("logout", logout != null);//TODO check why to use this
+        setCurrentLocaleLanguage(model);
         return "login";
+    }
+
+    private Model setCurrentLocaleLanguage(Model model) {
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+        return model;
     }
 }

@@ -1,6 +1,7 @@
 package ua.training.system_what_where_when.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -40,8 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .cors()
 //                .and()
                 .authorizeRequests()
-
-                .antMatchers("/", "/home", "/login", "/registration", "/css/*").permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .antMatchers("/", "/home", "/login", "/registration").permitAll()
                 .antMatchers(USER_ENDPOINT).hasRole("USER")
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()

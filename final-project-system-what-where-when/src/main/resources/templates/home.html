@@ -41,13 +41,13 @@
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
-            <!--            TODO hide active language selector-->
-            <li class="nav-item">
-                <a th:text="#{navbar.label.ua}" class="nav-link" href="?lang=ua"></a>
+            <li class="nav-item"
+                th:if="${lang.equals('en')}">
+                <a class="nav-link" th:text="#{navbar.label.ua}" href="?lang=ua"></a>
             </li>
-            |
-            <li class="nav-item">
-                <a th:text="#{navbar.label.en}" class="nav-link" href="?lang=en"></a>
+            <li class="nav-item"
+                th:if="${lang.equals('ua')}">
+                <a class="nav-link" th:text="#{navbar.label.en}" href="?lang=en"></a>
             </li>
             <li class="nav-item">
                 <a th:text="#{navbar.label.register}" class="nav-link" th:href="@{/registration}"></a>

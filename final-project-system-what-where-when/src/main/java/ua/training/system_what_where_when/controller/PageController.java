@@ -1,6 +1,7 @@
 package ua.training.system_what_where_when.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,11 @@ public class PageController {
     }
 
     @RequestMapping("/")
-    public String getMainPage(Principal principal) {
+    public String getMainPage(Model model,Principal principal) {
+        setCurrentLocaleLanguage(model);
 //        log.info("-----------------------IN getMainPage - principal: {}", principal.getName());
         if (principal == null) {
-            log.info("-----------------------IN getMainPage - principal: {}",  principal);
+            log.info("-----------------------IN getMainPage - principal: {}", principal);
             return "home";
         }
 
@@ -40,23 +42,25 @@ public class PageController {
     }
 
     @GetMapping("home")
-    public String getDefaultPage() {
+    public String getDefaultPage(Model model) {
+        setCurrentLocaleLanguage(model);
         return "home";
     }
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        setCurrentLocaleLanguage(model);
         return "registration";
     }
 
-    @GetMapping("/secured")
-    public String securedPage() {
-        return "secured";
+    @GetMapping("/admin/adminhome")
+    public String adminPage(Model model) {
+        setCurrentLocaleLanguage(model);
+        return "adminhome";
     }
 
-
-    @GetMapping("/admin/adminhome")
-    public String adminPage() {
-        return "adminhome";
+    private Model setCurrentLocaleLanguage(Model model) {
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+        return model;
     }
 }
