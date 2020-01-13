@@ -36,6 +36,12 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/user/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   th:if="${gameFullDTO.appealPossible}"
+                   th:href="@{|/user/appeal/games/${gameFullDTO.id}|}"
+                   th:text="#{navbar.label.games.file.appeal}"></a>
+            </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item"
@@ -69,16 +75,10 @@
     <!--    <div th:if=" ${gameFullDTO.empty}">-->
     <!--        <h1 th:text="#{requested.information.is.absent}"></h1>-->
     <!--    </div>-->
-    <div>
-        <td>
-            <a class="btn btn-primary" th:if="${gameFullDTO.appealPossible}"
-               th:href="@{|/user/appeal/games/${gameFullDTO.id}|}"
-               th:text="#{games.game.link.label.appeal.file}"></a>
-        </td>
-    </div>
+
 
     <div id="details">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover table-bordered table-sm">
             <h1 th:text="#{games.game.details.table.caption}"></h1>
             <thead class="thead-light">
             <tr>
@@ -104,16 +104,13 @@
     </div>
 
     <div id="qustions">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover table-bordered table-sm">
             <h1 th:text="#{games.game.quastions.details.table.caption}"></h1>
             <thead class="thead-light">
             <tr>
-                <!--                <th th:text="#{games.game.table.header.question.number}"></th>-->
                 <th th:text="#{games.game.table.header.question.id}"></th>
                 <th th:text="#{games.game.table.header.team.name.if.got.point}"></th>
                 <th th:text="#{games.table.header.appeal.stage}"></th>
-                <th th:text="#{games.game.table.header.appeal.file}"></th>
-
             </tr>
             </thead>
 
@@ -122,12 +119,8 @@
                 <td th:text="${answeredQuestionDTO.id}"></td>
                 <td><span th:if="${lang.equals('en')}" th:text="${answeredQuestionDTO.nameEn}"></span>
                     <span th:if="${lang.equals('ua')}" th:text="${answeredQuestionDTO.nameUa}"></span></td>
-                <td th:text="${answeredQuestionDTO.appealStage}"></td>
-                <td>
-                    <a th:if="${answeredQuestionDTO.appealPossible}"
-                       th:href="@{|/user/games/quastions/${answeredQuestionDTO.id}|}"
-                       th:text="#{games.game.text.appeal.file}"></a>
-                </td>
+                <td th:if="${answeredQuestionDTO.appealPossible}"
+                    th:text="${answeredQuestionDTO.appealStage}"></td>
             </tr>
             </tbody>
         </table>

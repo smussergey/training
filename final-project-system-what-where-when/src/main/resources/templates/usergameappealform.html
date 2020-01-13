@@ -36,6 +36,10 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/user/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{|/user/games/${gameFullDTO.id}|}"
+                   th:text="#{navbar.label.games.game.details}"></a>
+            </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item"
@@ -71,7 +75,7 @@
     <!--    </div>-->
 
     <div id="details">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover table-bordered table-sm">
             <h1 th:text="#{games.game.details.table.caption}"></h1>
             <thead class="thead-light">
             <tr>
@@ -96,42 +100,14 @@
         </table>
     </div>
 
-
-
-    <div class="panel-body">
-        <!--        TODO check  newuser may be deleted -->
-        <form th:action="@{/appeal}" method="post" class="was-validated" th:object="${questions}">
-            <!--        <form th:action="@{/registration}" method="post" th:object="${newuser}">-->
-            <div class="form-group">
-            <ul th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">
-                <li>
-                    <label th:text="${answeredQuestionDTO.id}" ></label>
-                    <input type="checkbox" name="appealed" th:value="${answeredQuestionDTO.id}" />
-                </li>
-            </ul>
-            </div>
-            <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
-
-
-
-
-            <button type="submit" class="btn btn-primary" th:text="#{registration.label.button}"></button>
-        </form>
-    </div>
-
-
-
-
     <div id="qustions">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover table-bordered table-sm">
             <h1 th:text="#{games.game.quastions.details.table.caption}"></h1>
             <thead class="thead-light">
             <tr>
                 <th th:text="#{games.game.table.header.question.id}"></th>
                 <th th:text="#{games.game.table.header.team.name.if.got.point}"></th>
                 <th th:text="#{games.table.header.appeal.stage}"></th>
-                <th th:text="#{games.game.table.header.appeal.file}"></th>
-
             </tr>
             </thead>
 
@@ -141,14 +117,27 @@
                 <td><span th:if="${lang.equals('en')}" th:text="${answeredQuestionDTO.nameEn}"></span>
                     <span th:if="${lang.equals('ua')}" th:text="${answeredQuestionDTO.nameUa}"></span></td>
                 <td th:text="${answeredQuestionDTO.appealStage}"></td>
-                <td>
-                    <a th:if="${answeredQuestionDTO.appealPossible}"th:href="@{|/user/games/quastions/${answeredQuestionDTO.id}|}"
-                       th:text="#{games.game.text.appeal.file}"></a>
-                </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <div class="panel-body">
+        <h2 class="panel-title" th:text="#{games.game.appeal.form.header}"></h2>
+        <!--        TODO check  questions may be deleted -->
+        <form th:action="@{/appeal}" method="post" class="was-validated" th:object="${questions}">
+            <div class="form-group">
+                <span th:if="${answeredQuestionDTO.appealPossible}"
+                      th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">
+                  <label th:text="${answeredQuestionDTO.id}"></label>
+                        <input type="checkbox" name="appealed"
+                               th:value="${answeredQuestionDTO.id}"/>
+                </span>
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="#{games.game.appeal.label.button}"></button>
+        </form>
+    </div>
+
 </div>
 
 <footer class="jumbotron text-center">

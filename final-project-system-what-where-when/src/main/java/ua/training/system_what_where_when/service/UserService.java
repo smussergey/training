@@ -15,6 +15,7 @@ import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.repository.UserRepository;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -101,12 +102,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByRole(role).orElseThrow(() -> new EntityNotFoundException("Can not fond users with role: " + role.name()));
     }
 
-    public User findLoginedUser() {
-        UserDetails principal = (UserDetails) SecurityContextHolder
+    public User findLoggedIndUser() {
+        String username = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
-                .getPrincipal();
-        String username = principal.getUsername();
+                .getName();
         User loginedUser = findUserByEmail(username);
         return loginedUser;
     }

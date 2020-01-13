@@ -8,17 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
-import ua.training.system_what_where_when.model.Game;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -62,11 +58,11 @@ public class UserController {
         model.addAttribute("gameFullDTO", gameFullDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
-        return "usergamedetailsappealform";
+        return "usergameappealform";
     }
 
     private Model setLocalizedLoggedInUserName(Model model) {
-        User loggedInUser = userService.findLoginedUser();
+        User loggedInUser = userService.findLoggedIndUser();
         model.addAttribute("userNameEn", loggedInUser.getNameEn());
         model.addAttribute("userNameUa", loggedInUser.getNameUa());
         return model;

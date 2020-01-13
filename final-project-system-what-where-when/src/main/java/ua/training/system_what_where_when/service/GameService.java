@@ -91,7 +91,7 @@ public class GameService {
     }
 
     public List<GameWithoutAnsweredQuestionDTO> getGameStatisticsByLoginedTeam() {
-        List<Game> games = findAllGamesByTeam(userService.findLoginedUser());
+        List<Game> games = findAllGamesByTeam(userService.findLoggedIndUser());
         return games.stream()
                 .map(GameWithoutAnsweredQuestionDTO::toGameDTO)
                 .collect(Collectors.toList());

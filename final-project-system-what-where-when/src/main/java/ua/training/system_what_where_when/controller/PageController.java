@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.service.UserService;
 
@@ -24,13 +23,12 @@ public class PageController {
     @RequestMapping("/")
     public String getMainPage(Model model,Principal principal) {
         setCurrentLocaleLanguage(model);
-//        log.info("-----------------------IN getMainPage - principal: {}", principal.getName());
         if (principal == null) {
             log.info("-----------------------IN getMainPage - principal: {}", principal);
             return "home";
         }
 
-        Role role = userService.findLoginedUser().getRole();
+        Role role = userService.findLoggedIndUser().getRole();
         log.info("-----------------------IN getMainPage - role: {}", role.name());
         switch (role) {
             case ROLE_USER:
