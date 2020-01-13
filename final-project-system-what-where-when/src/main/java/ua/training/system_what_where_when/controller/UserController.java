@@ -48,15 +48,21 @@ public class UserController {
         return "usergamesstatistics";
     }
 
-    @GetMapping("/games/appeal/{id}")
-    public ModelAndView getGameToAppeal(ModelAndView modelAndView, @PathVariable Long id) {
-        System.out.println("-----------------id=" + id);
-        Game game = gameService.findGameById(id);
+    @GetMapping("/games/{id}")
+    public String getGameDetails(Model model, @PathVariable Long id) {
         GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsByLoginedTeam(id);
-        modelAndView.setViewName("usergameappeal");
-        modelAndView.addObject("gameFullDTO", gameFullDTO);
-        System.out.println("from getGamesStatistics(ModelAndView modelAndView)");
-        return modelAndView;
+        model.addAttribute("gameFullDTO", gameFullDTO);
+        setLocalizedLoggedInUserName(model);
+        setCurrentLocaleLanguage(model);
+        return "usergamedetails";
+    }
+    @GetMapping("/appeal/games/{id}")
+    public String getGameApealForm(Model model, @PathVariable Long id) {
+        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsByLoginedTeam(id);
+        model.addAttribute("gameFullDTO", gameFullDTO);
+        setLocalizedLoggedInUserName(model);
+        setCurrentLocaleLanguage(model);
+        return "usergamedetailsappealform";
     }
 
     private Model setLocalizedLoggedInUserName(Model model) {

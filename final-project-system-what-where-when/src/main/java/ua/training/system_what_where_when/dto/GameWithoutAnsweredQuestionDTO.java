@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.training.system_what_where_when.model.Game;
+import ua.training.system_what_where_when.model.GameStatus;
 
 import java.time.LocalDate;
 
@@ -13,8 +14,10 @@ import java.time.LocalDate;
 public class GameWithoutAnsweredQuestionDTO {
     private Long id;
     private LocalDate date;
-    private String userName;
+    private String nameUa;
+    private String nameEn;
     private String scores;
+    private String gameStatus;
     private String appealStage;
 
     public static GameWithoutAnsweredQuestionDTO toGameDTO(Game game) {
@@ -22,8 +25,8 @@ public class GameWithoutAnsweredQuestionDTO {
 
         gameDTO.setId(game.getId());
         gameDTO.setDate(game.getDate());
-        gameDTO.setUserName(game.getUser().getNameUa()); //TODO correct for different locale
-        gameDTO.setAppealStage(game.getAppealStage().name());
+        gameDTO.setNameUa(game.getUser().getNameUa());
+        gameDTO.setNameEn(game.getUser().getNameEn());
 
         int teamsCorrectAnswers = (int) game.getAnsweredQuestions()
                 .stream()
@@ -37,6 +40,14 @@ public class GameWithoutAnsweredQuestionDTO {
         stringBuilder.append(teamsWrongAnswers);
         String scores = stringBuilder.toString();
         gameDTO.setScores(scores);
+
+        if ((teamsCorrectAnswers > teamsWrongAnswers)) {
+            gameDTO.setGameStatus(GameStatus.WON.name());
+        } else {
+            gameDTO.setGameStatus(GameStatus.LOST.name());
+        }
+
+        gameDTO.setAppealStage(game.getAppealStage().name());
         return gameDTO;
     }
 

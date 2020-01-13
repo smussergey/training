@@ -19,11 +19,16 @@ public class AnsweredQuestion {
     @JoinColumn(name = "game_id")
     private Game game;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User userWhoGotPoint;
+
+    @Column(name = "is_appeal_possible")
+    private boolean isAppealPossible;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "appeal_stage")
     private AppealStage appealStage;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User userWhoGotPoint;
+
 }

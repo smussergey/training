@@ -50,6 +50,11 @@ public class GameService {
             } else teamWrongAnswerCount++;
 
             if (teamCorrectAnswerCount == 6 || teamWrongAnswerCount == 6) { // TODO move "6" to properties
+                if (teamWrongAnswerCount > teamCorrectAnswerCount) {
+                    answeredQuestionList.stream().
+                            filter(aq -> aq.getUserWhoGotPoint() == null)
+                            .forEach(aq -> aq.setAppealPossible(true));
+                }
                 break;
             }
         }
@@ -57,6 +62,9 @@ public class GameService {
         Game game = new Game();
         game.setDate(LocalDate.now());
         game.setUser(playingTeam);
+        if (teamWrongAnswerCount > teamCorrectAnswerCount) {
+            game.setAppealPossible(true);
+        }
         game.setAppealStage(AppealStage.NOT_FILED);
         game.addAnsweredQuestions(answeredQuestionList);
 

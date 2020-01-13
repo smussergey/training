@@ -25,6 +25,9 @@ public class Game {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "is_appeal_possible")
+    private boolean isAppealPossible;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "appeal_stage")
     private AppealStage appealStage;

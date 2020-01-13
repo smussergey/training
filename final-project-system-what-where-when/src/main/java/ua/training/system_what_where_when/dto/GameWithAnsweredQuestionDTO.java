@@ -3,7 +3,9 @@ package ua.training.system_what_where_when.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Game;
+import ua.training.system_what_where_when.model.GameStatus;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,8 +18,11 @@ import java.util.stream.Collectors;
 public class GameWithAnsweredQuestionDTO {
     private Long id;
     private LocalDate date;
-    private String userName;
+    private String nameUa;
+    private String nameEn;
     private String scores;
+    private String gameStatus;
+    private boolean isAppealPossible;
     private String appealStage;
     private List<AnsweredQuestionDTO> answeredQuestionDTOs = new ArrayList<>();
 
@@ -26,8 +31,8 @@ public class GameWithAnsweredQuestionDTO {
 
         gameDTO.setId(game.getId());
         gameDTO.setDate(game.getDate());
-        gameDTO.setUserName(game.getUser().getNameUa()); //TODO correct for different locale
-        gameDTO.setAppealStage(game.getAppealStage().name());
+        gameDTO.setNameUa(game.getUser().getNameUa());
+        gameDTO.setNameEn(game.getUser().getNameEn());
 
         int teamsCorrectAnswers = (int) game.getAnsweredQuestions()
                 .stream()
@@ -42,11 +47,20 @@ public class GameWithAnsweredQuestionDTO {
         String scores = stringBuilder.toString();
         gameDTO.setScores(scores);
 
+        if ((teamsCorrectAnswers > teamsWrongAnswers)) {
+            gameDTO.setGameStatus(GameStatus.WON.name());
+        } else {
+            gameDTO.setGameStatus(GameStatus.LOST.name());
+        }
+
+        gameDTO.setAppealStage(game.getAppealStage().name());
+
+        gameDTO.setAppealPossible(game.isAppealPossible());
+
         List<AnsweredQuestionDTO> answeredQuestionDTOs = game.getAnsweredQuestions()
                 .stream()
                 .map(AnsweredQuestionDTO::toAnsweredQuestionDTO)
                 .collect(Collectors.toList());
-
         gameDTO.setAnsweredQuestionDTOs(answeredQuestionDTOs);
 
         return gameDTO;

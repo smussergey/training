@@ -10,7 +10,10 @@ import ua.training.system_what_where_when.model.AnsweredQuestion;
 @AllArgsConstructor
 public class AnsweredQuestionDTO {
     private Long id;
-    private String userName;
+    private int number;
+    private String nameUa;
+    private String nameEn;
+    private boolean isAppealPossible;
     private String appealStage;
 
     public static AnsweredQuestionDTO toAnsweredQuestionDTO(AnsweredQuestion answeredQuestion) {
@@ -18,9 +21,11 @@ public class AnsweredQuestionDTO {
 
         answeredQuestionDTO.setId(answeredQuestion.getId());
         if (answeredQuestion.getUserWhoGotPoint() != null) {
-            answeredQuestionDTO.setUserName(answeredQuestion.getUserWhoGotPoint().getNameUa());
+            answeredQuestionDTO.setNameUa(answeredQuestion.getUserWhoGotPoint().getNameUa());
+            answeredQuestionDTO.setNameEn(answeredQuestion.getUserWhoGotPoint().getNameEn());
         }
         answeredQuestionDTO.setAppealStage(answeredQuestion.getAppealStage().name()); //TODO correct for different locale
+        answeredQuestionDTO.setAppealPossible(answeredQuestion.isAppealPossible());
         return answeredQuestionDTO;
     }
 }
