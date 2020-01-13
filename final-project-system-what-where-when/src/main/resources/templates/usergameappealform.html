@@ -125,16 +125,16 @@
     <div class="panel-body">
         <h2 class="panel-title" th:text="#{games.game.appeal.form.header}"></h2>
         <!--        TODO check  questions may be deleted -->
-        <form th:action="@{/appeal}" method="post" class="was-validated" th:object="${questions}">
+        <form th:action="@{/user/appeal/games/quastions}" method="post">
             <div class="form-group">
                 <span th:if="${answeredQuestionDTO.appealPossible}"
                       th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">
-                  <label th:text="${answeredQuestionDTO.id}"></label>
-                        <input type="checkbox" name="appealed"
-                               th:value="${answeredQuestionDTO.id}"/>
+                        <input type="checkbox" name="ids"
+                               th:text="${answeredQuestionDTO.id}"
+                               th:value="${answeredQuestionDTO.id}" />
                 </span>
             </div>
-            <button type="submit" class="btn btn-primary" th:text="#{games.game.appeal.label.button}"></button>
+            <button type="submit" class="btn btn-primary" th:text="#{games.game.file.appeal.label.button}"></button>
         </form>
     </div>
 
