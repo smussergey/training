@@ -125,7 +125,7 @@
     <div class="panel-body">
         <h2 class="panel-title" th:text="#{games.game.appeal.form.header}"></h2>
         <!--        TODO check  questions may be deleted -->
-        <form th:action="@{/user/appeal/games/quastions}" method="post">
+        <form th:action="@{/user/appeal/game/quastions}" method="post">
             <div class="form-group">
                 <span th:if="${answeredQuestionDTO.appealPossible}"
                       th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">

@@ -110,7 +110,8 @@
             <tr>
                 <th th:text="#{games.game.table.header.question.id}"></th>
                 <th th:text="#{games.game.table.header.team.name.if.got.point}"></th>
-                <th th:text="#{games.table.header.appeal.stage}"></th>
+                <th th:if="${!gameFullDTO.gameStatus.equals('WON')}"
+                    th:text="#{games.table.header.appeal.stage}"></th>
             </tr>
             </thead>
 
@@ -119,8 +120,7 @@
                 <td th:text="${answeredQuestionDTO.id}"></td>
                 <td><span th:if="${lang.equals('en')}" th:text="${answeredQuestionDTO.nameEn}"></span>
                     <span th:if="${lang.equals('ua')}" th:text="${answeredQuestionDTO.nameUa}"></span></td>
-                <td th:if="${answeredQuestionDTO.appealPossible}"
-                    th:text="${answeredQuestionDTO.appealStage}"></td>
+                <td th:text="${answeredQuestionDTO.appealStage}"></td>
             </tr>
             </tbody>
         </table>

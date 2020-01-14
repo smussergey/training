@@ -5,17 +5,14 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 ;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
-import ua.training.system_what_where_when.dto.UserRegisterDTO;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,12 +62,15 @@ public class UserController {
         return "usergameappealform";
     }
 
-    @PostMapping("/appeal/games/quastions")
+    @PostMapping("/appeal/game/quastions")
     public String appealQuastions(HttpServletRequest request, Model model) {
-        Arrays.stream(request.getParameterValues("ids")).forEach(q-> System.out.println("--------id=" + q));
-        setLocalizedLoggedInUserName(model);
-        setCurrentLocaleLanguage(model);
-        return "userhome";
+        Arrays.stream(request.getParameterValues("ids")).forEach(q -> System.out.println("--------id=" + q));
+        String[] answeredQuestionIds = request.getParameterValues("ids");
+        if (answeredQuestionIds.length > 0) {
+            log.info("IN appealQuastions - question with id: {} successfully was got", answeredQuestionIds[0]);
+            gameService.fileAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
+        }
+        return "redirect:/user/games/statistics";
     }
 
     private Model setLocalizedLoggedInUserName(Model model) {

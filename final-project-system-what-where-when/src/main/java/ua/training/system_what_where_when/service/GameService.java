@@ -3,6 +3,7 @@ package ua.training.system_what_where_when.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
@@ -12,22 +13,29 @@ import ua.training.system_what_where_when.model.Game;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.repository.GameRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
+@Transactional
 public class GameService {
     @Autowired
     private UserService userService;
+    @Autowired
+    private GameRepository gameRepository;
+    private final AnsweredQuestionService answeredQuestionService;
 
-    private final GameRepository gameRepository;
-
-    public GameService(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
+    public GameService(AnsweredQuestionService answeredQuestionService) {
+        this.answeredQuestionService = answeredQuestionService;
     }
 
     public GameWithoutAnsweredQuestionDTO runNewGame(Long teamId) {
@@ -115,5 +123,32 @@ public class GameService {
 
     public List<Game> findAllGames() {
         return gameRepository.findAll();
+    }
+
+    public void fileAppealAgainstGameAnsweredQuestions(String[] ids) {
+        log.info("fileAppealAgainstGameAnsweredQuestions - id: {} successfully was got", ids[0]);
+        List<String> idsStrings = new ArrayList<>(Arrays.asList(ids));
+
+        List<Long> appealedQuestionIds = idsStrings.stream()
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        AnsweredQuestion anyQuestionFromAppealedGame = answeredQuestionService.findAnsweredQuestionById(appealedQuestionIds.
+                stream()
+                .findAny()
+                .get());
+
+        Game appealedGame = anyQuestionFromAppealedGame.getGame();
+        log.info("fileAppealAgainstGameAnsweredQuestions - appealedGame: {} successfully was find", appealedGame.getId());
+        appealedGame.setAppealPossible(false);
+        appealedGame.setAppealStage(AppealStage.FILED);
+        appealedGame.getAnsweredQuestions().stream()
+                .filter(answeredQuestion -> answeredQuestion.isAppealPossible())
+                .map(answeredQuestion -> {
+                    answeredQuestion.setAppealPossible(false);
+                    return answeredQuestion;
+                })
+                .filter(answeredQuestion -> appealedQuestionIds.contains(answeredQuestion.getId()))
+                .forEach(appealedQuestion -> appealedQuestion.setAppealStage(AppealStage.FILED));
     }
 }
