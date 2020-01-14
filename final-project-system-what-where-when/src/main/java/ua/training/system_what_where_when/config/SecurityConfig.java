@@ -48,18 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
-//                .successForwardUrl("/home") // TODO check and correct
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .logoutSuccessUrl("/");
 
     }
 }
-
-//                .authorizeRequests()
-//                        .antMatchers("/js/*", "/login/**", "/css/*", "/registration/**").permitAll()
-//                        .anyRequest().authenticated()
-//                        .and()
-//                        .formLogin().loginPage("/login").permitAll()
-//                        .and()
-//                        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();

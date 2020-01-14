@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
+import ua.training.system_what_where_when.model.GameStatus;
+import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 @Data
 @NoArgsConstructor
@@ -18,14 +20,18 @@ public class AnsweredQuestionDTO {
 
     public static AnsweredQuestionDTO toAnsweredQuestionDTO(AnsweredQuestion answeredQuestion) {
         AnsweredQuestionDTO answeredQuestionDTO = new AnsweredQuestionDTO();
-
         answeredQuestionDTO.setId(answeredQuestion.getId());
+
         if (answeredQuestion.getUserWhoGotPoint() != null) {
             answeredQuestionDTO.setNameUa(answeredQuestion.getUserWhoGotPoint().getNameUa());
             answeredQuestionDTO.setNameEn(answeredQuestion.getUserWhoGotPoint().getNameEn());
         }
-        answeredQuestionDTO.setAppealStage(answeredQuestion.getAppealStage().name()); //TODO correct for different locale
+
+        answeredQuestionDTO.setAppealStage(
+                ResourceBundleUtil.getBundleStringForAppealStage(
+                        answeredQuestion.getAppealStage().name())); //TODO correct for different locale
         answeredQuestionDTO.setAppealPossible(answeredQuestion.isAppealPossible());
+
         return answeredQuestionDTO;
     }
 }

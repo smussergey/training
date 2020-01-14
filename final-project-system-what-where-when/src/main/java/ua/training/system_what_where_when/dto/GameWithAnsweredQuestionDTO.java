@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Game;
 import ua.training.system_what_where_when.model.GameStatus;
+import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -48,12 +49,12 @@ public class GameWithAnsweredQuestionDTO {
         gameDTO.setScores(scores);
 
         if ((teamsCorrectAnswers > teamsWrongAnswers)) {
-            gameDTO.setGameStatus(GameStatus.WON.name());
+            gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.WON.name()));
         } else if ((teamsCorrectAnswers < teamsWrongAnswers)) {
-            gameDTO.setGameStatus(GameStatus.LOST.name());
-        } else gameDTO.setGameStatus(GameStatus.DRAW.name());
+            gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.LOST.name()));
+        } else   gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.DRAW.name()));
 
-        gameDTO.setAppealStage(game.getAppealStage().name());
+        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(game.getAppealStage().name()));
 
         gameDTO.setAppealPossible(game.isAppealPossible());
 

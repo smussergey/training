@@ -13,6 +13,7 @@ import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
+import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -50,7 +51,10 @@ public class AdminController {
     public String getGameDetails(Model model, @PathVariable Long id) {
         GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
-        model.addAttribute("appealStageProcessed", AppealStage.CONSIDERED.name());
+//        model.addAttribute("appealStageProcessed",
+//                ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.CONSIDERED.name()));
+        model.addAttribute("appealStageFiled",
+                ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
         return "admingamedetails";
@@ -60,6 +64,8 @@ public class AdminController {
     public String getCosiderationApealForm(Model model, @PathVariable Long id) {
         GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
+        model.addAttribute("appealStageFiled",
+                ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
         return "admingameconsiderationappealform";

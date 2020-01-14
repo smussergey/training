@@ -3,6 +3,7 @@ package ua.training.system_what_where_when.config;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
@@ -13,10 +14,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ua.training.system_what_where_when.util.UTF8Control;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 @Configuration
 public class LocaleConfigure implements WebMvcConfigurer {
-
 
     @Bean
     public MessageSource messageSource() {

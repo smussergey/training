@@ -17,7 +17,7 @@
     <h1 th:text="#{text.header}"></h1>
 </div>
 
-<nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+<nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top ">
     <button
             class="navbar-toggler"
             type="button"
@@ -50,7 +50,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container" >
     <h2 class="panel-title" th:text="#{login.form.header}"></h2>
     <div class="form-input-error">
         <span th:if="${error}" th:text="#{login.message.wrong.login.or.password}"></span>
