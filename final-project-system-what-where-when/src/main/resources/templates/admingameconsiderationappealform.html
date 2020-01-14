@@ -34,7 +34,7 @@
                 <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/admin/adminhome}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/newgame}" th:text="#{navbar.label.games.new}"></a>
+                <a class="nav-link" th:href="@{/admin/games/new}" th:text="#{navbar.label.games.new}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/teams}" th:text="#{navbar.label.teams}"></a>
@@ -130,15 +130,14 @@
 
     <div class="panel-body">
         <h2 class="panel-title" th:text="#{games.game.approvement.appeal.form.header}"></h2>
-        <!--        TODO check  questions may be deleted -->
         <form th:action="@{/admin/appeal/game/quastions}" method="post">
             <div class="form-group">
-                <span th:if="${answeredQuestionDTO.getAppealStage().equals('FILED')}"
-                      th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">
-                        <input type="checkbox" name="ids"
-                               th:text="${answeredQuestionDTO.id}"
-                               th:value="${answeredQuestionDTO.id}"/>
-                </span>
+                            <span th:if="${answeredQuestionDTO.getAppealStage().equals('FILED')}"
+                                  th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">
+                                    <input type="checkbox" name="ids"
+                                           th:text="${answeredQuestionDTO.id}"
+                                           th:value="${answeredQuestionDTO.id}"/>
+                            </span>
             </div>
             <button type="submit" class="btn btn-primary" th:text="#{games.game.approve.appeal.label.button}"></button>
         </form>
@@ -146,8 +145,8 @@
 
 </div>
 
-<footer class="jumbotron text-center">
-    <h6 th:text="#{text.footer}"></h6>
+<footer>
+    <h5 th:text="#{text.footer}"></h5>
 </footer>
 
 </body>

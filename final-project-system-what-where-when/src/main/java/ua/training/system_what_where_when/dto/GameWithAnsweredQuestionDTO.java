@@ -49,7 +49,7 @@ public class GameWithAnsweredQuestionDTO {
 
         if ((teamsCorrectAnswers > teamsWrongAnswers)) {
             gameDTO.setGameStatus(GameStatus.WON.name());
-        } else if ((teamsCorrectAnswers > teamsWrongAnswers)) {
+        } else if ((teamsCorrectAnswers < teamsWrongAnswers)) {
             gameDTO.setGameStatus(GameStatus.LOST.name());
         } else gameDTO.setGameStatus(GameStatus.DRAW.name());
 

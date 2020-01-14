@@ -34,7 +34,7 @@
                 <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/admin/adminhome}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/newgame}" th:text="#{navbar.label.games.new}"></a>
+                <a class="nav-link" th:href="@{/admin/games/new}" th:text="#{navbar.label.games.new}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/teams}" th:text="#{navbar.label.teams}"></a>
@@ -104,8 +104,8 @@
     </div>
 </div>
 
-<footer class="jumbotron text-center">
-    <h6 th:text="#{text.footer}"></h6>
+<footer>
+    <h5 th:text="#{text.footer}"></h5>
 </footer>
 
 </body>

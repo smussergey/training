@@ -46,16 +46,6 @@ public class AdminController {
         return "admingamesstatistics";
     }
 
-//    @GetMapping("/games/statistics")
-//    public ModelAndView getGamesStatistics(ModelAndView modelAndView) {
-//        List<GameWithoutAnsweredQuestionDTO> gameDTOs = gameService.getGameStatisticsByAllTeams();
-//        System.out.println("------------size=" + gameDTOs.size());
-//        modelAndView.setViewName("adminhome");
-//        modelAndView.addObject("gameDTOs", gameDTOs);
-//        System.out.println("from getGamesStatistics(ModelAndView modelAndView)");
-//        return modelAndView;
-//    }
-
     @GetMapping("/games/{id}")
     public String getGameDetails(Model model, @PathVariable Long id) {
         GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
@@ -86,28 +76,24 @@ public class AdminController {
         return "redirect:/admin/games/statistics";
     }
 
-    @GetMapping("/users/teams")
-    public ModelAndView getPreparedForNewGame(ModelAndView modelAndView) {
-        List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);
-        System.out.println("------------size=" + users.size());
-        System.out.println("1t user name=" + users.get(0).getNameUa());
-        //  users.stream().forEach(user -> System.out.println(user.getNameUa()));
-        modelAndView.setViewName("adminhome");
-        modelAndView.addObject("users", users);
-        System.out.println("from getAllUsersWithRoleUser(Model model)");
-        return modelAndView;
+    @GetMapping("/games/new")
+    public String getPreparedForNewGame(Model model) {
+        List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);;
+        model.addAttribute("users", users);
+        setLocalizedLoggedInUserName(model);
+        setCurrentLocaleLanguage(model);
+        return "admingamenew";
     }
 
-    @PostMapping("/games/play")
-    public ModelAndView playNewGame(@RequestParam(value = "id", required = true) Long teamId,
-                                    ModelAndView modelAndView) {
-        GameWithoutAnsweredQuestionDTO gameDTO = gameService.runNewGame(teamId);
-        modelAndView.setViewName("adminhome");
-        modelAndView.addObject("gameDTO", gameDTO);
-
-        return modelAndView;
+    @PostMapping("/games/new")
+    public String playNewGame(@RequestParam(value = "id", required = true) Long teamId,
+                              @RequestParam(value = "maxscores", required = true) int maxNumberOfScores,
+                              Model model) {
+        log.info("IN playNewGame - team id: {} successfully was got", teamId);
+        log.info("IN playNewGame - number Of questions : {} successfully was got", maxNumberOfScores);
+        GameWithoutAnsweredQuestionDTO gameDTO = gameService.runNewGame(teamId, maxNumberOfScores);
+        return "redirect:/admin/games/statistics";
     }
-
 
 
     private Model setLocalizedLoggedInUserName(Model model) {

@@ -34,13 +34,13 @@ public class GameService {
         this.answeredQuestionService = answeredQuestionService;
     }
 
-    public GameWithoutAnsweredQuestionDTO runNewGame(Long teamId) {
-        Game game = generateNewGameResults(teamId);
+    public GameWithoutAnsweredQuestionDTO runNewGame(Long teamId, int maxNumberOfScores) {
+        Game game = generateNewGameResults(teamId, maxNumberOfScores);
         gameRepository.save(game);
         return GameWithoutAnsweredQuestionDTO.toGameDTO(game);
     }
 
-    private Game generateNewGameResults(Long teamId) {
+    private Game generateNewGameResults(Long teamId, int maxNumberOfScores) {
         int teamCorrectAnswerCount = 0;
         int teamWrongAnswerCount = 0;
         List<AnsweredQuestion> answeredQuestionList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class GameService {
                 teamCorrectAnswerCount++;
             } else teamWrongAnswerCount++;
 
-            if (teamCorrectAnswerCount == 6 || teamWrongAnswerCount == 6) { // TODO move "6" to properties
+            if (teamCorrectAnswerCount == maxNumberOfScores || teamWrongAnswerCount == maxNumberOfScores) {
                 if (teamWrongAnswerCount > teamCorrectAnswerCount) {
                     answeredQuestionList.stream().
                             filter(aq -> aq.getUserWhoGotPoint() == null)
@@ -172,6 +172,7 @@ public class GameService {
                 .filter(answeredQuestion -> answeredQuestion.getAppealStage().equals(AppealStage.FILED))
                 .forEach(questionWithAppealStageFiled -> {
                     if (approvedQuestionIds.contains(questionWithAppealStageFiled.getId())) {
+                        questionWithAppealStageFiled.setUserWhoGotPoint(appealedGame.getUser());
                         questionWithAppealStageFiled.setAppealStage(AppealStage.WON);
                     } else questionWithAppealStageFiled.setAppealStage(AppealStage.LOST);
                 });
