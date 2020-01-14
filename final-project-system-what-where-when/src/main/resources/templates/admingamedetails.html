@@ -31,14 +31,22 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/user/userhome}"></a>
+                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/admin/adminhome}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/user/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
+                <a class="nav-link" th:href="@{/admin/newgame}" th:text="#{navbar.label.games.new}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{|/user/games/${gameFullDTO.id}|}"
-                   th:text="#{navbar.label.games.game.details}"></a>
+                <a class="nav-link" th:href="@{/admin/teams}" th:text="#{navbar.label.teams}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   th:if="${gameFullDTO.getAppealStage().equals('FILED')}"
+                   th:href="@{|/admin/appeal/games/${gameFullDTO.id}|}"
+                   th:text="#{navbar.label.games.consider.appeal}"></a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
@@ -73,6 +81,7 @@
     <!--    <div th:if=" ${gameFullDTO.empty}">-->
     <!--        <h1 th:text="#{requested.information.is.absent}"></h1>-->
     <!--    </div>-->
+
 
     <div id="details">
         <table class="table table-striped table-hover table-bordered table-sm">
@@ -121,23 +130,6 @@
             </tbody>
         </table>
     </div>
-
-    <div class="panel-body">
-        <h2 class="panel-title" th:text="#{games.game.appeal.form.header}"></h2>
-        <!--        TODO check  questions may be deleted -->
-        <form th:action="@{/user/appeal/game/quastions}" method="post">
-            <div class="form-group">
-                <span th:if="${answeredQuestionDTO.appealPossible}"
-                      th:each="answeredQuestionDTO : ${gameFullDTO.answeredQuestionDTOs}">
-                        <input type="checkbox" name="ids"
-                               th:text="${answeredQuestionDTO.id}"
-                               th:value="${answeredQuestionDTO.id}" />
-                </span>
-            </div>
-            <button type="submit" class="btn btn-primary" th:text="#{games.game.file.appeal.label.button}"></button>
-        </form>
-    </div>
-
 </div>
 
 <footer class="jumbotron text-center">

@@ -3,7 +3,6 @@ package ua.training.system_what_where_when.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
@@ -19,10 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
@@ -105,7 +101,7 @@ public class GameService {
                 .collect(Collectors.toList());
     }
 
-    public GameWithAnsweredQuestionDTO getGameFullStatisticsByLoginedTeam(Long id) {
+    public GameWithAnsweredQuestionDTO getGameFullStatisticsById(Long id) {
         Game game = findGameById(id); //TODO allow only user's games
         return GameWithAnsweredQuestionDTO.toGameDTO(game);
     }
@@ -125,11 +121,11 @@ public class GameService {
         return gameRepository.findAll();
     }
 
-    public void fileAppealAgainstGameAnsweredQuestions(String[] ids) {
-        log.info("fileAppealAgainstGameAnsweredQuestions - id: {} successfully was got", ids[0]);
-        List<String> idsStrings = new ArrayList<>(Arrays.asList(ids));
+    public void fileAppealAgainstGameAnsweredQuestions(String[] appealedQuestionStringIds) {
+        log.info("in GameService: fileAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", appealedQuestionStringIds[0]);
+        List<String> iDs = new ArrayList<>(Arrays.asList(appealedQuestionStringIds));
 
-        List<Long> appealedQuestionIds = idsStrings.stream()
+        List<Long> appealedQuestionIds = iDs.stream()
                 .map(Long::valueOf)
                 .collect(Collectors.toList());
 
@@ -139,10 +135,12 @@ public class GameService {
                 .get());
 
         Game appealedGame = anyQuestionFromAppealedGame.getGame();
-        log.info("fileAppealAgainstGameAnsweredQuestions - appealedGame: {} successfully was find", appealedGame.getId());
+        log.info("in GameService: fileAppealAgainstGameAnsweredQuestions() - appealedGame: {} successfully was find", appealedGame.getId());
+
         appealedGame.setAppealPossible(false);
         appealedGame.setAppealStage(AppealStage.FILED);
-        appealedGame.getAnsweredQuestions().stream()
+        appealedGame.getAnsweredQuestions()
+                .stream()
                 .filter(answeredQuestion -> answeredQuestion.isAppealPossible())
                 .map(answeredQuestion -> {
                     answeredQuestion.setAppealPossible(false);
@@ -150,5 +148,32 @@ public class GameService {
                 })
                 .filter(answeredQuestion -> appealedQuestionIds.contains(answeredQuestion.getId()))
                 .forEach(appealedQuestion -> appealedQuestion.setAppealStage(AppealStage.FILED));
+    }
+
+    public void approveAppealAgainstGameAnsweredQuestions(String[] approvedQuestionStringIds) {
+        log.info("in GameService: considerAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", approvedQuestionStringIds[0]);
+        List<String> iDs = new ArrayList<>(Arrays.asList(approvedQuestionStringIds));
+
+        List<Long> approvedQuestionIds = iDs.stream()
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        AnsweredQuestion anyQuestionFromAppealedGame = answeredQuestionService.findAnsweredQuestionById(approvedQuestionIds.
+                stream()
+                .findAny()
+                .get());
+
+        Game appealedGame = anyQuestionFromAppealedGame.getGame();
+        log.info("in GameService: fileAppealAgainstGameAnsweredQuestions() - appealedGame: {} successfully was find", appealedGame.getId());
+
+        appealedGame.setAppealStage(AppealStage.CONSIDERED);
+        appealedGame.getAnsweredQuestions()
+                .stream()
+                .filter(answeredQuestion -> answeredQuestion.getAppealStage().equals(AppealStage.FILED))
+                .forEach(questionWithAppealStageFiled -> {
+                    if (approvedQuestionIds.contains(questionWithAppealStageFiled.getId())) {
+                        questionWithAppealStageFiled.setAppealStage(AppealStage.WON);
+                    } else questionWithAppealStageFiled.setAppealStage(AppealStage.LOST);
+                });
     }
 }

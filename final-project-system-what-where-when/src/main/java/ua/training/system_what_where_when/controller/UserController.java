@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/userhome")
-    public String userHomePage(Model model) {
+    public String getUserHomePage(Model model) {
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
         return "userhome";
@@ -46,7 +46,7 @@ public class UserController {
 
     @GetMapping("/games/{id}")
     public String getGameDetails(Model model, @PathVariable Long id) {
-        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsByLoginedTeam(id);
+        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -54,20 +54,19 @@ public class UserController {
     }
 
     @GetMapping("/appeal/games/{id}")
-    public String getGameApealForm(Model model, @PathVariable Long id) {
-        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsByLoginedTeam(id);
+    public String getFileApealForm(Model model, @PathVariable Long id) {
+        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
-        return "usergameappealform";
+        return "usergamefileappealform";
     }
 
-    @PostMapping("/appeal/game/quastions")
-    public String appealQuastions(HttpServletRequest request, Model model) {
-        Arrays.stream(request.getParameterValues("ids")).forEach(q -> System.out.println("--------id=" + q));
+    @PostMapping("/appeal/game/questions")
+    public String appealQuestions(HttpServletRequest request, Model model) {
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
-            log.info("IN appealQuastions - question with id: {} successfully was got", answeredQuestionIds[0]);
+            log.info("IN appealQuastions - appealed questions {} successfully were got", answeredQuestionIds.length);
             gameService.fileAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
         }
         return "redirect:/user/games/statistics";

@@ -51,12 +51,6 @@ public class PageController {
         return "registration";
     }
 
-    @GetMapping("/admin/adminhome")
-    public String adminPage(Model model) {
-        setCurrentLocaleLanguage(model);
-        return "adminhome";
-    }
-
     private Model setCurrentLocaleLanguage(Model model) {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return model;

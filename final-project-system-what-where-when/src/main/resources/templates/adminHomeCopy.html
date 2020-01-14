@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Admin Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .fakeimg {
+            height: 200px;
+            background: #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <h1 th:text="#{text.header}"></h1>
+</div>
+
+<p>Admin page</p>
+
+<nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapsibleNavbar"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <!-- Links -->
+
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/index}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?lang=en">en</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?lang=ua">ua</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}">Login</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/registration}">Register</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top:30px">
+    <ul class="navbar-nav my-2 my-lg-0">
+
+        <!--        <li class="nav-item">-->
+        <!--            <a class="nav-link" th:href="@{/admin/users}">Get list of teams</a>-->
+        <!--        </li>-->
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/users/teams}"> Prepare for a new game</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/games/statistics}">Statistics</a>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <p> Select team to play the game</p>
+    <form method="post" th:action="${'/admin/games/play'}">
+        <div>
+            <label for="team">Teams:</label>
+            <select id="team" th:name="id">
+                <option value="" selected="selected">-----</option>
+                <option th:each="user : ${users}"
+                        th:value="${user.id}" th:text="${user.nameUa}">
+                </option>
+            </select>
+        </div>
+        <button type="submit">Play the game</button>
+    </form>
+</div>
+
+<div>
+    <table class="datatable">
+        <caption> Game statistics</caption>
+        <thead>
+        <tr>
+            <!--            <th th:text="#{label.user.id}"></th>-->
+
+            <th>Date</th>
+            <th>Team</th>
+            <th>Scores</th>
+            <th>Appeal</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <!--        <tr th:if="${gameDTOs.empty}">-->
+        <!--            <td colspan="2" th:text="#{message.users.empty}"> </td>-->
+        <td>The list of games is empty</td>
+        </tr>
+        <tr th:each="gameDTO: ${gameDTO}">
+            <td><span th:text="${gameDTO.date}"> date </span></td>
+            <td><span th:text="${gameDTO.userName}">userName </span></td>
+            <td><span th:text="${gameDTO.scores}"> scores </span></td>
+            <td><span th:text="${gameDTO.appealStage}"> appealStage </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="statistics">
+    <table class="datatable">
+        <caption> Games statistics</caption>
+        <thead>
+        <tr>
+            <!--            <th th:text="#{label.user.id}"></th>-->
+
+            <th>Date</th>
+            <th>Team</th>
+            <th>Scores</th>
+            <th>Appeal</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <!--        <tr th:if="${gameDTOs.empty}">-->
+        <!--            <td colspan="2" th:text="#{message.users.empty}"> </td>-->
+        <td>The list of games is empty</td>
+        </tr>
+        <tr th:each="gameDTO: ${gameDTOs}">
+            <td><span th:text="${gameDTO.date}"> date </span></td>
+            <td><span th:text="${gameDTO.userName}">userName </span></td>
+            <td><span th:text="${gameDTO.scores}"> scores </span></td>
+            <td><span th:text="${gameDTO.appealStage}"> appealStage </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <p>Footer</p>
+</div>
+
+</body>
+</html>

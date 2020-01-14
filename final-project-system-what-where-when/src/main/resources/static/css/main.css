@@ -7,21 +7,21 @@
 
 #nav a:active {
     color: #f1f7f4;
-    background-color:limegreen;
+    background-color: limegreen;
 }
 
 .nav-item a:hover {
     background-color: darkslategray;
 }
 
-.form-input-error{
+.form-input-error {
     color: red;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
+/*html {*/
+/*    position: relative;*/
+/*    min-height: 100%;*/
+/*}*/
 
 /*body {*/
 /*    margin: 0 0 100px;*/
@@ -29,12 +29,30 @@ html {
 /*    padding: 25px;*/
 /*}*/
 
+/*footer {*/
+/*    background-color: lightgray;*/
+/*    position: relative; // TODO correct position*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    height: 50px;*/
+/*    width: 100%;*/
+/*overflow: hidden;*/
+/*}*/
+html, body {
+    height: 100%;
+}
+
+.container {
+    min-height: 100%;
+    padding-bottom: 50px;
+}
+
 footer {
+    text-align: center;
     background-color: lightgray;
-    position: relative; // TODO correct position
-    left: 0;
-    bottom: 0;
-    height: 50px;
-    width: 100%;
-    /*overflow: hidden;*/
+    position: relative;
+    height: 100px;
+    margin-top: -100px;
+    /*width: 100%;*/
+    clear: both;
 }
