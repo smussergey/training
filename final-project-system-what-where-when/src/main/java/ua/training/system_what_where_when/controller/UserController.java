@@ -3,17 +3,17 @@ package ua.training.system_what_where_when.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
-;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
+import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +37,13 @@ public class UserController {
 
     @GetMapping("/games/statistics")
     public String getGamesStatistics(Model model) {
-        List<GameWithoutAnsweredQuestionDTO> gameDTOs = gameService.getGameStatisticsByLoginedTeam();
+        List<GameWithoutAnsweredQuestionDTO> gameDTOs = new ArrayList<>();
+        try {
+            gameDTOs = gameService.getGameStatisticsByLoginedTeam();
+        } catch (EntityNotFoundException e) {
+            log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
+        }
+
         model.addAttribute("gameDTOs", gameDTOs);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -83,5 +89,4 @@ public class UserController {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return model;
     }
-
 }

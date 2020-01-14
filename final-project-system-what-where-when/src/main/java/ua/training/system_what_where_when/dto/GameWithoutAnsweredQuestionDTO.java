@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameWithoutAnsweredQuestionDTO {
+    private static final String DELIMITER = ":";
     private Long id;
     private LocalDate date;
     private String nameUa;
@@ -37,7 +38,7 @@ public class GameWithoutAnsweredQuestionDTO {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(teamsCorrectAnswers);
-        stringBuilder.append(':');//TODO move ":" to properties
+        stringBuilder.append(DELIMITER);//TODO move ":" to properties
         stringBuilder.append(teamsWrongAnswers);
         String scores = stringBuilder.toString();
         gameDTO.setScores(scores);

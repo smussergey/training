@@ -5,7 +5,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
 import ua.training.system_what_where_when.model.AppealStage;
@@ -51,8 +50,6 @@ public class AdminController {
     public String getGameDetails(Model model, @PathVariable Long id) {
         GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
-//        model.addAttribute("appealStageProcessed",
-//                ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.CONSIDERED.name()));
         model.addAttribute("appealStageFiled",
                 ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
         setLocalizedLoggedInUserName(model);
@@ -84,7 +81,7 @@ public class AdminController {
 
     @GetMapping("/games/new")
     public String getPreparedForNewGame(Model model) {
-        List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);;
+        List<User> users = userService.findAllUsersByRole(Role.ROLE_USER);
         model.addAttribute("users", users);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);

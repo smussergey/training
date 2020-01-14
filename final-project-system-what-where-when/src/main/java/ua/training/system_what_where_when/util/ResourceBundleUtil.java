@@ -15,9 +15,9 @@ public class ResourceBundleUtil {
     }
 
 
-//    public String getBundleString(String message) {
-//        return bundle.getString(message);
-//    }
+    public static String getBundleString(String message) {
+        return getBundle().getString(message);
+    }
 
     public static String getBundleStringForAppealStage(String appealStage) {
         return getBundle().getString(concatenateStrings(APPEAL_STAGE, appealStage));

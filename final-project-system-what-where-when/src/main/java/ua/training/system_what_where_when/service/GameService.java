@@ -102,7 +102,7 @@ public class GameService {
     }
 
     public GameWithAnsweredQuestionDTO getGameFullStatisticsById(Long id) {
-        Game game = findGameById(id); //TODO allow only user's games
+        Game game = findGameById(id); //TODO check/allow only user's games
         return GameWithAnsweredQuestionDTO.toGameDTO(game);
     }
 
@@ -141,8 +141,8 @@ public class GameService {
         appealedGame.setAppealStage(AppealStage.FILED);
         appealedGame.getAnsweredQuestions()
                 .stream()
-                .filter(answeredQuestion -> answeredQuestion.isAppealPossible())
-                .map(answeredQuestion -> {
+                .filter(AnsweredQuestion::isAppealPossible)
+                .map(answeredQuestion -> { //TODO replace with peek
                     answeredQuestion.setAppealPossible(false);
                     return answeredQuestion;
                 })

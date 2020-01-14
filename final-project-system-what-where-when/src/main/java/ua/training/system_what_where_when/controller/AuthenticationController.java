@@ -8,7 +8,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ua.training.system_what_where_when.dto.UserRegisterDTO;
 import ua.training.system_what_where_when.service.UserService;
-import ua.training.system_what_where_when.util.UTF8Control;
 import ua.training.system_what_where_when.util.validation.ValidationErrorBuilder;
 
 import javax.validation.Valid;
@@ -17,15 +16,13 @@ import javax.validation.Valid;
 @Controller
 public class AuthenticationController {
 
-    private final UTF8Control utf8Control;
     private UserService userService;
 
-    public AuthenticationController(UTF8Control utf8Control, UserService userService) {
-        this.utf8Control = utf8Control;
+    public AuthenticationController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping("/registration") //TODO correct functionality of bindingResult
+    @PostMapping("/registration")
     public String registrer(@ModelAttribute("newuser") @Valid UserRegisterDTO userRegisterDTO,
                             Errors errors, Model model) {
         setCurrentLocaleLanguage(model);
@@ -39,10 +36,9 @@ public class AuthenticationController {
                 return "registration";
             }
         }
-        model.addAttribute("fielderrors", ValidationErrorBuilder.fromBindingErrors(errors, utf8Control).getErrors());
+        model.addAttribute("fielderrors", ValidationErrorBuilder.fromBindingErrors(errors).getErrors());
 
         return "registration";
-//        return "redirect:/login";
     }
 
     @GetMapping("/login")

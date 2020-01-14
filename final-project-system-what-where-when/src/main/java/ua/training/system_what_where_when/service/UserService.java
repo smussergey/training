@@ -15,7 +15,6 @@ import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.repository.UserRepository;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,7 +59,6 @@ public class UserService implements UserDetailsService {
 
 
     public User findUserByEmail(String email) {
-        System.out.println("email = " + email);
         User result = userRepository.findByEmail(email);
         log.info("IN findByEmail - user: {} found by email: {}", result, email);
         return result;
@@ -75,14 +73,14 @@ public class UserService implements UserDetailsService {
             return null;
         }
 
-        log.info("IN findById - user: {} found by id: {}", result);
+        log.info("IN findById - user: {} found by id: {}", result, id);
         return result;
     }
 
 
     public void delete(Long id) {
         userRepository.deleteById(id);
-        log.info("IN delete - user with id: {} successfully deleted");
+        log.info("IN delete - user with id: {} successfully deleted", id);
     }
 
 
@@ -107,7 +105,6 @@ public class UserService implements UserDetailsService {
                 .getContext()
                 .getAuthentication()
                 .getName();
-        User loginedUser = findUserByEmail(username);
-        return loginedUser;
+        return findUserByEmail(username);
     }
 }

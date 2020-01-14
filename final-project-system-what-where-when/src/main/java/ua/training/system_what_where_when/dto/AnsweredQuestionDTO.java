@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
-import ua.training.system_what_where_when.model.GameStatus;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 @Data
@@ -29,7 +28,7 @@ public class AnsweredQuestionDTO {
 
         answeredQuestionDTO.setAppealStage(
                 ResourceBundleUtil.getBundleStringForAppealStage(
-                        answeredQuestion.getAppealStage().name())); //TODO correct for different locale
+                        answeredQuestion.getAppealStage().name()));
         answeredQuestionDTO.setAppealPossible(answeredQuestion.isAppealPossible());
 
         return answeredQuestionDTO;

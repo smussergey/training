@@ -3,7 +3,6 @@ package ua.training.system_what_where_when.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Game;
 import ua.training.system_what_where_when.model.GameStatus;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameWithAnsweredQuestionDTO {
+    private static final String DELIMITER = ":";
     private Long id;
     private LocalDate date;
     private String nameUa;
@@ -43,7 +43,7 @@ public class GameWithAnsweredQuestionDTO {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(teamsCorrectAnswers);
-        stringBuilder.append(':');//TODO move ":" to properties
+        stringBuilder.append(DELIMITER); //TODO move ":" to properties
         stringBuilder.append(teamsWrongAnswers);
         String scores = stringBuilder.toString();
         gameDTO.setScores(scores);
@@ -52,7 +52,7 @@ public class GameWithAnsweredQuestionDTO {
             gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.WON.name()));
         } else if ((teamsCorrectAnswers < teamsWrongAnswers)) {
             gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.LOST.name()));
-        } else   gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.DRAW.name()));
+        } else gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.DRAW.name()));
 
         gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(game.getAppealStage().name()));
 
