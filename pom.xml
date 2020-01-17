@@ -33,6 +33,7 @@
         <module>block12-task02-representative-controller</module>
         <module>block12-tasks03_05-car-db</module>
         <module>block02-pr_mas_sokr-different-operations-with-arrays</module>
+        <module>block12-car-and-driver</module>
     </modules>
 
     <properties>
