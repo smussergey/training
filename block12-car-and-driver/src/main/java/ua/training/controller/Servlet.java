@@ -21,12 +21,12 @@ public class Servlet extends HttpServlet {
             DaoFactory factory = DaoFactory.getInstance();
             CarDao dao = factory.createCarDao();
 
-//            List<Car> cars= dao.findAll();
-            List<Car> cars = new ArrayList<>();
-            cars.add(dao.findById(1));
-            cars.add(dao.findById(2));
-            cars.add(dao.findById(3));
-            cars.add(dao.findById(4));
+            List<Car> cars= dao.findAll();
+//            List<Car> cars = new ArrayList<>();
+//            cars.add(dao.findById(1));
+//            cars.add(dao.findById(2));
+//            cars.add(dao.findById(3));
+//            cars.add(dao.findById(4));
 
             request.setAttribute("cars" , cars);
             request.getRequestDispatcher("./WEB-INF/carlist.jsp")

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
-    private int idCar;
+    private int idcar;
     private String name;
     private String number;
 
@@ -12,18 +12,18 @@ public class Car {
 
     public Car() {
     }
-    public Car(int idCar, String name, String nomer, List<Driver> drivers) {
-        this.idCar = idCar;
+    public Car(int idcar, String name, String nomer, List<Driver> drivers) {
+        this.idcar = idcar;
         this.name = name;
         this.number = nomer;
         this.drivers = drivers;
     }
 
-    public int getIdCar() {
-        return idCar;
+    public int getIdcar() {
+        return idcar;
     }
-    public void setIdCar(int idCar) {
-        this.idCar = idCar;
+    public void setIdcar(int idcar) {
+        this.idcar = idcar;
     }
     public String getName() {
         return name;
@@ -48,9 +48,10 @@ public class Car {
     public String toString() {
         return "Car{" +
                 System.identityHashCode(this)+
-                ", idCar=" + idCar +
+                ", idCar=" + idcar +
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +
+                ", drivers='" + drivers + '\'' +
                 '}' + '\n';
     }
 

@@ -42,7 +42,7 @@ public class JDBCCarDao implements CarDao {
             throws SQLException {
         Car result = new Car();
 
-        result.setIdCar(rs.getInt("idcar") );
+        result.setIdcar(rs.getInt("idcar") );
         result.setName( rs.getString("car.name") );
         result.setNumber( rs.getString("nomer"));
 
@@ -59,8 +59,8 @@ public class JDBCCarDao implements CarDao {
             ResultSet rs = ps.executeQuery(
                     "select * from car left join car_driver on " +
                             "car.idcar = car_driver.car_idcar left join " +
-                            "driver on car_driver.driver_driver_id = " +
-                            "driver.driver_id");
+                            "driver on car_driver.driver_iddriver = " +
+                            "driver.iddriver");
             while ( rs.next() ){
                 Car car = extractFromResultSet(rs);
                 Driver driver =
@@ -69,7 +69,7 @@ public class JDBCCarDao implements CarDao {
                 driver = makeUniqueDriver(drivers,driver);
                 car.getDrivers().add(driver);
                 driver.getCars().add(car);
-                System.out.println(driver);
+//                System.out.println(driver);
 
                 resultList.add(car);
             }
@@ -80,8 +80,8 @@ public class JDBCCarDao implements CarDao {
     }
 
     private Car makeUniqueCar(Map<Integer, Car> cars,  Car car) {
-        cars.putIfAbsent(car.getIdCar(), car);
-        return cars.get(car.getIdCar());
+        cars.putIfAbsent(car.getIdcar(), car);
+        return cars.get(car.getIdcar());
     }
 
     private Driver makeUniqueDriver(

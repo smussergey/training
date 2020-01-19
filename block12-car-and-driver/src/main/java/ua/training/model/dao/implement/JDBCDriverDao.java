@@ -1,7 +1,6 @@
 
 package ua.training.model.dao.implement;
 
-import ua.training.model.dao.CarDao;
 import ua.training.model.dao.DriverDao;
 import ua.training.model.entity.Car;
 import ua.training.model.entity.Driver;
@@ -68,7 +67,7 @@ public class JDBCDriverDao implements DriverDao {
                 driver = makeUniqueDriver(drivers, driver);
                 car.getDrivers().add(driver);
                 driver.getCars().add(car);
-                System.out.println(car);
+//                System.out.println(car);
 
                 resultList.add(driver);
             }
@@ -79,8 +78,8 @@ public class JDBCDriverDao implements DriverDao {
     }
 
     private Car makeUniqueCar(Map<Integer, Car> cars, Car car) {
-        cars.putIfAbsent(car.getIdCar(), car);
-        return cars.get(car.getIdCar());
+        cars.putIfAbsent(car.getIdcar(), car);
+        return cars.get(car.getIdcar());
     }
 
     private Driver makeUniqueDriver(

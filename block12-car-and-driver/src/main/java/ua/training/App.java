@@ -10,8 +10,13 @@ public class App {
         CarDao carDao = factory.createCarDao();
         DriverDao driverDao = factory.createDriverDao();
 
+        System.out.println("carDao.findById(2):");
         System.out.println(carDao.findById(2));
+        System.out.println("driverDao.findById(5):");
         System.out.println(driverDao.findById(5));
+        System.out.println("carDao.findAll():");
         System.out.println(carDao.findAll());
+        System.out.println("driverDao.findAll():");
+        System.out.println(driverDao.findAll());
     }
 }
