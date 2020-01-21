@@ -8,7 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,20 +18,39 @@ import java.util.List;
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "game_id")
     private Long id;
+
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Setter(AccessLevel.PRIVATE)
+//    @JoinColumn(name = "user_id")
+    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
+    private Set<User> users = new HashSet<>();
 
     @Column(name = "is_appeal_possible")
     private boolean isAppealPossible;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "appeal_stage")
-    private AppealStage appealStage;
+    @Setter(AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<Appeal> appeals = new ArrayList<>();
+
+    public void addAppeal(Appeal appeal) {
+        appeals.add(appeal);
+        appeal.setGame(this);
+    }
+
+    public void addAppeals(List<Appeal> appeals) {
+        this.appeals.addAll(appeals);
+        appeals.forEach(appeal -> appeal.setGame(this));
+    }
+
+    public void removeAppeal(Appeal appeal) {
+        appeals.remove(appeal);
+        appeal.setGame(null);
+    }
+
 
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)

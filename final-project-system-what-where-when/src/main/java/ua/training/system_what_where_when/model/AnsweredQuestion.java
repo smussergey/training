@@ -13,11 +13,16 @@ import java.time.LocalDate;
 public class AnsweredQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "answered_question_id")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @ManyToOne
+    @JoinColumn(name = "appeal_id")
+    private Appeal appeal;
 
     @OneToOne
     @JoinColumn(name = "user_id")

@@ -30,39 +30,39 @@ public class GameWithAnsweredQuestionDTO {
     public static GameWithAnsweredQuestionDTO toGameDTO(Game game) {
         GameWithAnsweredQuestionDTO gameDTO = new GameWithAnsweredQuestionDTO();
 
-        gameDTO.setId(game.getId());
-        gameDTO.setDate(game.getDate());
-        gameDTO.setNameUa(game.getUser().getNameUa());
-        gameDTO.setNameEn(game.getUser().getNameEn());
-
-        int teamsCorrectAnswers = (int) game.getAnsweredQuestions()
-                .stream()
-                .filter(answeredQuestion -> answeredQuestion.getUserWhoGotPoint() != null)
-                .count();
-        int teamsWrongAnswers = game.getAnsweredQuestions().size() - teamsCorrectAnswers;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(teamsCorrectAnswers);
-        stringBuilder.append(DELIMITER); //TODO move ":" to properties
-        stringBuilder.append(teamsWrongAnswers);
-        String scores = stringBuilder.toString();
-        gameDTO.setScores(scores);
-
-        if ((teamsCorrectAnswers > teamsWrongAnswers)) {
-            gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.WON.name()));
-        } else if ((teamsCorrectAnswers < teamsWrongAnswers)) {
-            gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.LOST.name()));
-        } else gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.DRAW.name()));
-
-        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(game.getAppealStage().name()));
-
-        gameDTO.setAppealPossible(game.isAppealPossible());
-
-        List<AnsweredQuestionDTO> answeredQuestionDTOs = game.getAnsweredQuestions()
-                .stream()
-                .map(AnsweredQuestionDTO::toAnsweredQuestionDTO)
-                .collect(Collectors.toList());
-        gameDTO.setAnsweredQuestionDTOs(answeredQuestionDTOs);
+//        gameDTO.setId(game.getId());
+//        gameDTO.setDate(game.getDate());
+//        gameDTO.setNameUa(game.getUser().getNameUa());
+//        gameDTO.setNameEn(game.getUser().getNameEn());
+//
+//        int teamsCorrectAnswers = (int) game.getAnsweredQuestions()
+//                .stream()
+//                .filter(answeredQuestion -> answeredQuestion.getUserWhoGotPoint() != null)
+//                .count();
+//        int teamsWrongAnswers = game.getAnsweredQuestions().size() - teamsCorrectAnswers;
+//
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append(teamsCorrectAnswers);
+//        stringBuilder.append(DELIMITER); //TODO move ":" to properties
+//        stringBuilder.append(teamsWrongAnswers);
+//        String scores = stringBuilder.toString();
+//        gameDTO.setScores(scores);
+//
+//        if ((teamsCorrectAnswers > teamsWrongAnswers)) {
+//            gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.WON.name()));
+//        } else if ((teamsCorrectAnswers < teamsWrongAnswers)) {
+//            gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.LOST.name()));
+//        } else gameDTO.setGameStatus(ResourceBundleUtil.getBundleStringForGameStatus(GameStatus.DRAW.name()));
+//
+//        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(game.getAppealStage().name()));
+//
+//        gameDTO.setAppealPossible(game.isAppealPossible());
+//
+//        List<AnsweredQuestionDTO> answeredQuestionDTOs = game.getAnsweredQuestions()
+//                .stream()
+//                .map(AnsweredQuestionDTO::toAnsweredQuestionDTO)
+//                .collect(Collectors.toList());
+//        gameDTO.setAnsweredQuestionDTOs(answeredQuestionDTOs);
 
         return gameDTO;
     }

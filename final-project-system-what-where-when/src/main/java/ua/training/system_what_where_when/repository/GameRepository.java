@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
-    Optional<List<Game>> findByUser(User user);
+    Optional<List<Game>> findByUsers(User user); // TODO correct
 }

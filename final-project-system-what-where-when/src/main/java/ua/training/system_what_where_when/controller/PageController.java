@@ -25,7 +25,7 @@ public class PageController {
         setCurrentLocaleLanguage(model);
         if (principal == null) {
             log.info("-----------------------IN getMainPage - principal: {}", principal);
-            return "home";
+            return "index";
         }
 
         Role role = userService.findLoggedIndUser().getRole();
@@ -42,7 +42,7 @@ public class PageController {
     @GetMapping("home")
     public String getDefaultPage(Model model) {
         setCurrentLocaleLanguage(model);
-        return "home";
+        return "index";
     }
 
     @GetMapping("/registration")

@@ -65,12 +65,12 @@ public class GameService {
 
         Game game = new Game();
         game.setDate(LocalDate.now());
-        game.setUser(playingTeam);
-        if (teamWrongAnswerCount > teamCorrectAnswerCount) {
-            game.setAppealPossible(true);
-        }
-        game.setAppealStage(AppealStage.NOT_FILED);
-        game.addAnsweredQuestions(answeredQuestionList);
+//        game.setUser(playingTeam);
+//        if (teamWrongAnswerCount > teamCorrectAnswerCount) {
+//            game.setAppealPossible(true);
+//        }
+//        game.setAppealStage(AppealStage.NOT_FILED);
+//        game.addAnsweredQuestions(answeredQuestionList);
 
         return game;
     }
@@ -112,7 +112,7 @@ public class GameService {
     }
 
     public List<Game> findAllGamesByTeam(User team) {
-        return gameRepository.findByUser(team)
+        return gameRepository.findByUsers(team)
                 .orElseThrow(() -> new EntityNotFoundException("Can not fond games with team: " + team.getEmail()));
     }
 
@@ -138,7 +138,7 @@ public class GameService {
         log.info("in GameService: fileAppealAgainstGameAnsweredQuestions() - appealedGame: {} successfully was find", appealedGame.getId());
 
         appealedGame.setAppealPossible(false);
-        appealedGame.setAppealStage(AppealStage.FILED);
+//        appealedGame.setAppealStage(AppealStage.FILED);
         appealedGame.getAnsweredQuestions()
                 .stream()
                 .filter(AnsweredQuestion::isAppealPossible)
@@ -166,13 +166,13 @@ public class GameService {
         Game appealedGame = anyQuestionFromAppealedGame.getGame();
         log.info("in GameService: fileAppealAgainstGameAnsweredQuestions() - appealedGame: {} successfully was find", appealedGame.getId());
 
-        appealedGame.setAppealStage(AppealStage.CONSIDERED);
+//        appealedGame.setAppealStage(AppealStage.CONSIDERED);
         appealedGame.getAnsweredQuestions()
                 .stream()
                 .filter(answeredQuestion -> answeredQuestion.getAppealStage().equals(AppealStage.FILED))
                 .forEach(questionWithAppealStageFiled -> {
                     if (approvedQuestionIds.contains(questionWithAppealStageFiled.getId())) {
-                        questionWithAppealStageFiled.setUserWhoGotPoint(appealedGame.getUser());
+//                        questionWithAppealStageFiled.setUserWhoGotPoint(appealedGame.getUser());
                         questionWithAppealStageFiled.setAppealStage(AppealStage.WON);
                     } else questionWithAppealStageFiled.setAppealStage(AppealStage.LOST);
                 });
