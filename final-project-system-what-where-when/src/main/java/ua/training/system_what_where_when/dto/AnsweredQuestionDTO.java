@@ -12,25 +12,8 @@ import ua.training.system_what_where_when.util.ResourceBundleUtil;
 public class AnsweredQuestionDTO {
     private Long id;
     private int number; // TODO check where it is used
-    private String nameUa;
-    private String nameEn;
+    private String nameWhoGotPointUa;
+    private String nameWhoGotPointEn;
     private boolean isAppealPossible;
     private String appealStage;
-
-    public static AnsweredQuestionDTO toAnsweredQuestionDTO(AnsweredQuestion answeredQuestion) {
-        AnsweredQuestionDTO answeredQuestionDTO = new AnsweredQuestionDTO();
-        answeredQuestionDTO.setId(answeredQuestion.getId());
-
-        if (answeredQuestion.getUserWhoGotPoint() != null) {
-            answeredQuestionDTO.setNameUa(answeredQuestion.getUserWhoGotPoint().getNameUa());
-            answeredQuestionDTO.setNameEn(answeredQuestion.getUserWhoGotPoint().getNameEn());
-        }
-
-        answeredQuestionDTO.setAppealStage(
-                ResourceBundleUtil.getBundleStringForAppealStage(
-                        answeredQuestion.getAppealStage().name()));
-        answeredQuestionDTO.setAppealPossible(answeredQuestion.isAppealPossible());
-
-        return answeredQuestionDTO;
-    }
 }

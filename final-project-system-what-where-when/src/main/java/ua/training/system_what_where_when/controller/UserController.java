@@ -5,16 +5,12 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
-import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
-import ua.training.system_what_where_when.exception.EntityNotFoundException;
+import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.User;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -52,7 +48,7 @@ public class UserController {
 
     @GetMapping("/games/{id}")
     public String getGameDetails(Model model, @PathVariable Long id) {
-        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
+        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -61,7 +57,7 @@ public class UserController {
 
     @GetMapping("/appeal/games/{id}")
     public String getFileApealForm(Model model, @PathVariable Long id) {
-        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
+        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);

@@ -41,8 +41,8 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   th:if="${gameFullDTO.getAppealStage().equals(appealStageFiled)}"
-                   th:href="@{|/admin/appeal/games/${gameFullDTO.id}|}"
+                   th:if="${gameDTO.appealStage.equals(appealStageFiled)}"
+                   th:href="@{|/admin/appeal/games/${gameDTO.id}|}"
                    th:text="#{navbar.label.games.consider.appeal}"></a>
             </li>
         </ul>
@@ -80,23 +80,28 @@
             <h1 th:text="#{games.game.details.table.caption}"></h1>
             <thead class="thead-light">
             <tr>
+            <tr>
                 <th th:text="#{games.table.header.date}"></th>
                 <th th:text="#{games.table.header.team}"></th>
+                <th th:text="#{games.table.header.team}"></th>
                 <th th:text="#{games.table.header.scores}"></th>
-                <th th:text="#{games.table.header.game.status}"></th>
                 <th th:text="#{games.table.header.appeal.stage}"></th>
+            </tr>
             </tr>
             </thead>
 
             <tbody>
+
             <tr>
-                <td th:text="${gameFullDTO.date}"></td>
-                <td><span th:if="${lang.equals('en')}" th:text="${gameFullDTO.nameEn}"></span>
-                    <span th:if="${lang.equals('ua')}" th:text="${gameFullDTO.nameUa}"></span></td>
-                <td th:text="${gameFullDTO.scores}"></td>
-                <td th:text="${gameFullDTO.gameStatus}"></td>
-                <td th:text="${gameFullDTO.appealStage}"></td>
+                <td th:text="${gameDTO.date}"></td>
+                <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.playerNameEn}"></span>
+                    <span th:if="${lang.equals('ua')}" th:text="${gameDTO.playerNameUa}"></span></td>
+                <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.opponentNameEn}"></span>
+                    <span th:if="${lang.equals('ua')}" th:text="${gameDTO.opponentNameUa}"></span></td>
+                <td th:text="${gameDTO.scores}"></td>
+                <td th:text="${gameDTO.appealStage}"></td>
             </tr>
+
             </tbody>
         </table>
     </div>
@@ -107,16 +112,16 @@
             <thead class="thead-light">
             <tr>
                 <th th:text="#{games.game.table.header.question.id}"></th>
-                <th th:text="#{games.game.table.header.team.name.if.got.point}"></th>
+                <th th:text="#{games.game.table.header.name.who.got.point}"></th>
                 <th th:text="#{games.table.header.appeal.stage}"></th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each="answeredQuestionDTO: ${gameFullDTO.answeredQuestionDTOs}">
+            <tr th:each="answeredQuestionDTO: ${gameDTO.answeredQuestionDTOs}">
                 <td th:text="${answeredQuestionDTO.id}"></td>
-                <td><span th:if="${lang.equals('en')}" th:text="${answeredQuestionDTO.nameEn}"></span>
-                    <span th:if="${lang.equals('ua')}" th:text="${answeredQuestionDTO.nameUa}"></span></td>
+                <td><span th:if="${lang.equals('en')}" th:text="${answeredQuestionDTO.nameWhoGotPointEn}"></span>
+                    <span th:if="${lang.equals('ua')}" th:text="${answeredQuestionDTO.nameWhoGotPointEn}"></span></td>
                 <td th:text="${answeredQuestionDTO.appealStage}"></td>
             </tr>
             </tbody>

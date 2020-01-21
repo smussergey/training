@@ -1,8 +1,11 @@
 package ua.training.system_what_where_when.service;
 
 import org.springframework.stereotype.Service;
+import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
+import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.repository.AnsweredQuestionRepository;
+import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 @Service
 public class AnsweredQuestionService {
@@ -16,4 +19,30 @@ public class AnsweredQuestionService {
     public AnsweredQuestion findAnsweredQuestionById(Long id) {
         return answeredQuestionRepository.findById(id).get();
     }
+
+    public AnsweredQuestionDTO toAnsweredQuestionDTO(AnsweredQuestion answeredQuestion) {
+        AnsweredQuestionDTO answeredQuestionDTO = new AnsweredQuestionDTO();
+        answeredQuestionDTO.setId(answeredQuestion.getId());
+
+        if (answeredQuestion.getUserWhoGotPoint() != null) {
+            answeredQuestionDTO.setNameWhoGotPointUa(answeredQuestion.getUserWhoGotPoint().getNameUa());
+            answeredQuestionDTO.setNameWhoGotPointEn(answeredQuestion.getUserWhoGotPoint().getNameEn());
+        } else {
+            answeredQuestionDTO.setNameWhoGotPointUa(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
+            answeredQuestionDTO.setNameWhoGotPointEn(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
+        }
+
+        if (answeredQuestion.getAppeal() != null) {
+            answeredQuestionDTO.setAppealStage(
+                    ResourceBundleUtil.getBundleStringForAppealStage(
+                            answeredQuestion.getAppealStage().name()));
+
+        } else answeredQuestionDTO.setAppealStage(
+                ResourceBundleUtil.getBundleStringForAppealStage(
+                        AppealStage.NOT_FILED.name()));
+
+
+        return answeredQuestionDTO;
+    }
+
 }

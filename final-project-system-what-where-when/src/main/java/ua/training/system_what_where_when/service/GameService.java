@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
-import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
+import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
+import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.*;
 import ua.training.system_what_where_when.repository.GameRepository;
@@ -33,11 +33,6 @@ public class GameService {
     public GameService(AnsweredQuestionService answeredQuestionService) {
         this.answeredQuestionService = answeredQuestionService;
     }
-    //    public GameWithoutAnsweredQuestionDTO runNewGame(Long teamId, int maxNumberOfScores) {
-//        Game game = generateNewGameResults(teamId, maxNumberOfScores);
-//        gameRepository.save(game);
-//        return GameWithoutAnsweredQuestionDTO.toGameDTO(game);
-//    }
 
     public Game runNewGame(Long teamId, Long opponentId, int maxNumberOfScores) {
         Game game;
@@ -108,44 +103,8 @@ public class GameService {
         return game;
     }
 
-//    private Game generateNewGameResults(Long teamId, Long opponentId, int maxNumberOfScores) {
-//        int teamCorrectAnswerCount = 0;
-//        int teamWrongAnswerCount = 0;
-//        List<AnsweredQuestion> answeredQuestionList = new ArrayList<>();
-//        User playingTeam = userService.findUserById(teamId);
-//
-//        while (true) {
-//            AnsweredQuestion answeredQuestion = generateAnsweredQuestion(playingTeam);
-//            answeredQuestionList.add(answeredQuestion);
-//            if (answeredQuestion.getUserWhoGotPoint() != null) {
-//                teamCorrectAnswerCount++;
-//            } else teamWrongAnswerCount++;
-//
-//            if (teamCorrectAnswerCount == maxNumberOfScores || teamWrongAnswerCount == maxNumberOfScores) {
-//                if (teamWrongAnswerCount > teamCorrectAnswerCount) {
-//                    answeredQuestionList.stream().
-//                            filter(aq -> aq.getUserWhoGotPoint() == null)
-//                            .forEach(aq -> aq.setAppealPossible(true));
-//                }
-//                break;
-//            }
-//        }
-//
-//        Game game = new Game();
-//        game.setDate(LocalDate.now());
-////        game.setUser(playingTeam);
-////        if (teamWrongAnswerCount > teamCorrectAnswerCount) {
-////            game.setAppealPossible(true);
-////        }
-////        game.setAppealStage(AppealStage.NOT_FILED);
-////        game.addAnsweredQuestions(answeredQuestionList);
-//
-//        return game;
-//    }
-
     private AnsweredQuestion generateAnsweredQuestion(User playingTeam, @Nullable User opponent) {
         AnsweredQuestion answeredQuestion = new AnsweredQuestion();
-//        answeredQuestion.setAppealStage(AppealStage.NOT_FILED);
         if (ThreadLocalRandom.current().nextBoolean()) {
             answeredQuestion.setUserWhoGotPoint(playingTeam);
         } else {
@@ -154,15 +113,15 @@ public class GameService {
         return answeredQuestion;
     }
 
-    public List<GameWithoutAnsweredQuestionDTO> getGameStatisticsByAllGames() {
+    public List<GameDTO> getGameStatisticsByAllGames() {
         List<Game> games = findAllGames();
         return games.stream()
                 .map(game -> toGameDTO(game))
                 .collect(Collectors.toList());
     }
 
-    private GameWithoutAnsweredQuestionDTO toGameDTO(Game game) {
-        GameWithoutAnsweredQuestionDTO gameDTO = new GameWithoutAnsweredQuestionDTO();
+    private GameDTO toGameDTO(Game game) {
+        GameDTO gameDTO = new GameDTO();
 
         gameDTO.setId(game.getId());
         gameDTO.setDate(game.getDate());
@@ -174,7 +133,6 @@ public class GameService {
                 .findFirst()
                 .get()
                 .getNameEn());
-
 
         if (game.getUsers().size() > 1) { //TODO correct
             gameDTO.setOpponentNameUa(game.getUsers().get(1).getNameUa());
@@ -188,7 +146,7 @@ public class GameService {
         long firstPlayerScores = game.getAnsweredQuestions()
                 .stream()
                 .filter(aq -> firstPlayer.equals(aq.getUserWhoGotPoint()))
-                        .count();
+                .count();
 
         long secondPlayerScores = game.getAnsweredQuestions()
                 .stream()
@@ -208,18 +166,19 @@ public class GameService {
         return gameDTO;
     }
 
-
-//    public List<GameWithoutAnsweredQuestionDTO> getGameStatisticsByLoginedTeam() {
-//        List<Game> games = findAllGamesByTeam(userService.findLoggedIndUser());
-//        return games.stream()
-//                .map(GameWithoutAnsweredQuestionDTO::toGameDTO)
-//                .collect(Collectors.toList());
-//    }
-
-    public GameWithAnsweredQuestionDTO getGameFullStatisticsById(Long id) {
+    public GameDTO getGameFullStatisticsById(Long id) {
         Game game = findGameById(id); //TODO check/allow only user's games
-        return GameWithAnsweredQuestionDTO.toGameDTO(game);
+        GameDTO gameDTO = toGameDTO(game);
+
+        List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
+                .map(aq -> answeredQuestionService.toAnsweredQuestionDTO(aq))
+                .collect(Collectors.toList());
+
+        gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
+
+        return gameDTO;
     }
+
 
     public Game findGameById(Long id) {
         return gameRepository.findById(id)

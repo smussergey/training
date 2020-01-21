@@ -5,8 +5,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.training.system_what_where_when.dto.GameWithAnsweredQuestionDTO;
-import ua.training.system_what_where_when.dto.GameWithoutAnsweredQuestionDTO;
+import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
@@ -39,7 +38,7 @@ public class AdminController {
 
     @GetMapping("/games/statistics")
     public String getGamesStatistics(Model model) {
-        List<GameWithoutAnsweredQuestionDTO> gameDTOs = gameService.getGameStatisticsByAllGames();
+        List<GameDTO> gameDTOs = gameService.getGameStatisticsByAllGames();
         model.addAttribute("gameDTOs", gameDTOs);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -48,8 +47,8 @@ public class AdminController {
 
     @GetMapping("/games/{id}")
     public String getGameDetails(Model model, @PathVariable Long id) {
-        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
-        model.addAttribute("gameFullDTO", gameFullDTO);
+        GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
+        model.addAttribute("gameDTO", gameDTO);
         model.addAttribute("appealStageFiled",
                 ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
         setLocalizedLoggedInUserName(model);
@@ -59,7 +58,7 @@ public class AdminController {
 
     @GetMapping("/appeal/games/{id}")
     public String getCosiderationApealForm(Model model, @PathVariable Long id) {
-        GameWithAnsweredQuestionDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
+        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameFullDTO", gameFullDTO);
         model.addAttribute("appealStageFiled",
                 ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
