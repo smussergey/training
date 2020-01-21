@@ -11,7 +11,7 @@ import ua.training.system_what_where_when.util.ResourceBundleUtil;
 @AllArgsConstructor
 public class AnsweredQuestionDTO {
     private Long id;
-    private int number;
+    private int number; // TODO check where it is used
     private String nameUa;
     private String nameEn;
     private boolean isAppealPossible;

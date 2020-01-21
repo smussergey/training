@@ -1,5 +1,6 @@
 package ua.training.system_what_where_when.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -24,10 +25,25 @@ public class Game {
     @Column(name = "date")
     private LocalDate date;
 
+    //    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
     @Setter(AccessLevel.PRIVATE)
-//    @JoinColumn(name = "user_id")
-    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_game",
+            joinColumns = {@JoinColumn(name = "game_id", referencedColumnName = "game_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")})
+    private List<User> users = new ArrayList<>();
+
+
+    public void addUser(User user) {
+        users.add(user);
+        user.getGames().add(this);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        user.getGames().remove(this);
+    }
+
 
     @Column(name = "is_appeal_possible")
     private boolean isAppealPossible;

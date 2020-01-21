@@ -37,16 +37,16 @@ public class UserController {
 
     @GetMapping("/games/statistics")
     public String getGamesStatistics(Model model) {
-        List<GameWithoutAnsweredQuestionDTO> gameDTOs = new ArrayList<>();
-        try {
-            gameDTOs = gameService.getGameStatisticsByLoginedTeam();
-        } catch (EntityNotFoundException e) {
-            log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
-        }
-
-        model.addAttribute("gameDTOs", gameDTOs);
-        setLocalizedLoggedInUserName(model);
-        setCurrentLocaleLanguage(model);
+//        List<GameWithoutAnsweredQuestionDTO> gameDTOs = new ArrayList<>();
+//        try {
+//            gameDTOs = gameService.getGameStatisticsByLoginedTeam();
+//        } catch (EntityNotFoundException e) {
+//            log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
+//        }
+//
+//        model.addAttribute("gameDTOs", gameDTOs);
+//        setLocalizedLoggedInUserName(model);
+//        setCurrentLocaleLanguage(model);
         return "usergamesstatistics";
     }
 

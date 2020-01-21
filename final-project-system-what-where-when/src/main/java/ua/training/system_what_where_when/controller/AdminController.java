@@ -39,7 +39,7 @@ public class AdminController {
 
     @GetMapping("/games/statistics")
     public String getGamesStatistics(Model model) {
-        List<GameWithoutAnsweredQuestionDTO> gameDTOs = gameService.getGameStatisticsByAllTeams();
+        List<GameWithoutAnsweredQuestionDTO> gameDTOs = gameService.getGameStatisticsByAllGames();
         model.addAttribute("gameDTOs", gameDTOs);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -89,12 +89,15 @@ public class AdminController {
     }
 
     @PostMapping("/games/new")
-    public String playNewGame(@RequestParam(value = "id", required = true) Long teamId,
+    public String playNewGame(@RequestParam(value = "teamid", required = true) Long teamId,
+                              @RequestParam(value = "opponentid", required = true) Long opponentId,
                               @RequestParam(value = "maxscores", required = true) int maxNumberOfScores,
                               Model model) {
         log.info("IN playNewGame - team id: {} successfully was got", teamId);
+        log.info("IN playNewGame - opponent id: {} successfully was got", opponentId);
         log.info("IN playNewGame - number Of questions : {} successfully was got", maxNumberOfScores);
-        GameWithoutAnsweredQuestionDTO gameDTO = gameService.runNewGame(teamId, maxNumberOfScores);
+//        GameWithoutAnsweredQuestionDTO gameDTO = gameService.runNewGame(teamId, opponentId, maxNumberOfScores);
+        gameService.runNewGame(teamId, opponentId, maxNumberOfScores);
         return "redirect:/admin/games/statistics";
     }
 

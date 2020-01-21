@@ -24,4 +24,8 @@ public class Appeal {
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

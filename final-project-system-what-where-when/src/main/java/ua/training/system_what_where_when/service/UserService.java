@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
-
+// TODO redo
     public User findUserById(Long id) {
         User result = userRepository.findById(id).orElse(null);
 

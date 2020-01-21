@@ -76,8 +76,8 @@
             <tr>
                 <th th:text="#{games.table.header.date}"></th>
                 <th th:text="#{games.table.header.team}"></th>
+                <th th:text="#{games.table.header.team}"></th>
                 <th th:text="#{games.table.header.scores}"></th>
-                <th th:text="#{games.table.header.game.status}"></th>
                 <th th:text="#{games.table.header.appeal.stage}"></th>
                 <th th:text="#{games.statistics.table.header.game.statistics}"></th>
             </tr>
@@ -86,10 +86,11 @@
             <tbody>
             <tr th:each="gameDTO: ${gameDTOs}">
                 <td th:text="${gameDTO.date}"></td>
-                <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.nameEn}"></span>
-                    <span th:if="${lang.equals('ua')}" th:text="${gameDTO.nameUa}"></span></td>
+                <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.playerNameEn}"></span>
+                    <span th:if="${lang.equals('ua')}" th:text="${gameDTO.playerNameUa}"></span></td>
+                <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.opponentNameEn}"></span>
+                    <span th:if="${lang.equals('ua')}" th:text="${gameDTO.opponentNameUa}"></span></td>
                 <td th:text="${gameDTO.scores}"></td>
-                <td th:text="${gameDTO.gameStatus}"></td>
                 <td th:text="${gameDTO.appealStage}"></td>
                 <td>
                     <a th:href="@{|/admin/games/${gameDTO.id}|}"
