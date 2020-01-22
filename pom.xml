@@ -29,11 +29,12 @@
         <module>block08-task01-count-repeated-elements</module>
         <module>block08-task02-blocked-methods-in-arraylist</module>
         <module>final-project-system-what-where-when</module>
-        <module>block12-task01-err-diagram</module>
+<!--        <module>block12-task01-err-diagram</module>-->
         <module>block12-task02-representative-controller</module>
         <module>block12-tasks03_05-car-db</module>
         <module>block02-pr_mas_sokr-different-operations-with-arrays-using-Stream-API</module>
-        <module>block12-car-and-driver</module>
+        <module> block12-car-and-driver</module>
+        <module>block-jsp-locales</module>
     </modules>
 
     <properties>
