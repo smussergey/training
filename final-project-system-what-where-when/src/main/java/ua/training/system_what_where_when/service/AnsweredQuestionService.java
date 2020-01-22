@@ -7,6 +7,8 @@ import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.repository.AnsweredQuestionRepository;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
+import java.util.List;
+
 @Service
 public class AnsweredQuestionService {
 
@@ -45,4 +47,7 @@ public class AnsweredQuestionService {
         return answeredQuestionDTO;
     }
 
+    public List<AnsweredQuestion> saveAll(List<AnsweredQuestion> answeredQuestions) {
+        return answeredQuestionRepository.saveAll(answeredQuestions);
+    }
 }

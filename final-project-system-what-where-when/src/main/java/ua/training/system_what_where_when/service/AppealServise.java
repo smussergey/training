@@ -22,7 +22,7 @@ public class AppealServise {
     private AnsweredQuestionService answeredQuestionService;
     @Autowired
     private UserService userService;
-
+    @Autowired
     private final AppealRepository appealRepository;
 
     public AppealServise(AppealRepository appealRepository) {
@@ -57,4 +57,30 @@ public class AppealServise {
         return appealRepository.save(appeal);
     }
 
+    public List<Appeal> saveAll(List<Appeal> appeals) {
+        return appealRepository.saveAll(appeals);
+    }
+
+    public void approveAppealsAgainstGameAnsweredQuestions(String[] approvedQuestionStringIds) {
+        log.info("in AppealServise: approveAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", approvedQuestionStringIds[0]);
+        List<AnsweredQuestion> answeredQuestionsWithApprovedAppeal = Arrays.stream(approvedQuestionStringIds)
+                .mapToLong(Long::valueOf)
+                .mapToObj(answeredQuestionService::findAnsweredQuestionById)
+                .collect(Collectors.toList());
+
+        answeredQuestionService.saveAll(answeredQuestionsWithApprovedAppeal.stream()
+                .peek(aq -> aq.setUserWhoGotPoint(aq.getAppeal().getUser()))
+                .collect(Collectors.toList()));
+
+        Game appealedGame = answeredQuestionsWithApprovedAppeal.stream()
+                .findAny()
+                .get()
+                .getGame();
+
+
+        saveAll(appealedGame.getAppeals().stream()
+                .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))
+                .collect(Collectors.toList()));
+
+    }
 }

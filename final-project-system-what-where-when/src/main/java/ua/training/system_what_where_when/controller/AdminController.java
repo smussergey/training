@@ -9,6 +9,7 @@ import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.service.AppealServise;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
@@ -23,10 +24,12 @@ import java.util.List;
 public class AdminController {
     private final GameService gameService;
     private final UserService userService;
+    private final AppealServise appealServise;
 
-    public AdminController(GameService gameService, UserService userService) {
+    public AdminController(GameService gameService, UserService userService, AppealServise appealServise) {
         this.gameService = gameService;
         this.userService = userService;
+        this.appealServise = appealServise;
     }
 
     @GetMapping("/adminhome")
@@ -58,8 +61,8 @@ public class AdminController {
 
     @GetMapping("/appeal/games/{id}")
     public String getCosiderationApealForm(Model model, @PathVariable Long id) {
-        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
-        model.addAttribute("gameFullDTO", gameFullDTO);
+        GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
+        model.addAttribute("gameDTO", gameDTO);
         model.addAttribute("appealStageFiled",
                 ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
         setLocalizedLoggedInUserName(model);
@@ -68,12 +71,12 @@ public class AdminController {
     }
 
     @PostMapping("/appeal/game/quastions")
-    public String considerAppealedQuestions(HttpServletRequest request, Model model) {
+    public String approvedAppealedQuestions(HttpServletRequest request, Model model) {
         Arrays.stream(request.getParameterValues("ids")).forEach(q -> System.out.println("--------id=" + q));
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
             log.info("IN considerAppealedQuestions - question with id: {} successfully was got", answeredQuestionIds.length);
-            gameService.approveAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
+            appealServise.approveAppealsAgainstGameAnsweredQuestions(answeredQuestionIds);
         }
         return "redirect:/admin/games/statistics";
     }
