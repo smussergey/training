@@ -23,5 +23,6 @@ public class GameDTO {
     private String opponentNameEn;
     private String scores;
     private String appealStage;
+    private boolean isAppealPossible;
     private List<AnsweredQuestionDTO> answeredQuestionDTOs = new ArrayList<>();
 }

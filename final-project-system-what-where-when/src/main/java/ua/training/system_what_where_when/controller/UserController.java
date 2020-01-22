@@ -6,11 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.training.system_what_where_when.dto.GameDTO;
+import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.service.AppealServise;
 import ua.training.system_what_where_when.service.GameService;
 import ua.training.system_what_where_when.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -18,10 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     private final GameService gameService;
     private final UserService userService;
+    private final AppealServise appealServise;
 
-    public UserController(GameService gameService, UserService userService) {
+    public UserController(GameService gameService, UserService userService, AppealServise appealServise) {
         this.gameService = gameService;
         this.userService = userService;
+        this.appealServise = appealServise;
     }
 
     @GetMapping("/userhome")
@@ -33,32 +39,41 @@ public class UserController {
 
     @GetMapping("/games/statistics")
     public String getGamesStatistics(Model model) {
-//        List<GameWithoutAnsweredQuestionDTO> gameDTOs = new ArrayList<>();
-//        try {
-//            gameDTOs = gameService.getGameStatisticsByLoginedTeam();
-//        } catch (EntityNotFoundException e) {
-//            log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
-//        }
-//
-//        model.addAttribute("gameDTOs", gameDTOs);
-//        setLocalizedLoggedInUserName(model);
-//        setCurrentLocaleLanguage(model);
+        List<GameDTO> gameDTOs = new ArrayList<>();
+        try {
+            gameDTOs = gameService.getGamesStatisticsByLoggedInTeam();
+        } catch (EntityNotFoundException e) { // TODO chech if it should be here
+            log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
+        }
+
+        model.addAttribute("gameDTOs", gameDTOs);
+        setLocalizedLoggedInUserName(model);
+        setCurrentLocaleLanguage(model);
         return "usergamesstatistics";
     }
 
-    @GetMapping("/games/{id}")
+//    @GetMapping("/games/{id}")
+//    public String getGameDetails(Model model, @PathVariable Long id) {
+//        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
+//        model.addAttribute("gameFullDTO", gameFullDTO);
+//        setLocalizedLoggedInUserName(model);
+//        setCurrentLocaleLanguage(model);
+//        return "usergamedetails";
+//    }
+    @GetMapping("/games/{id}") //TODO check user can get info only on hig game
     public String getGameDetails(Model model, @PathVariable Long id) {
-        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
-        model.addAttribute("gameFullDTO", gameFullDTO);
+        GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
+        model.addAttribute("gameDTO", gameDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
         return "usergamedetails";
     }
 
+
     @GetMapping("/appeal/games/{id}")
     public String getFileApealForm(Model model, @PathVariable Long id) {
-        GameDTO gameFullDTO = gameService.getGameFullStatisticsById(id);
-        model.addAttribute("gameFullDTO", gameFullDTO);
+        GameDTO gameDTO = gameService.getGameFullStatisticsByIdForAppealForm(id);
+        model.addAttribute("gameDTO", gameDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
         return "usergamefileappealform";
@@ -69,7 +84,9 @@ public class UserController {
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
             log.info("IN appealQuastions - appealed questions {} successfully were got", answeredQuestionIds.length);
-            gameService.fileAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
+
+
+            appealServise.fileAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
         }
         return "redirect:/user/games/statistics";
     }

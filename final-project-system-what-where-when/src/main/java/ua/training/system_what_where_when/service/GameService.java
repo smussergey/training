@@ -159,11 +159,18 @@ public class GameService {
         String scores = stringBuilder.toString();
         gameDTO.setScores(scores);
 
+
         if (game.getAppeals().size() > 0) {
             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name())); //TODO correct
         } else
             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
         return gameDTO;
+    }
+
+    public List<GameDTO> getGamesStatisticsByLoggedInTeam() {
+        return findAllGamesByTeam(userService.findLoggedIndUser()).stream()
+                .map(game -> toGameDTO(game))
+                .collect(Collectors.toList());
     }
 
     public GameDTO getGameFullStatisticsById(Long id) {
@@ -175,9 +182,58 @@ public class GameService {
                 .collect(Collectors.toList());
 
         gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
+        gameDTO.setAppealPossible(checkIfLoggedInUserCanFileAppealAgainstGame(game));
 
         return gameDTO;
     }
+
+    // TODO improve this method
+    private boolean checkIfLoggedInUserCanFileAppealAgainstGame(Game game) {
+
+        if (!game.getAppeals().isEmpty()) {
+            return !game.getAppeals().stream()
+                    .filter(appeal -> appeal.getUser().equals(userService.findLoggedIndUser()))
+                    .findAny()
+                    .isPresent();
+        } else {
+            return true;
+        }
+    }
+
+    public GameDTO getGameFullStatisticsByIdForAppealForm(Long id) {
+        User loggedInUser = userService.findLoggedIndUser();
+        Game game = findGameById(id); //TODO check/allow only user's games
+        GameDTO gameDTO = toGameDTO(game);
+
+        List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
+                .map(aq -> answeredQuestionService.toAnsweredQuestionDTO(aq))
+                .peek(aqDTO -> {
+                    if (!aqDTO.getNameWhoGotPointEn().equals(loggedInUser.getNameEn())) {
+                        aqDTO.setAppealPossible(true);
+                    } else {
+                        aqDTO.setAppealPossible(false);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
+//        gameDTO.setAppealPossible(checkIfLoggedInUserCanFileAppealAgainstGame(game));
+
+        return gameDTO;
+    }
+
+    // TODO improve this method
+//    private boolean checkIfLoggedInUserCanFileAppealAgainstQuestion(Game game) {
+//
+//        if (!game.getAppeals().isEmpty()) {
+//            return !game.getAppeals().stream()
+//                    .filter(appeal -> appeal.getUser().equals(userService.findLoggedIndUser()))
+//                    .findAny()
+//                    .isPresent();
+//        } else {
+//            return true;
+//        }
+//    }
 
 
     public Game findGameById(Long id) {

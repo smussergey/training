@@ -44,7 +44,7 @@ public class Game {
         user.getGames().remove(this);
     }
 
-
+    // TODO delete this field
     @Column(name = "is_appeal_possible")
     private boolean isAppealPossible;
 

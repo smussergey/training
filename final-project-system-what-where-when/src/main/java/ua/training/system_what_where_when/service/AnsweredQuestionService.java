@@ -35,7 +35,7 @@ public class AnsweredQuestionService {
         if (answeredQuestion.getAppeal() != null) {
             answeredQuestionDTO.setAppealStage(
                     ResourceBundleUtil.getBundleStringForAppealStage(
-                            answeredQuestion.getAppealStage().name()));
+                            answeredQuestion.getAppeal().getAppealStage().name()));
 
         } else answeredQuestionDTO.setAppealStage(
                 ResourceBundleUtil.getBundleStringForAppealStage(

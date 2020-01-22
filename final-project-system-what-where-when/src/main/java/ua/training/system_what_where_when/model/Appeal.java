@@ -1,9 +1,13 @@
 package ua.training.system_what_where_when.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,4 +32,24 @@ public class Appeal {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Setter(AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "appeal", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<AnsweredQuestion> appealedQuestions = new ArrayList<>();
+
+    public void addAnsweredQuestion(AnsweredQuestion answeredQuestion) {
+        appealedQuestions.add(answeredQuestion);
+        answeredQuestion.setAppeal(this);
+    }
+
+    public void addAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
+        this.appealedQuestions.addAll(answeredQuestions);
+        answeredQuestions.forEach(answeredQuestion -> answeredQuestion.setAppeal(this));
+    }
+
+    public void removeAnsweredQuestions(AnsweredQuestion answeredQuestion) {
+        appealedQuestions.remove(answeredQuestion);
+        answeredQuestion.setAppeal(null);
+    }
+
 }

@@ -28,6 +28,7 @@ public class AnsweredQuestion {
     @JoinColumn(name = "user_id")
     private User userWhoGotPoint;
 
+    // TODO delete this field
     @Column(name = "is_appeal_possible")
     private boolean isAppealPossible;
 
