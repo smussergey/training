@@ -58,7 +58,7 @@ public class GameStatisticsAndDetailsController {
     }
 
     @GetMapping("/referee/games/statistics")
-    public String getGamesStatisticsForAdmin(Model model) {
+    public String getGamesStatisticsForReferee(Model model) {
         List<GameDTO> gameDTOs = gameService.getGameStatisticsByAllGames();
         model.addAttribute("gameDTOs", gameDTOs);
         setLocalizedLoggedInUserName(model);
@@ -67,7 +67,7 @@ public class GameStatisticsAndDetailsController {
     }
 
     @GetMapping("/referee/games/{id}")
-    public String getGameDetailsForAdmin(Model model, @PathVariable Long id) {
+    public String getGameDetailsForReferee(Model model, @PathVariable Long id) {
         GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameDTO", gameDTO);
         model.addAttribute("appealStageFiled",

@@ -37,7 +37,7 @@ public class AppealGameController {
 
 
     @GetMapping("/player/appeal/games/{id}")
-    public String getFileApealForm(Model model, @PathVariable Long id) {
+    public String getFileAppealForm(Model model, @PathVariable Long id) {
         GameDTO gameDTO = gameService.getGameFullStatisticsByIdForAppealForm(id);
         model.addAttribute("gameDTO", gameDTO);
         setLocalizedLoggedInUserName(model);
@@ -46,7 +46,7 @@ public class AppealGameController {
     }
 
     @PostMapping("/player/appeal/game/questions")
-    public String appealQuestions(HttpServletRequest request, Model model) {
+    public String fileAppealAgainstGameAnsweredQuestions(HttpServletRequest request, Model model) {
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
             log.info("IN appealQuastions - appealed questions {} successfully were got", answeredQuestionIds.length);
@@ -57,7 +57,7 @@ public class AppealGameController {
 
 
     @GetMapping("/referee/appeal/games/{id}")
-    public String getCosiderationApealForm(Model model, @PathVariable Long id) {
+    public String getConsiderationAppealForm(Model model, @PathVariable Long id) {
         GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
         model.addAttribute("gameDTO", gameDTO);
         model.addAttribute("appealStageFiled",
@@ -68,7 +68,7 @@ public class AppealGameController {
     }
 
     @PostMapping("/referee/appeal/game/quastions")
-    public String approvedAppealedQuestions(HttpServletRequest request, Model model) {
+    public String approveAppealsAgainstGameAnsweredQuestions(HttpServletRequest request, Model model) {
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
             log.info("IN considerAppealedQuestions - question with id: {} successfully was got", answeredQuestionIds.length);

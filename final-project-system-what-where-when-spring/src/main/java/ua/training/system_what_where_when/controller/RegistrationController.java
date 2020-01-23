@@ -6,23 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import ua.training.system_what_where_when.dto.UserRegisterDTO;
+import ua.training.system_what_where_when.dto.UserRegistrationDTO;
 import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.validation.ValidationErrorBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Slf4j
 @Controller
-public class RegistrationAndLoginController {
+public class RegistrationController {
     private final static String REGISTRATION_PAGE = "registration";
     private final static String LOGIN_PAGE = "login";
 
     private UserService userService;
 
-    public RegistrationAndLoginController(UserService userService) {
+    public RegistrationController(UserService userService) {
         this.userService = userService;
     }
 
@@ -33,14 +31,14 @@ public class RegistrationAndLoginController {
     }
 
     @PostMapping("/registration")
-    public String registrer(@ModelAttribute("newuser") @Valid UserRegisterDTO userRegisterDTO,
+    public String registrer(@ModelAttribute("newuser") @Valid UserRegistrationDTO userRegistrationDTO,
                             Errors errors, Model model) {
         if (!errors.hasErrors()) {
             try {
-                userService.register(userRegisterDTO);
+                userService.register(userRegistrationDTO);
                 return LOGIN_PAGE;
             } catch (Exception ex) {
-                log.info(userRegisterDTO.getEmail() + " email is already exist");
+                log.info(userRegistrationDTO.getEmail() + " email is already exist");
                 model.addAttribute("emailerror", "registration.message.login.already.exists");
                 return REGISTRATION_PAGE;
             }
@@ -48,16 +46,6 @@ public class RegistrationAndLoginController {
 
         model.addAttribute("fielderrors", ValidationErrorBuilder.fromBindingErrors(errors).getErrors());
         return REGISTRATION_PAGE;
-    }
-
-    @GetMapping("/login")
-    public String getLogin(@RequestParam(value = "error", required = false) String error,
-                           @RequestParam(value = "logout", required = false) String logout,
-                           Model model) {
-        model.addAttribute("error", error != null); //TODO check why to use this
-        model.addAttribute("logout", logout != null);//TODO check why to use this
-        setCurrentLocaleLanguage(model);
-        return "login";
     }
 
     private Model setCurrentLocaleLanguage(Model model) {

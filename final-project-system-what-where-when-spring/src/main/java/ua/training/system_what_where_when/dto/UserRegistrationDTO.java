@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserRegisterDTO {
+public class UserRegistrationDTO {
     @NotBlank(message = "validation.name.ua.cannot.be.blank")
     private String nameUa;
     @NotBlank(message = "validation.name.en.cannot.be.blank")
