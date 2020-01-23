@@ -25,7 +25,7 @@ public class NewGameService {
     }
 
     public Game runNewGame(Long playerId, Long opponentId, int maxNumberOfScoresToFinishGame) {
-        Game game = generateNewGameResults(playerId, opponentId, maxNumberOfScoresToFinishGame);
+        Game game = generateNewGameWithResults(playerId, opponentId, maxNumberOfScoresToFinishGame);
 
         log.info("in GameService: save() - numberOfPlayers: {}", game.getUsers().size());
         log.info("in GameService: save() - numberOfQuestionInGame: {}", game.getAnsweredQuestions().size());
@@ -33,7 +33,12 @@ public class NewGameService {
         return save(game);
     }
 
-    private Game generateNewGameResults(Long playerId, Long opponentId, int maxNumberOfScoresToFinishGame) {
+    @Transactional
+    public Game save(Game game) {
+        return gameRepository.save(game);
+    }
+
+    private Game generateNewGameWithResults(Long playerId, Long opponentId, int maxNumberOfScoresToFinishGame) {
         int playerScoresCount = 0;
         int opponentScoresCount = 0;
         List<AnsweredQuestion> answeredQuestionList = new ArrayList<>();
@@ -79,8 +84,4 @@ public class NewGameService {
         return game;
     }
 
-    @Transactional
-    public Game save(Game game) {
-        return gameRepository.save(game);
-    }
 }

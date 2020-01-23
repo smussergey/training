@@ -2,6 +2,7 @@ package ua.training.system_what_where_when.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
 import ua.training.system_what_where_when.model.Appeal;
 import ua.training.system_what_where_when.model.AppealStage;
@@ -26,13 +27,6 @@ public class AppealService {
         this.appealRepository = appealRepository;
     }
 
-    public Appeal save(Appeal appeal) {
-        return appealRepository.save(appeal);
-    }
-
-    public List<Appeal> saveAll(List<Appeal> appeals) {
-        return appealRepository.saveAll(appeals);
-    }
 
     public Appeal fileAppealAgainstGameAnsweredQuestions(String[] appealedQuestionStringIds) {
         log.info("in AppealServise: fileAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", appealedQuestionStringIds[0]);
@@ -47,7 +41,7 @@ public class AppealService {
                 .get()
                 .getGame();
 
-        log.info("in AppealServise: fileAppealAgainstGameAnsweredQuestions() - appealedGame: {} successfully was find", appealedGame.getId());
+        log.info("in AppealService: fileAppealAgainstGameAnsweredQuestions() - appealedGame: {} successfully was find", appealedGame.getId());
 
         Appeal appeal = new Appeal();
         appeal.setDate(LocalDate.now());
@@ -58,7 +52,12 @@ public class AppealService {
         return save(appeal);
     }
 
-    public void approveAppealsAgainstGameAnsweredQuestions(String[] approvedQuestionStringIds) {
+    @Transactional
+    public Appeal save(Appeal appeal) {
+        return appealRepository.save(appeal);
+    }
+
+    public List<Appeal> approveAppealsAgainstGameAnsweredQuestions(String[] approvedQuestionStringIds) {
         log.info("in AppealServise: approveAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", approvedQuestionStringIds[0]);
         List<AnsweredQuestion> answeredQuestionsWithApprovedAppeal = Arrays.stream(approvedQuestionStringIds)
                 .mapToLong(Long::valueOf)
@@ -74,9 +73,15 @@ public class AppealService {
                 .get()
                 .getGame();
 
-        saveAll(appealedGame.getAppeals().stream()
+        return saveAll(appealedGame.getAppeals().stream()
                 .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))
                 .collect(Collectors.toList()));
 
     }
+
+    @Transactional
+    public List<Appeal> saveAll(List<Appeal> appeals) {
+        return appealRepository.saveAll(appeals);
+    }
+
 }

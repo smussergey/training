@@ -1,6 +1,8 @@
 package ua.training.system_what_where_when.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameDTO;
@@ -9,6 +11,7 @@ import ua.training.system_what_where_when.model.*;
 import ua.training.system_what_where_when.repository.GameRepository;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,13 @@ public class GameStatisticsAndDetailsService {
         this.answeredQuestionService = answeredQuestionService;
     }
 
+//    public List<GameDTO> getGameStatisticsByAllGames() {
+//        List<Game> games = findAllGames();
+//        return games.stream()
+//                .map(game -> toGameDTO(game))
+//                .collect(Collectors.toList());
+//    }
+
     public List<GameDTO> getGameStatisticsByAllGames() {
         List<Game> games = findAllGames();
         return games.stream()
@@ -39,16 +49,10 @@ public class GameStatisticsAndDetailsService {
 
         gameDTO.setId(game.getId());
         gameDTO.setDate(game.getDate());
-        gameDTO.setPlayerNameUa(game.getUsers().stream()
-                .findFirst()
-                .get()
-                .getNameUa());
-        gameDTO.setPlayerNameEn(game.getUsers().stream()
-                .findFirst()
-                .get()
-                .getNameEn());
+        gameDTO.setPlayerNameUa(game.getUsers().get(0).getNameUa());//TODO improve
+        gameDTO.setPlayerNameEn(game.getUsers().get(0).getNameEn());//TODO improve
 
-        if (game.getUsers().size() > 1) { //TODO correct
+        if (game.getUsers().size() > 1) { //TODO improve
             gameDTO.setOpponentNameUa(game.getUsers().get(1).getNameUa());
             gameDTO.setOpponentNameEn(game.getUsers().get(1).getNameEn());
         } else {
@@ -74,21 +78,23 @@ public class GameStatisticsAndDetailsService {
         gameDTO.setScores(scores);
 
 
-        if (game.getAppeals().size() > 0) {
+        if (game.getAppeals().size() > 0) { //TODO improve
             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name())); //TODO correct
         } else
             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
         return gameDTO;
     }
 
-    public List<GameDTO> getGamesStatisticsByLoggedInTeam() {
-        return findAllGamesByTeam(userService.findLoggedIndUser()).stream()
-                .map(game -> toGameDTO(game))
-                .collect(Collectors.toList());
+    public Page<GameDTO> getGamesStatisticsByLoggedInPlayerOrderByDate(Principal principal, Pageable pageable) throws EntityNotFoundException {
+        //TODO improve with Principal
+        Page<Game> gamePage = gameRepository.findAllByUsers(userService.findLoggedIndUser(), pageable);
+        return gamePage.map(this::toGameDTO);
     }
 
+
+    //    TODO forbid logged user to see not his game results
     public GameDTO getGameFullStatisticsById(Long id) {
-        Game game = findGameById(id); //TODO check/allow only user's games
+        Game game = findGameById(id);
         GameDTO gameDTO = toGameDTO(game);
 
         List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
@@ -114,9 +120,10 @@ public class GameStatisticsAndDetailsService {
         }
     }
 
+    //TODO check/allow only user's games
     public GameDTO getGameFullStatisticsByIdForAppealForm(Long id) {
         User loggedInUser = userService.findLoggedIndUser();
-        Game game = findGameById(id); //TODO check/allow only user's games
+        Game game = findGameById(id);
         GameDTO gameDTO = toGameDTO(game);
 
         List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
@@ -141,7 +148,7 @@ public class GameStatisticsAndDetailsService {
                 .orElseThrow(() -> new EntityNotFoundException("Can not fond games with id: " + id));
     }
 
-    public List<Game> findAllGamesByTeam(User team) {
+    public List<Game> findAllGamesByPlayer(User team) {
         return gameRepository.findByUsers(team)
                 .orElseThrow(() -> new EntityNotFoundException("Can not fond games with team: " + team.getEmail()));
     }

@@ -1,6 +1,7 @@
 package ua.training.system_what_where_when.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.training.system_what_where_when.model.Game;
