@@ -1,7 +1,6 @@
 package ua.training.system_what_where_when.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.model.AnsweredQuestion;
 import ua.training.system_what_where_when.model.Appeal;
@@ -10,23 +9,29 @@ import ua.training.system_what_where_when.model.Game;
 import ua.training.system_what_where_when.repository.AppealRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class AppealServise {
-    @Autowired
-    private AnsweredQuestionService answeredQuestionService;
-    @Autowired
-    private UserService userService;
-    @Autowired
+public class AppealService {
+    private final AnsweredQuestionService answeredQuestionService;
+    private final UserService userService;
     private final AppealRepository appealRepository;
 
-    public AppealServise(AppealRepository appealRepository) {
+    public AppealService(AnsweredQuestionService answeredQuestionService, UserService userService, AppealRepository appealRepository) {
+        this.answeredQuestionService = answeredQuestionService;
+        this.userService = userService;
         this.appealRepository = appealRepository;
+    }
+
+    public Appeal save(Appeal appeal) {
+        return appealRepository.save(appeal);
+    }
+
+    public List<Appeal> saveAll(List<Appeal> appeals) {
+        return appealRepository.saveAll(appeals);
     }
 
     public Appeal fileAppealAgainstGameAnsweredQuestions(String[] appealedQuestionStringIds) {
@@ -53,14 +58,6 @@ public class AppealServise {
         return save(appeal);
     }
 
-    public Appeal save(Appeal appeal) {
-        return appealRepository.save(appeal);
-    }
-
-    public List<Appeal> saveAll(List<Appeal> appeals) {
-        return appealRepository.saveAll(appeals);
-    }
-
     public void approveAppealsAgainstGameAnsweredQuestions(String[] approvedQuestionStringIds) {
         log.info("in AppealServise: approveAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", approvedQuestionStringIds[0]);
         List<AnsweredQuestion> answeredQuestionsWithApprovedAppeal = Arrays.stream(approvedQuestionStringIds)
@@ -76,7 +73,6 @@ public class AppealServise {
                 .findAny()
                 .get()
                 .getGame();
-
 
         saveAll(appealedGame.getAppeals().stream()
                 .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))

@@ -15,7 +15,7 @@ import java.security.Principal;
 @Slf4j
 @Controller
 public class MainPageController {
-    private final static String HOME_PAGE = "index";
+    private final static String HOME_PAGE_DEFAULT = "index";
     private final static String HOME_PAGE_PLAYER = "player/homeplayer";
     private final static String HOME_PAGE_REFEREE = "referee/homereferee";
     private final static String REDIRECT_HOME_PAGE_PLAYER = "redirect:/player/home";
@@ -33,7 +33,7 @@ public class MainPageController {
 
         if (principal == null) {
             log.info("-----------------------IN getMainPage - principal: {}", principal);
-            return HOME_PAGE;
+            return HOME_PAGE_DEFAULT;
         }
 
         Role role = userService.findLoggedIndUser().getRole(); // TODO check if principal can be used instead of userService.findLoggedIndUser()
@@ -44,13 +44,13 @@ public class MainPageController {
             case ROLE_REFEREE:
                 return REDIRECT_HOME_PAGE_REFEREE;
         }
-        return HOME_PAGE;
+        return HOME_PAGE_DEFAULT;
     }
 
     @GetMapping("/home")
     public String getDefaultPage(Model model) {
         setCurrentLocaleLanguage(model);
-        return HOME_PAGE;
+        return HOME_PAGE_DEFAULT;
     }
 
     @GetMapping("/player/home")

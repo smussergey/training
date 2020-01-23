@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.training.system_what_where_when.dto.UserRegistrationDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
@@ -17,6 +16,7 @@ import ua.training.system_what_where_when.repository.UserRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -33,38 +33,13 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public User register(UserRegistrationDTO userRegistrationDto) {
-
-        User user = new User();
-        user.setNameUa(userRegistrationDto.getNameUa());
-        user.setNameEn(userRegistrationDto.getNameEn());
-        user.setEmail(userRegistrationDto.getEmail());
-
-        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-        user.setRole(Role.ROLE_PLAYER);
-
-        User registeredUser = userRepository.save(user);
-
-        log.info("IN register - user: {} successfully registered", registeredUser);
-
-        return registeredUser;
-    }
-
-
-    public List<User> getAll() {
-        List<User> result = userRepository.findAll();
-        log.info("IN getAll - {} users found", result.size());
-        return result;
-    }
-
-
     public User findUserByEmail(String email) {
         User result = userRepository.findByEmail(email);
         log.info("IN findByEmail - user: {} found by email: {}", result, email);
         return result;
     }
 
-// TODO redo
+    // TODO redo
     public User findUserById(Long id) {
         User result = userRepository.findById(id).orElse(null);
 
@@ -77,6 +52,9 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
+    public Optional<User> findUserByIdOptional(Long id) {
+        return userRepository.findById(id);
+    }
 
     public void delete(Long id) {
         userRepository.deleteById(id);

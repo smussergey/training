@@ -83,6 +83,7 @@
         <div class="custom-control mb-3">
             <label th:text="#{games.new.game.opponent.label}" for="opponent"></label>
             <select class="custom-select mb-3" id="opponent" th:name="opponentid">
+<!--                TODO move to property  th:value="0"-->
                 <option
                         th:value="0" th:text="#{games.new.game.option.label.opponent}">
                 </option>

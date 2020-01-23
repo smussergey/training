@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.training.system_what_where_when.model.Role;
 import ua.training.system_what_where_when.model.User;
-import ua.training.system_what_where_when.service.GameService;
+import ua.training.system_what_where_when.service.NewGameService;
 import ua.training.system_what_where_when.service.UserService;
 
 import java.util.List;
@@ -21,11 +21,12 @@ import java.util.List;
 public class NewGameController {
     private final static String NEW_GAME_PAGE_REFEREE = "referee/newgamereferee";
     private final static String REDIRECT_GAMES_STATISTICS_REFEREE = "redirect:/referee/games/statistics";
-    private final GameService gameService;
+
+    private final NewGameService newGameService;
     private final UserService userService;
 
-    public NewGameController(GameService gameService, UserService userService) {
-        this.gameService = gameService;
+    public NewGameController(NewGameService newGameService, UserService userService) {
+        this.newGameService = newGameService;
         this.userService = userService;
     }
 
@@ -41,12 +42,12 @@ public class NewGameController {
     @PostMapping("/games/new")
     public String playNewGame(@RequestParam(value = "playerid", required = true) Long playerId,
                               @RequestParam(value = "opponentid", required = true) Long opponentId,
-                              @RequestParam(value = "maxscores", required = true) int maxNumberOfScores,
+                              @RequestParam(value = "maxscores", required = true) int maxNumberOfScoresToFinishGame,
                               Model model) {
         log.info("IN playNewGame - team id: {} successfully was got", playerId);
         log.info("IN playNewGame - opponent id: {} successfully was got", opponentId);
-        log.info("IN playNewGame - number Of questions : {} successfully was got", maxNumberOfScores);
-        gameService.runNewGame(playerId, opponentId, maxNumberOfScores);
+        log.info("IN playNewGame - number Of questions : {} successfully was got", maxNumberOfScoresToFinishGame);
+        newGameService.runNewGame(playerId, opponentId, maxNumberOfScoresToFinishGame);
         return REDIRECT_GAMES_STATISTICS_REFEREE;
     }
 

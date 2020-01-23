@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.User;
-import ua.training.system_what_where_when.service.AppealServise;
-import ua.training.system_what_where_when.service.GameService;
+import ua.training.system_what_where_when.service.AppealService;
+import ua.training.system_what_where_when.service.GameStatisticsAndDetailsService;
 import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
@@ -25,20 +25,20 @@ public class AppealGameController {
     private final static String APPEAL_CONSIDERATION_FORM_PAGE_REFEREE = "referee/appealconsiderationformreferee";
     private final static String REDIRECT_GAMES_STATISTICS_REFEREE = "redirect:/referee/games/statistics";
 
-    private final GameService gameService;
+    private final GameStatisticsAndDetailsService gameStatisticsAndDetailsService;
     private final UserService userService;
-    private final AppealServise appealServise;
+    private final AppealService appealService;
 
-    public AppealGameController(GameService gameService, UserService userService, AppealServise appealServise) {
-        this.gameService = gameService;
+    public AppealGameController(GameStatisticsAndDetailsService gameStatisticsAndDetailsService, UserService userService, AppealService appealService) {
+        this.gameStatisticsAndDetailsService = gameStatisticsAndDetailsService;
         this.userService = userService;
-        this.appealServise = appealServise;
+        this.appealService = appealService;
     }
 
 
     @GetMapping("/player/appeal/games/{id}")
     public String getFileAppealForm(Model model, @PathVariable Long id) {
-        GameDTO gameDTO = gameService.getGameFullStatisticsByIdForAppealForm(id);
+        GameDTO gameDTO = gameStatisticsAndDetailsService.getGameFullStatisticsByIdForAppealForm(id);
         model.addAttribute("gameDTO", gameDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -50,7 +50,7 @@ public class AppealGameController {
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
             log.info("IN appealQuastions - appealed questions {} successfully were got", answeredQuestionIds.length);
-            appealServise.fileAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
+            appealService.fileAppealAgainstGameAnsweredQuestions(answeredQuestionIds);
         }
         return REDIRECT_GAMES_STATISTICS_PLAYER;
     }
@@ -58,7 +58,7 @@ public class AppealGameController {
 
     @GetMapping("/referee/appeal/games/{id}")
     public String getConsiderationAppealForm(Model model, @PathVariable Long id) {
-        GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
+        GameDTO gameDTO = gameStatisticsAndDetailsService.getGameFullStatisticsById(id);
         model.addAttribute("gameDTO", gameDTO);
         model.addAttribute("appealStageFiled",
                 ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
@@ -72,7 +72,7 @@ public class AppealGameController {
         String[] answeredQuestionIds = request.getParameterValues("ids");
         if (answeredQuestionIds.length > 0) {
             log.info("IN considerAppealedQuestions - question with id: {} successfully was got", answeredQuestionIds.length);
-            appealServise.approveAppealsAgainstGameAnsweredQuestions(answeredQuestionIds);
+            appealService.approveAppealsAgainstGameAnsweredQuestions(answeredQuestionIds);
         }
         return REDIRECT_GAMES_STATISTICS_REFEREE;
     }

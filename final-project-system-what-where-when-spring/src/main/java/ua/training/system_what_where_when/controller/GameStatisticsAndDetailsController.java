@@ -10,7 +10,7 @@ import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
 import ua.training.system_what_where_when.model.AppealStage;
 import ua.training.system_what_where_when.model.User;
-import ua.training.system_what_where_when.service.GameService;
+import ua.training.system_what_where_when.service.GameStatisticsAndDetailsService;
 import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
@@ -25,11 +25,11 @@ public class GameStatisticsAndDetailsController {
     private final static String GAMES_STATISTICS_PAGE_REFEREE = "referee/gamesstatisticsreferee";
     private final static String GAME_DETAILS_PAGE_REFEREE = "referee/gamedetailsreferee";
 
-    private final GameService gameService;
+    private final GameStatisticsAndDetailsService gameStatisticsAndDetailsService;
     private final UserService userService;
 
-    public GameStatisticsAndDetailsController(GameService gameService, UserService userService) {
-        this.gameService = gameService;
+    public GameStatisticsAndDetailsController(GameStatisticsAndDetailsService gameStatisticsAndDetailsService, UserService userService) {
+        this.gameStatisticsAndDetailsService = gameStatisticsAndDetailsService;
         this.userService = userService;
     }
 
@@ -37,7 +37,7 @@ public class GameStatisticsAndDetailsController {
     public String getGamesStatisticsForPlayer(Model model) {
         List<GameDTO> gameDTOs = new ArrayList<>();
         try {
-            gameDTOs = gameService.getGamesStatisticsByLoggedInTeam();
+            gameDTOs = gameStatisticsAndDetailsService.getGamesStatisticsByLoggedInTeam();
         } catch (EntityNotFoundException e) { // TODO chech if it should be here
             log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
         }
@@ -50,7 +50,7 @@ public class GameStatisticsAndDetailsController {
 
     @GetMapping("/player/games/{id}") //TODO check user can get info only on hig game
     public String getGameDetailsForPlayer(Model model, @PathVariable Long id) {
-        GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
+        GameDTO gameDTO = gameStatisticsAndDetailsService.getGameFullStatisticsById(id);
         model.addAttribute("gameDTO", gameDTO);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -59,7 +59,7 @@ public class GameStatisticsAndDetailsController {
 
     @GetMapping("/referee/games/statistics")
     public String getGamesStatisticsForReferee(Model model) {
-        List<GameDTO> gameDTOs = gameService.getGameStatisticsByAllGames();
+        List<GameDTO> gameDTOs = gameStatisticsAndDetailsService.getGameStatisticsByAllGames();
         model.addAttribute("gameDTOs", gameDTOs);
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
@@ -68,7 +68,7 @@ public class GameStatisticsAndDetailsController {
 
     @GetMapping("/referee/games/{id}")
     public String getGameDetailsForReferee(Model model, @PathVariable Long id) {
-        GameDTO gameDTO = gameService.getGameFullStatisticsById(id);
+        GameDTO gameDTO = gameStatisticsAndDetailsService.getGameFullStatisticsById(id);
         model.addAttribute("gameDTO", gameDTO);
         model.addAttribute("appealStageFiled",
                 ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
