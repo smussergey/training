@@ -99,6 +99,32 @@
             </tr>
             </tbody>
         </table>
+
+        <!--pagination-->
+        <nav th:if="${gameDTOs.totalPages > 1}">
+            <ul class="pagination justify-content-center">
+                <li th:if="${gameDTOs.hasPrevious()}" class="page-item">
+                    <a th:href="@{/referee/games/statistics(page=${gameDTOs.number-1})}" class="page-link">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+
+                <th:block th:each="i: ${#numbers.sequence(0, gameDTOs.totalPages - 1)}">
+                    <li th:if="${gameDTOs.number == i}" class="page-item active"><span
+                            class="page-link">[[${i}+1]]</span></li>
+                    <li th:unless="${gameDTOs.number == i}" class="page-item">
+                        <a th:href="@{/referee/games/statistics(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+
+                <li th:if="${gameDTOs.hasNext()}" class="page-item">
+                    <a th:href="@{/referee/games/statistics(page=${gameDTOs.number+1})}" class="page-link">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </div>
 

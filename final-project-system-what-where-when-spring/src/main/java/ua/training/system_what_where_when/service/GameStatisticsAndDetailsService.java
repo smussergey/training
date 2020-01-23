@@ -30,18 +30,15 @@ public class GameStatisticsAndDetailsService {
         this.answeredQuestionService = answeredQuestionService;
     }
 
-//    public List<GameDTO> getGameStatisticsByAllGames() {
-//        List<Game> games = findAllGames();
-//        return games.stream()
-//                .map(game -> toGameDTO(game))
-//                .collect(Collectors.toList());
-//    }
+    public Page<GameDTO> getGameStatisticsByAllGamesAndPlayers(Pageable pageable) {
+        return gameRepository.findAll(pageable)
+                .map(this::toGameDTO);
+    }
 
-    public List<GameDTO> getGameStatisticsByAllGames() {
-        List<Game> games = findAllGames();
-        return games.stream()
-                .map(game -> toGameDTO(game))
-                .collect(Collectors.toList());
+    public Page<GameDTO> getGamesStatisticsByLoggedInPlayer(Principal principal, Pageable pageable) throws EntityNotFoundException {
+        //TODO improve with Principal
+        return gameRepository.findAllByUsers(userService.findLoggedIndUser(), pageable)
+                .map(this::toGameDTO);
     }
 
     private GameDTO toGameDTO(Game game) {
@@ -83,12 +80,6 @@ public class GameStatisticsAndDetailsService {
         } else
             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
         return gameDTO;
-    }
-
-    public Page<GameDTO> getGamesStatisticsByLoggedInPlayerOrderByDate(Principal principal, Pageable pageable) throws EntityNotFoundException {
-        //TODO improve with Principal
-        Page<Game> gamePage = gameRepository.findAllByUsers(userService.findLoggedIndUser(), pageable);
-        return gamePage.map(this::toGameDTO);
     }
 
 
@@ -146,16 +137,6 @@ public class GameStatisticsAndDetailsService {
     public Game findGameById(Long id) {
         return gameRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can not fond games with id: " + id));
-    }
-
-    public List<Game> findAllGamesByPlayer(User team) {
-        return gameRepository.findByUsers(team)
-                .orElseThrow(() -> new EntityNotFoundException("Can not fond games with team: " + team.getEmail()));
-    }
-
-
-    public List<Game> findAllGames() {
-        return gameRepository.findAll();
     }
 
 }

@@ -19,8 +19,6 @@ import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -41,9 +39,10 @@ public class GameStatisticsAndDetailsController {
     }
 
     @GetMapping("/player/games/statistics")
-    public String getGamesStatisticsForPlayer(@PageableDefault(sort = "date", size = DEFAULT_PAGINATION_SIZE, direction = Sort.Direction.DESC) Pageable pageable, Model model, Principal principal) {
+    public String getGamesStatisticsForPlayer(@PageableDefault(sort = "date", size = DEFAULT_PAGINATION_SIZE, direction = Sort.Direction.DESC)
+                                                          Pageable pageable, Model model, Principal principal) {
         try {
-            Page<GameDTO> gameDTOs = gameStatisticsAndDetailsService.getGamesStatisticsByLoggedInPlayerOrderByDate(principal, pageable);
+            Page<GameDTO> gameDTOs = gameStatisticsAndDetailsService.getGamesStatisticsByLoggedInPlayer(principal, pageable);
             model.addAttribute("gameDTOs", gameDTOs);
         } catch (EntityNotFoundException ex) { // TODO chech if it should be here
             log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
@@ -63,9 +62,14 @@ public class GameStatisticsAndDetailsController {
     }
 
     @GetMapping("/referee/games/statistics")
-    public String getGamesStatisticsForReferee(Model model) {
-        List<GameDTO> gameDTOs = gameStatisticsAndDetailsService.getGameStatisticsByAllGames();
-        model.addAttribute("gameDTOs", gameDTOs);
+    public String getGamesStatisticsForReferee(@PageableDefault(sort = "date", size = DEFAULT_PAGINATION_SIZE, direction = Sort.Direction.DESC)
+                                                           Pageable pageable, Model model) {
+        try {
+            Page<GameDTO> gameDTOs = gameStatisticsAndDetailsService.getGameStatisticsByAllGamesAndPlayers(pageable);
+            model.addAttribute("gameDTOs", gameDTOs);
+        } catch (EntityNotFoundException ex) { // TODO chech if it should be here
+            log.warn("IN getGamesStatistics - cannot find games statistics for logged in user");
+        }
         setLocalizedLoggedInUserName(model);
         setCurrentLocaleLanguage(model);
         return GAMES_STATISTICS_PAGE_REFEREE;
