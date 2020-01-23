@@ -10,35 +10,44 @@ import ua.training.system_what_where_when.dto.UserRegisterDTO;
 import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.validation.ValidationErrorBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Slf4j
 @Controller
-public class AuthenticationController {
+public class RegistrationAndLoginController {
+    private final static String REGISTRATION_PAGE = "registration";
+    private final static String LOGIN_PAGE = "login";
 
     private UserService userService;
 
-    public AuthenticationController(UserService userService) {
+    public RegistrationAndLoginController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        setCurrentLocaleLanguage(model);
+        return REGISTRATION_PAGE;
     }
 
     @PostMapping("/registration")
     public String registrer(@ModelAttribute("newuser") @Valid UserRegisterDTO userRegisterDTO,
                             Errors errors, Model model) {
-        setCurrentLocaleLanguage(model);
         if (!errors.hasErrors()) {
             try {
                 userService.register(userRegisterDTO);
-                return "login";
+                return LOGIN_PAGE;
             } catch (Exception ex) {
                 log.info(userRegisterDTO.getEmail() + " email is already exist");
                 model.addAttribute("emailerror", "registration.message.login.already.exists");
-                return "registration";
+                return REGISTRATION_PAGE;
             }
         }
-        model.addAttribute("fielderrors", ValidationErrorBuilder.fromBindingErrors(errors).getErrors());
 
-        return "registration";
+        model.addAttribute("fielderrors", ValidationErrorBuilder.fromBindingErrors(errors).getErrors());
+        return REGISTRATION_PAGE;
     }
 
     @GetMapping("/login")
@@ -55,4 +64,5 @@ public class AuthenticationController {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return model;
     }
+
 }

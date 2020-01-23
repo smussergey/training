@@ -14,8 +14,8 @@ import ua.training.system_what_where_when.service.UserService;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String USER_ENDPOINT = "/user/**";
-    private static final String ADMIN_ENDPOINT = "/admin/**";
+    private static final String PLAYER_ENDPOINT = "/player/**";
+    private static final String REFEREE_ENDPOINT = "/referee/**";
 
     @Autowired
     private UserService userService;
@@ -43,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/home", "/login", "/registration").permitAll()
-                .antMatchers(USER_ENDPOINT).hasRole("USER")
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .antMatchers(PLAYER_ENDPOINT).hasRole("PLAYER")
+                .antMatchers(REFEREE_ENDPOINT).hasRole("REFEREE")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()

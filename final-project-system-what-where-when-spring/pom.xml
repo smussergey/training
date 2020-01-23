@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>ua.training</groupId>
-    <artifactId>final-project-system-what-where-when</artifactId>
+    <artifactId>final-project-system-what-where-when-spring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>system-what-where-when</name>
     <description>Final project</description>

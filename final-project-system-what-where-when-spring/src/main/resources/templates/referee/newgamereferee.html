@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <title th:text="#{home.page.title}"></title>
+    <title th:text="#{games.game.new.page.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/main.css" th:href="@{/css/main.css}">
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -31,10 +31,10 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/games/new}" th:text="#{navbar.label.games.new}"></a>
+                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/referee/home}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
+                <a class="nav-link" th:href="@{/referee/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
@@ -65,9 +65,47 @@
 </nav>
 
 <div class="container" style="margin-top:30px">
-    <div>
-        <h3 th:text="#{home.text.please.make.your.choice}"></h3>
-    </div>
+    <h2 class="panel-title" th:text="#{new.game.form.header}"></h2>
+    <form th:action="@{'/referee/games/new'}" method="post">
+        <div class="custom-control mb-3">
+            <label th:text="#{games.new.game.team.label}" for="player"></label>
+            <select class="custom-select mb-3" id="player" th:name="playerid">
+                <option th:if="${lang.equals('en')}"
+                        th:each="player : ${players}"
+                        th:value="${player.id}" th:text="${player.nameEn}">
+                </option>
+                <option th:if="${lang.equals('ua')}"
+                        th:each="player : ${players}"
+                        th:value="${player.id}" th:text="${player.nameUa}">
+                </option>
+            </select>
+        </div>
+        <div class="custom-control mb-3">
+            <label th:text="#{games.new.game.opponent.label}" for="opponent"></label>
+            <select class="custom-select mb-3" id="opponent" th:name="opponentid">
+                <option
+                        th:value="0" th:text="#{games.new.game.option.label.opponent}">
+                </option>
+                <option th:if="${lang.equals('en')}"
+                        th:each="player : ${players}"
+                        th:value="${player.id}" th:text="${player.nameEn}">
+                </option>
+                <option th:if="${lang.equals('ua')}"
+                        th:each="player : ${players}"
+                        th:value="${player.id}" th:text="${player.nameUa}">
+                </option>
+            </select>
+        </div>
+
+        <div class="custom-control mb-3">
+            <label for="quantity"
+                   th:text="#{games.new.game.max.scores.label}"></label>
+            <br>
+            <input type="number" min="1" id="quantity"
+                   th:name="maxscores" required>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{games.game.new.label.button}"></button>
+    </form>
 </div>
 
 <footer>

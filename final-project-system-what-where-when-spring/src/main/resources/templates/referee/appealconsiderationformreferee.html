@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/main.css" th:href="@{/css/main.css}">
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -31,16 +31,16 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/admin/adminhome}"></a>
+                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/referee/home}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/games/new}" th:text="#{navbar.label.games.new}"></a>
+                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.label.games.new}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
+                <a class="nav-link" th:href="@{/referee/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{|/admin/games/${gameDTO.id}|}"
+                <a class="nav-link" th:href="@{|/referee/games/${gameDTO.id}|}"
                    th:text="#{navbar.label.games.game.details}"></a>
             </li>
         </ul>
@@ -126,36 +126,20 @@
         </table>
     </div>
 
-<!--<div class="panel-body">-->
-<!--    <h2 class="panel-title" th:text="#{games.game.file.appeal.form.header}"></h2>-->
-<!--    <form th:action="@{/admin/appeal/game/questions}" method="post">-->
-<!--        <div class="form-group">-->
-<!--                <span th:if="${answeredQuestionDTO.appealPossible}"-->
-<!--                      th:each="answeredQuestionDTO : ${gameDTO.answeredQuestionDTOs}">-->
-<!--                        <input type="checkbox" name="ids"-->
-<!--                               th:text="${answeredQuestionDTO.id}"-->
-<!--                               th:value="${answeredQuestionDTO.id}"/>-->
-<!--                </span>-->
-<!--        </div>-->
-<!--        <button type="submit" class="btn btn-primary" th:text="#{games.game.file.appeal.label.button}"></button>-->
-<!--    </form>-->
-<!--</div>-->
-
-
-<div class="panel-body">
-    <h2 class="panel-title" th:text="#{games.game.approvement.appeal.form.header}"></h2>
-    <form th:action="@{/admin/appeal/game/quastions}" method="post">
-        <div class="form-group">
+    <div class="panel-body">
+        <h2 class="panel-title" th:text="#{games.game.approvement.appeal.form.header}"></h2>
+        <form th:action="@{/referee/appeal/game/quastions}" method="post">
+            <div class="form-group">
                             <span th:if="${answeredQuestionDTO.getAppealStage().equals(appealStageFiled)}"
                                   th:each="answeredQuestionDTO : ${gameDTO.answeredQuestionDTOs}">
                                     <input type="checkbox" name="ids"
                                            th:text="${answeredQuestionDTO.id}"
                                            th:value="${answeredQuestionDTO.id}"/>
                             </span>
-        </div>
-        <button type="submit" class="btn btn-primary" th:text="#{games.game.approve.appeal.label.button}"></button>
-    </form>
-</div>
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="#{games.game.approve.appeal.label.button}"></button>
+        </form>
+    </div>
 
 </div>
 
