@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.UserRegistrationDTO;
-import ua.training.system_what_where_when.model.Role;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.Role;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.repository.UserRepository;
 
 @Slf4j

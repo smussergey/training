@@ -1,11 +1,8 @@
-package ua.training.system_what_where_when.model;
+package ua.training.system_what_where_when.entity;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 //TODO add constraints
 @Data

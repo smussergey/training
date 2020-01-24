@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.training.system_what_where_when.model.*;
+import ua.training.system_what_where_when.entity.AnsweredQuestion;
+import ua.training.system_what_where_when.entity.Game;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.repository.GameRepository;
 
 import java.time.LocalDate;

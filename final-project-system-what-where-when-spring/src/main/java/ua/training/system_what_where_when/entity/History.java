@@ -1,6 +1,5 @@
-package ua.training.system_what_where_when.model;
+package ua.training.system_what_where_when.entity;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;

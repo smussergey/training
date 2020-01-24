@@ -8,7 +8,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ua.training.system_what_where_when.dto.UserRegistrationDTO;
 import ua.training.system_what_where_when.service.UserRegistrationService;
-import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.validation.ValidationErrorBuilder;
 
 import javax.validation.Valid;

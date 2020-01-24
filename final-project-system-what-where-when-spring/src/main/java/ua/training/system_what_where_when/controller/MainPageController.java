@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.training.system_what_where_when.model.Role;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.Role;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.service.UserService;
 
 import java.security.Principal;

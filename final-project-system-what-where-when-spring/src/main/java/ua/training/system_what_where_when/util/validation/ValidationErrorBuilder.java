@@ -20,6 +20,7 @@ public class ValidationErrorBuilder {
         return validationError;
     }
 
+    //TODO check it
     private static ResourceBundle getResourceBundleForCurrentLocale(UTF8Control utf8Control) {
         return ResourceBundle.getBundle(
                 MESSAGES_BUNDLE_NAME, LocaleContextHolder.getLocale(), utf8Control);

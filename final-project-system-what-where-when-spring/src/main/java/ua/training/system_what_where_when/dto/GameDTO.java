@@ -1,9 +1,6 @@
 package ua.training.system_what_where_when.dto;
 
 import lombok.*;
-import ua.training.system_what_where_when.model.Game;
-import ua.training.system_what_where_when.model.GameStatus;
-import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

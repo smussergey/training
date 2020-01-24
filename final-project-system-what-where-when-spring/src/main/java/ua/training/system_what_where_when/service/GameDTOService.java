@@ -2,15 +2,16 @@ package ua.training.system_what_where_when.service;
 
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.GameDTO;
-import ua.training.system_what_where_when.model.AppealStage;
-import ua.training.system_what_where_when.model.Game;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.AppealStage;
+import ua.training.system_what_where_when.entity.Game;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 @Service
 public class GameDTOService {
     private static final String DELIMITER = ":";
 
+    //TODO refactor this method
     public GameDTO toGameDTO(Game game) {
         GameDTO gameDTO = new GameDTO();
 
@@ -44,12 +45,6 @@ public class GameDTOService {
         String scores = stringBuilder.toString();
         gameDTO.setScores(scores);
 
-
-//        if (game.getAppeals().size() > 0) { //TODO improve
-//            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name())); //TODO correct
-//        } else
-//            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
-//        if (game.getAppeals().size() > 0) { //TODO improve
         if (game.getAppeals().isEmpty()) {
             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name()));
         } else {
@@ -59,15 +54,11 @@ public class GameDTOService {
                             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
                         } else {
                             gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.CONSIDERED.name()));
-                        } //else {
-//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name()));
-//                    }
+                        }
 
                     });
         }
-//        }
         return gameDTO;
     }
-
 
 }

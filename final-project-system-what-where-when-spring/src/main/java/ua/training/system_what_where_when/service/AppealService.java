@@ -3,10 +3,10 @@ package ua.training.system_what_where_when.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.training.system_what_where_when.model.AnsweredQuestion;
-import ua.training.system_what_where_when.model.Appeal;
-import ua.training.system_what_where_when.model.AppealStage;
-import ua.training.system_what_where_when.model.Game;
+import ua.training.system_what_where_when.entity.AnsweredQuestion;
+import ua.training.system_what_where_when.entity.Appeal;
+import ua.training.system_what_where_when.entity.AppealStage;
+import ua.training.system_what_where_when.entity.Game;
 import ua.training.system_what_where_when.repository.AppealRepository;
 
 import java.time.LocalDate;
@@ -76,7 +76,6 @@ public class AppealService {
         return saveAll(appealedGame.getAppeals().stream()
                 .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))
                 .collect(Collectors.toList()));
-
     }
 
     @Transactional

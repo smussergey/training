@@ -1,4 +1,4 @@
-package ua.training.system_what_where_when.model;
+package ua.training.system_what_where_when.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -22,7 +22,6 @@ public class Game {
     @Column(name = "date")
     private LocalDate date;
 
-    //    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
     @Setter(AccessLevel.PRIVATE)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_game",
@@ -36,11 +35,6 @@ public class Game {
         user.getGames().add(this);
     }
 
-    public void removeUser(User user) {
-        users.remove(user);
-        user.getGames().remove(this);
-    }
-
     // TODO delete this field
     @Column(name = "is_appeal_possible")
     private boolean isAppealPossible;
@@ -49,38 +43,12 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Appeal> appeals = new ArrayList<>();
 
-    public void addAppeal(Appeal appeal) {
-        appeals.add(appeal);
-        appeal.setGame(this);
-    }
-
-    public void addAppeals(List<Appeal> appeals) {
-        this.appeals.addAll(appeals);
-        appeals.forEach(appeal -> appeal.setGame(this));
-    }
-
-    public void removeAppeal(Appeal appeal) {
-        appeals.remove(appeal);
-        appeal.setGame(null);
-    }
-
-
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
 
-    public void addAnsweredQuestion(AnsweredQuestion answeredQuestion) {
-        answeredQuestions.add(answeredQuestion);
-        answeredQuestion.setGame(this);
-    }
-
     public void addAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions.addAll(answeredQuestions);
         answeredQuestions.forEach(answeredQuestion -> answeredQuestion.setGame(this));
-    }
-
-    public void removeAnsweredQuestions(AnsweredQuestion answeredQuestion) {
-        answeredQuestions.remove(answeredQuestion);
-        answeredQuestion.setGame(null);
     }
 }

@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when.dto.GameDTO;
+import ua.training.system_what_where_when.entity.Game;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
-import ua.training.system_what_where_when.model.*;
 import ua.training.system_what_where_when.repository.GameRepository;
-import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
 import java.security.Principal;
 import java.util.List;
@@ -42,68 +42,13 @@ public class GameStatisticsAndDetailsService {
                 .map(gameDTOService::toGameDTO);
     }
 
-    //TODO move to it's own service
-//    private GameDTO toGameDTO(Game game) {
-//        GameDTO gameDTO = new GameDTO();
-//
-//        gameDTO.setId(game.getId());
-//        gameDTO.setDate(game.getDate());
-//        gameDTO.setPlayerNameUa(game.getUsers().get(0).getNameUa());//TODO improve
-//        gameDTO.setPlayerNameEn(game.getUsers().get(0).getNameEn());//TODO improve
-//
-//        if (game.getUsers().size() > 1) { //TODO improve
-//            gameDTO.setOpponentNameUa(game.getUsers().get(1).getNameUa());
-//            gameDTO.setOpponentNameEn(game.getUsers().get(1).getNameEn());
-//        } else {
-//            gameDTO.setOpponentNameUa(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
-//            gameDTO.setOpponentNameEn(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
-//        }
-//
-//        User firstPlayer = game.getUsers().get(0); //TODO correct
-//        long firstPlayerScores = game.getAnsweredQuestions()
-//                .stream()
-//                .filter(aq -> firstPlayer.equals(aq.getUserWhoGotPoint()))
-//                .count();
-//
-//        long secondPlayerScores = game.getAnsweredQuestions()
-//                .stream()
-//                .count() - firstPlayerScores;
-//
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(firstPlayerScores);
-//        stringBuilder.append(DELIMITER);//TODO move ":" to properties
-//        stringBuilder.append(secondPlayerScores);
-//        String scores = stringBuilder.toString();
-//        gameDTO.setScores(scores);
-//
-//
-////        if (game.getAppeals().size() > 0) { //TODO improve
-////            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name())); //TODO correct
-////        } else
-////            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
-////        if (game.getAppeals().size() > 0) { //TODO improve
-//        game.getAppeals().stream()
-//                .forEach(appeal -> {
-//                    if (appeal.getAppealStage().equals(AppealStage.FILED)) {
-//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
-//                    } else if (appeal.getAppealStage().equals(AppealStage.CONSIDERED)) {
-//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.CONSIDERED.name()));
-//                    } else {
-//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name()));
-//                    }
-//
-//                });
-////        }
-//        return gameDTO;
-//    }
-
     //    TODO forbid logged user to see not his game results
     public GameDTO getGameFullStatisticsById(Long id) {
         Game game = findGameById(id);
         GameDTO gameDTO = gameDTOService.toGameDTO(game);
 
         List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
-                .map(aq -> answeredQuestionService.toAnsweredQuestionDTO(aq))
+                .map(answeredQuestionService::toAnsweredQuestionDTO)
                 .collect(Collectors.toList());
 
         gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
@@ -132,7 +77,7 @@ public class GameStatisticsAndDetailsService {
         GameDTO gameDTO = gameDTOService.toGameDTO(game);
 
         List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
-                .map(aq -> answeredQuestionService.toAnsweredQuestionDTO(aq))
+                .map(answeredQuestionService::toAnsweredQuestionDTO)
                 .peek(aqDTO -> {
                     if (!aqDTO.getNameWhoGotPointEn().equals(loggedInUser.getNameEn())) {
                         aqDTO.setAppealPossible(true);
@@ -143,7 +88,6 @@ public class GameStatisticsAndDetailsService {
                 .collect(Collectors.toList());
 
         gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
-//        gameDTO.setAppealPossible(checkIfLoggedInUserCanFileAppealAgainstGame(game));
 
         return gameDTO;
     }

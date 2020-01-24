@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.training.system_what_where_when.model.Role;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.Role;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.service.NewGameService;
 import ua.training.system_what_where_when.service.UserService;
 

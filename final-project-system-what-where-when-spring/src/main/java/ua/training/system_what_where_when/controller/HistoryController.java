@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.service.HistoryService;
-import ua.training.system_what_where_when.service.GameStatisticsAndDetailsService;
 import ua.training.system_what_where_when.service.UserService;
 
 import java.util.Set;
@@ -27,13 +26,10 @@ public class HistoryController {
     private final static String REDIRECT_HISTORY_CONSIDERATION_PAGE_REFEREE = "redirect:/referee/history/consideration";
     private final static int DEFAULT_PAGINATION_SIZE = 5;
 
-
-    private final GameStatisticsAndDetailsService gameStatisticsAndDetailsService;
     private final HistoryService historyService;
     private final UserService userService;
 
-    public HistoryController(GameStatisticsAndDetailsService gameStatisticsAndDetailsService, HistoryService historyService, UserService userService) {
-        this.gameStatisticsAndDetailsService = gameStatisticsAndDetailsService;
+    public HistoryController(HistoryService historyService, UserService userService) {
         this.historyService = historyService;
         this.userService = userService;
     }

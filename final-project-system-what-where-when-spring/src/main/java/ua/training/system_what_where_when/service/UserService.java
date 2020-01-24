@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
-import ua.training.system_what_where_when.model.Role;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.Role;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.repository.UserRepository;
 
 import java.util.Collections;
@@ -55,12 +55,6 @@ public class UserService implements UserDetailsService {
     public Optional<User> findUserByIdOptional(Long id) {
         return userRepository.findById(id);
     }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-        log.info("IN delete - user with id: {} successfully deleted", id);
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

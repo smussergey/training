@@ -1,12 +1,10 @@
-package ua.training.system_what_where_when.model;
+package ua.training.system_what_where_when.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 //TODO add constraints
 @Data
@@ -37,30 +35,9 @@ public class User {
     @Column(name = "role")
     private Role role;
 
-    //    @Setter(AccessLevel.PRIVATE)
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "user_game",
-//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "game_id", referencedColumnName = "game_id")})
     @Setter(AccessLevel.PRIVATE)
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<Game> games = new ArrayList<>();
-
-//    public void addGame(Game game) {
-//        games.add(game);
-//        game.getUsers().add(this);
-//    }
-//
-//    public void addGames(List<Game> games) {
-//        this.games.addAll(games);
-//        games.forEach(game -> game.getUsers().add(this));
-//    }
-//
-//    public void removeGame(Game game) {
-//        games.remove(game);
-//        game.getUsers().remove(this);
-//    }
-
 
     @Override
     public String toString() {

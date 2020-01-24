@@ -23,6 +23,7 @@ public class ResourceBundleUtil {
         return getBundle().getString(concatenateStrings(APPEAL_STAGE, appealStage));
     }
 
+    //TODO check it
     public static String getBundleStringForGameStatus(String gameStatus) {
         return getBundle().getString(concatenateStrings(GAME_STATUS, gameStatus));
     }

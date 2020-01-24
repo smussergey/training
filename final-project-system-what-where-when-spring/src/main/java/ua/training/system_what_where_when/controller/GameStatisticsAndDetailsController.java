@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ua.training.system_what_where_when.dto.GameDTO;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
-import ua.training.system_what_where_when.model.AppealStage;
-import ua.training.system_what_where_when.model.User;
+import ua.training.system_what_where_when.entity.AppealStage;
+import ua.training.system_what_where_when.entity.User;
 import ua.training.system_what_where_when.service.GameStatisticsAndDetailsService;
 import ua.training.system_what_where_when.service.UserService;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
@@ -28,7 +28,6 @@ public class GameStatisticsAndDetailsController {
     private final static String GAMES_STATISTICS_PAGE_REFEREE = "referee/gamesstatisticsreferee";
     private final static String GAME_DETAILS_PAGE_REFEREE = "referee/gamedetailsreferee";
     private final static int DEFAULT_PAGINATION_SIZE = 5;
-
 
     private final GameStatisticsAndDetailsService gameStatisticsAndDetailsService;
     private final UserService userService;

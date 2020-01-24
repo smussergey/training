@@ -1,4 +1,4 @@
-package ua.training.system_what_where_when.model;
+package ua.training.system_what_where_when.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -38,19 +38,8 @@ public class Appeal {
     @OneToMany(mappedBy = "appeal", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<AnsweredQuestion> appealedQuestions = new ArrayList<>();
 
-    public void addAnsweredQuestion(AnsweredQuestion answeredQuestion) {
-        appealedQuestions.add(answeredQuestion);
-        answeredQuestion.setAppeal(this);
-    }
-
     public void addAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.appealedQuestions.addAll(answeredQuestions);
         answeredQuestions.forEach(answeredQuestion -> answeredQuestion.setAppeal(this));
     }
-
-    public void removeAnsweredQuestions(AnsweredQuestion answeredQuestion) {
-        appealedQuestions.remove(answeredQuestion);
-        answeredQuestion.setAppeal(null);
-    }
-
 }

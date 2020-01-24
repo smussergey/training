@@ -3,11 +3,8 @@ package ua.training.system_what_where_when.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ua.training.system_what_where_when.model.Game;
-import ua.training.system_what_where_when.model.User;
-
-import java.util.List;
-import java.util.Optional;
+import ua.training.system_what_where_when.entity.Game;
+import ua.training.system_what_where_when.entity.User;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
     Page<Game> findAll(Pageable pageable);

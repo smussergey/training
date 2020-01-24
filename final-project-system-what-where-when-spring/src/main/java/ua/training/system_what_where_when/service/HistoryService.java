@@ -6,8 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.system_what_where_when.dto.GameDTO;
+import ua.training.system_what_where_when.entity.*;
 import ua.training.system_what_where_when.exception.EntityNotFoundException;
-import ua.training.system_what_where_when.model.*;
 import ua.training.system_what_where_when.repository.HistoryRepository;
 import ua.training.system_what_where_when.repository.GameRepository;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
@@ -39,7 +39,7 @@ public class HistoryService {
     public Set<GameDTO> getGamesWhichCanBeMovedToHistory() {
         return appealService.findAllByAppealStage(AppealStage.CONSIDERED)
                 .stream()
-                .map(appeal -> appeal.getGame())
+                .map(Appeal::getGame)
                 .map(gameDTOService::toGameDTO)
                 .collect(Collectors.toSet());
     }
@@ -64,6 +64,7 @@ public class HistoryService {
         return false;
     }
 
+    //TODO refactor this method
     private History toHistory(Game game) {
 
         History history = new History();
@@ -87,9 +88,8 @@ public class HistoryService {
                 .filter(aq -> firstPlayer.equals(aq.getUserWhoGotPoint()))
                 .count();
 
-        long secondPlayerScores = game.getAnsweredQuestions()
-                .stream()
-                .count() - firstPlayerScores;
+        long secondPlayerScores = (long) game.getAnsweredQuestions()
+                .size() - firstPlayerScores;
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(firstPlayerScores);
@@ -112,6 +112,7 @@ public class HistoryService {
 
     }
 
+    //TODO refactor this method
     @Transactional
     public History save(History history) {
         return historyRepository.save(history);

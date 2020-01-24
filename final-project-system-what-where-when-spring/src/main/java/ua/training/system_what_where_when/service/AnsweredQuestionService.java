@@ -2,8 +2,8 @@ package ua.training.system_what_where_when.service;
 
 import org.springframework.stereotype.Service;
 import ua.training.system_what_where_when.dto.AnsweredQuestionDTO;
-import ua.training.system_what_where_when.model.AnsweredQuestion;
-import ua.training.system_what_where_when.model.AppealStage;
+import ua.training.system_what_where_when.entity.AnsweredQuestion;
+import ua.training.system_what_where_when.entity.AppealStage;
 import ua.training.system_what_where_when.repository.AnsweredQuestionRepository;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
 
@@ -12,12 +12,13 @@ import java.util.List;
 @Service
 public class AnsweredQuestionService {
 
-    private AnsweredQuestionRepository answeredQuestionRepository;
+    private final AnsweredQuestionRepository answeredQuestionRepository;
 
     public AnsweredQuestionService(AnsweredQuestionRepository answeredQuestionRepository) {
         this.answeredQuestionRepository = answeredQuestionRepository;
     }
 
+    //TODO refactor this method
     public AnsweredQuestion findAnsweredQuestionById(Long id) {
         return answeredQuestionRepository.findById(id).get();
     }
