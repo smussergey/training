@@ -1,9 +1,6 @@
 package ua.training.system_what_where_when.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ua.training.system_what_where_when.model.Game;
 import ua.training.system_what_where_when.model.GameStatus;
 import ua.training.system_what_where_when.util.ResourceBundleUtil;
@@ -13,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(of = "id")
+@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameDTO {

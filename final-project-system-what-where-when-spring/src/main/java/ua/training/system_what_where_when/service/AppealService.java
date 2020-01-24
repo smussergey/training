@@ -52,7 +52,7 @@ public class AppealService {
         return save(appeal);
     }
 
-    @Transactional
+    @Transactional // TODO reduse operation in transaction
     public Appeal save(Appeal appeal) {
         return appealRepository.save(appeal);
     }
@@ -84,4 +84,7 @@ public class AppealService {
         return appealRepository.saveAll(appeals);
     }
 
+    public List<Appeal> findAllByAppealStage(AppealStage appealStage) {
+        return appealRepository.findAllByAppealStage(appealStage);
+    }
 }

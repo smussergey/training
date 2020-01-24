@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO add constraints
 @Data
 @Entity
 @Table(name = "game")

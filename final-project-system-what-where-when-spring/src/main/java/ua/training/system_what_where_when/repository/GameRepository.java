@@ -13,5 +13,4 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Page<Game> findAll(Pageable pageable);
 
     Page<Game> findAllByUsers(User user, Pageable pageable);
-
 }

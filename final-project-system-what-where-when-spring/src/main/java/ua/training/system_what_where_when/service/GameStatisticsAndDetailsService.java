@@ -18,75 +18,89 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class GameStatisticsAndDetailsService {
-    private static final String DELIMITER = ":";
 
     private final UserService userService;
     private final GameRepository gameRepository;
     private final AnsweredQuestionService answeredQuestionService;
+    private final GameDTOService gameDTOService;
 
-    public GameStatisticsAndDetailsService(UserService userService, GameRepository gameRepository, AnsweredQuestionService answeredQuestionService) {
+    public GameStatisticsAndDetailsService(UserService userService, GameRepository gameRepository, AnsweredQuestionService answeredQuestionService, GameDTOService gameDTOService) {
         this.userService = userService;
         this.gameRepository = gameRepository;
         this.answeredQuestionService = answeredQuestionService;
+        this.gameDTOService = gameDTOService;
     }
 
     public Page<GameDTO> getGameStatisticsByAllGamesAndPlayers(Pageable pageable) {
         return gameRepository.findAll(pageable)
-                .map(this::toGameDTO);
+                .map(gameDTOService::toGameDTO);
     }
 
     public Page<GameDTO> getGamesStatisticsByLoggedInPlayer(Principal principal, Pageable pageable) throws EntityNotFoundException {
         //TODO improve with Principal
         return gameRepository.findAllByUsers(userService.findLoggedIndUser(), pageable)
-                .map(this::toGameDTO);
+                .map(gameDTOService::toGameDTO);
     }
 
-    private GameDTO toGameDTO(Game game) {
-        GameDTO gameDTO = new GameDTO();
-
-        gameDTO.setId(game.getId());
-        gameDTO.setDate(game.getDate());
-        gameDTO.setPlayerNameUa(game.getUsers().get(0).getNameUa());//TODO improve
-        gameDTO.setPlayerNameEn(game.getUsers().get(0).getNameEn());//TODO improve
-
-        if (game.getUsers().size() > 1) { //TODO improve
-            gameDTO.setOpponentNameUa(game.getUsers().get(1).getNameUa());
-            gameDTO.setOpponentNameEn(game.getUsers().get(1).getNameEn());
-        } else {
-            gameDTO.setOpponentNameUa(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
-            gameDTO.setOpponentNameEn(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
-        }
-
-        User firstPlayer = game.getUsers().get(0); //TODO correct
-        long firstPlayerScores = game.getAnsweredQuestions()
-                .stream()
-                .filter(aq -> firstPlayer.equals(aq.getUserWhoGotPoint()))
-                .count();
-
-        long secondPlayerScores = game.getAnsweredQuestions()
-                .stream()
-                .count() - firstPlayerScores;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(firstPlayerScores);
-        stringBuilder.append(DELIMITER);//TODO move ":" to properties
-        stringBuilder.append(secondPlayerScores);
-        String scores = stringBuilder.toString();
-        gameDTO.setScores(scores);
-
-
-        if (game.getAppeals().size() > 0) { //TODO improve
-            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name())); //TODO correct
-        } else
-            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
-        return gameDTO;
-    }
-
+    //TODO move to it's own service
+//    private GameDTO toGameDTO(Game game) {
+//        GameDTO gameDTO = new GameDTO();
+//
+//        gameDTO.setId(game.getId());
+//        gameDTO.setDate(game.getDate());
+//        gameDTO.setPlayerNameUa(game.getUsers().get(0).getNameUa());//TODO improve
+//        gameDTO.setPlayerNameEn(game.getUsers().get(0).getNameEn());//TODO improve
+//
+//        if (game.getUsers().size() > 1) { //TODO improve
+//            gameDTO.setOpponentNameUa(game.getUsers().get(1).getNameUa());
+//            gameDTO.setOpponentNameEn(game.getUsers().get(1).getNameEn());
+//        } else {
+//            gameDTO.setOpponentNameUa(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
+//            gameDTO.setOpponentNameEn(ResourceBundleUtil.getBundleString("games.game.statistics.text.audience"));
+//        }
+//
+//        User firstPlayer = game.getUsers().get(0); //TODO correct
+//        long firstPlayerScores = game.getAnsweredQuestions()
+//                .stream()
+//                .filter(aq -> firstPlayer.equals(aq.getUserWhoGotPoint()))
+//                .count();
+//
+//        long secondPlayerScores = game.getAnsweredQuestions()
+//                .stream()
+//                .count() - firstPlayerScores;
+//
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append(firstPlayerScores);
+//        stringBuilder.append(DELIMITER);//TODO move ":" to properties
+//        stringBuilder.append(secondPlayerScores);
+//        String scores = stringBuilder.toString();
+//        gameDTO.setScores(scores);
+//
+//
+////        if (game.getAppeals().size() > 0) { //TODO improve
+////            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name())); //TODO correct
+////        } else
+////            gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name())); //TODO correct
+////        if (game.getAppeals().size() > 0) { //TODO improve
+//        game.getAppeals().stream()
+//                .forEach(appeal -> {
+//                    if (appeal.getAppealStage().equals(AppealStage.FILED)) {
+//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.FILED.name()));
+//                    } else if (appeal.getAppealStage().equals(AppealStage.CONSIDERED)) {
+//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.CONSIDERED.name()));
+//                    } else {
+//                        gameDTO.setAppealStage(ResourceBundleUtil.getBundleStringForAppealStage(AppealStage.NOT_FILED.name()));
+//                    }
+//
+//                });
+////        }
+//        return gameDTO;
+//    }
 
     //    TODO forbid logged user to see not his game results
     public GameDTO getGameFullStatisticsById(Long id) {
         Game game = findGameById(id);
-        GameDTO gameDTO = toGameDTO(game);
+        GameDTO gameDTO = gameDTOService.toGameDTO(game);
 
         List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
                 .map(aq -> answeredQuestionService.toAnsweredQuestionDTO(aq))
@@ -115,7 +129,7 @@ public class GameStatisticsAndDetailsService {
     public GameDTO getGameFullStatisticsByIdForAppealForm(Long id) {
         User loggedInUser = userService.findLoggedIndUser();
         Game game = findGameById(id);
-        GameDTO gameDTO = toGameDTO(game);
+        GameDTO gameDTO = gameDTOService.toGameDTO(game);
 
         List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
                 .map(aq -> answeredQuestionService.toAnsweredQuestionDTO(aq))
