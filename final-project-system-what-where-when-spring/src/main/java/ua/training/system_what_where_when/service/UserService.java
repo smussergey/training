@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-
+//TODO add logger to write to file
 @Slf4j
 @Service
 public class UserService implements UserDetailsService {

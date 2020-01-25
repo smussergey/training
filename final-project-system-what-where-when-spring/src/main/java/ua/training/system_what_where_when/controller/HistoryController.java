@@ -47,6 +47,7 @@ public class HistoryController {
         return HISTORY_CONSIDERATION_PAGE_REFEREE;
     }
 
+//TODO change to delete
     @GetMapping("/referee/history/game/{id}") //TODO check user can get info only on his game
     public String moveGameToHistory(Model model, @PathVariable Long id) {
         historyService.moveGameToHistory(id);

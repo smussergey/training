@@ -12,6 +12,8 @@ import ua.training.system_what_where_when.service.UserService;
 
 import java.security.Principal;
 
+//TODO add exception handler
+//TODO add error pages
 @Slf4j
 @Controller
 public class MainPageController {

@@ -32,7 +32,7 @@ public class AppealService {
         log.info("in AppealServise: fileAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", appealedQuestionStringIds[0]);
         List<AnsweredQuestion> appealedQuestions = Arrays.stream(appealedQuestionStringIds)
                 .mapToLong(Long::valueOf)
-                .mapToObj(answeredQuestionService::findAnsweredQuestionById)
+                .mapToObj(answeredQuestionService::findAnsweredQuestionById) // TODO improve this method: too many calls to db (use "IN")
                 .collect(Collectors.toList());
 
         // TODO check if null is impossible
@@ -52,7 +52,7 @@ public class AppealService {
         return save(appeal);
     }
 
-    @Transactional // TODO reduse operation in transaction
+    @Transactional // TODO reduce operation in transaction
     public Appeal save(Appeal appeal) {
         return appealRepository.save(appeal);
     }
@@ -61,7 +61,7 @@ public class AppealService {
         log.info("in AppealServise: approveAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", approvedQuestionStringIds[0]);
         List<AnsweredQuestion> answeredQuestionsWithApprovedAppeal = Arrays.stream(approvedQuestionStringIds)
                 .mapToLong(Long::valueOf)
-                .mapToObj(answeredQuestionService::findAnsweredQuestionById)
+                .mapToObj(answeredQuestionService::findAnsweredQuestionById)// TODO improve this method: too many calls to db (use "IN")
                 .collect(Collectors.toList());
 
         answeredQuestionService.saveAll(answeredQuestionsWithApprovedAppeal.stream()
@@ -73,6 +73,7 @@ public class AppealService {
                 .get()
                 .getGame();
 
+        // maybe move to separate method and update field through dirty checking
         return saveAll(appealedGame.getAppeals().stream()
                 .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))
                 .collect(Collectors.toList()));
