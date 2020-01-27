@@ -35,6 +35,7 @@
         <module>block02-pr_mas_sokr-different-operations-with-arrays-using-Stream-API</module>
         <module> block12-car-and-driver</module>
         <module>block-jsp-locales</module>
+        <module>final-project-system-what-where-when-servlet-jsp</module>
     </modules>
 
     <properties>

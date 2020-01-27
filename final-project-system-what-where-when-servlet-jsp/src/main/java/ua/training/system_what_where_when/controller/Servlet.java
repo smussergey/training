@@ -1,8 +1,9 @@
 package ua.training.system_what_where_when.controller;
 
-
-
-import ua.training.system_what_where_when.controller.Command.Command;
+import ua.training.system_what_where_when.controller.command.Command;
+import ua.training.system_what_where_when.controller.command.ExceptionCommand;
+import ua.training.system_what_where_when.controller.command.LoginCommand;
+import ua.training.system_what_where_when.controller.command.LogoutCommand;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -21,34 +22,40 @@ public class Servlet extends HttpServlet {
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-
-//        commands.put("logout",
-//                new LogOutCommand());
-//        commands.put("login",
-//                new LoginCommand());
-//        commands.put("exception" , new ExceptionCommand());
+        commands.put("logout",
+                new LogoutCommand());
+        commands.put("login",
+                new LoginCommand());
+        commands.put("exception" , new ExceptionCommand());
     }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws IOException, ServletException {
+        System.out.println("DoGet=" + request.getRequestURI());
+
         processRequest(request, response);
-        //response.getWriter().print("Hello from servlet");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        System.out.println(request.getRequestURI());
         processRequest(request, response);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/coffee/" , "");
+        System.out.println("request.getRequestURI(): " + path);
+        path = path.replaceAll(".*/" , "");
+        System.out.println("replaceAll(\".*/\" , \"\"): " + path);
         Command command = commands.getOrDefault(path ,
                 (r)->"/index.jsp");
-        System.out.println(command.getClass().getName());
         String page = command.execute(request);
-        request.getRequestDispatcher(page).forward(request,response);
+//        request.getRequestDispatcher(page).forward(request,response);
+        response.sendRedirect(page);
     }
+
+
+
 }
