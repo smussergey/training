@@ -31,32 +31,32 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/referee/home}"></a>
+                <a th:text="#{navbar.link.home.page}" class="nav-link" th:href="@{/referee/home}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.label.games.new}"></a>
+                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/referee/games/statistics}" th:text="#{navbar.label.games.statistics}"></a>
+                <a class="nav-link" th:href="@{/referee/games/statistics}" th:text="#{navbar.link.games.statistics}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
                    th:if="${gameDTO.appealStage.equals(appealStageFiled)}"
                    th:href="@{|/referee/appeal/games/${gameDTO.id}|}"
-                   th:text="#{navbar.label.games.consider.appeal}"></a>
+                   th:text="#{navbar.link.games.consider.appeal}"></a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item"
                 th:if="${lang.equals('en')}">
-                <a class="nav-link" th:text="#{navbar.label.ua}" href="?lang=ua"></a>
+                <a class="nav-link" th:text="#{navbar.link.ua}" href="?lang=ua"></a>
             </li>
             <li class="nav-item"
                 th:if="${lang.equals('ua')}">
-                <a class="nav-link" th:text="#{navbar.label.en}" href="?lang=en"></a>
+                <a class="nav-link" th:text="#{navbar.link.en}" href="?lang=en"></a>
             </li>
             <li class="nav-item nav-link"
-                th:text="#{navbar.label.you.logined.as}"></li>
+                th:text="#{navbar.text.you.logined.as}"></li>
             <li class="nav-item nav-link"
                 th:if="${lang.equals('en')}"
                 th:text="${userNameEn}">
@@ -67,7 +67,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}" th:text="#{navbar.label.logout}"></a>
+                <a class="nav-link" th:href="@{/logout}" th:text="#{navbar.text.logout}"></a>
             </li>
         </ul>
     </div>

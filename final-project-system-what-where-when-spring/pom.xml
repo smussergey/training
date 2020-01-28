@@ -11,7 +11,7 @@
     <groupId>ua.training</groupId>
     <artifactId>final-project-system-what-where-when-spring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>system-what-where-when</name>
+    <name>final-project-system-what-where-when-spring</name>
     <description>Final project</description>
 
     <properties>

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <title th:text="#{home.page.title}"></title>
+    <title th:text="#{index.page.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -31,28 +31,28 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.label.games.new}"></a>
+                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/referee/games/statistics}"
-                   th:text="#{navbar.label.games.statistics}"></a>
+                   th:text="#{navbar.link.games.statistics}"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/referee/history/consideration}"
-                   th:text="#{navbar.label.history.consideration}"></a>
+                   th:text="#{navbar.link.history.consideration}"></a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item"
                 th:if="${lang.equals('en')}">
-                <a class="nav-link" th:text="#{navbar.label.ua}" href="?lang=ua"></a>
+                <a class="nav-link" th:text="#{navbar.link.ua}" href="?lang=ua"></a>
             </li>
             <li class="nav-item"
                 th:if="${lang.equals('ua')}">
-                <a class="nav-link" th:text="#{navbar.label.en}" href="?lang=en"></a>
+                <a class="nav-link" th:text="#{navbar.link.en}" href="?lang=en"></a>
             </li>
             <li class="nav-item nav-link"
-                th:text="#{navbar.label.you.logined.as}"></li>
+                th:text="#{navbar.text.you.logined.as}"></li>
             <li class="nav-item nav-link"
                 th:if="${lang.equals('en')}"
                 th:text="${userNameEn}">
@@ -63,7 +63,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}" th:text="#{navbar.label.logout}"></a>
+                <a class="nav-link" th:href="@{/logout}" th:text="#{navbar.text.logout}"></a>
             </li>
         </ul>
     </div>

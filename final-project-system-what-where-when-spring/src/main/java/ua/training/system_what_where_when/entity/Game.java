@@ -35,10 +35,6 @@ public class Game {
         user.getGames().add(this);
     }
 
-    // TODO delete this field
-    @Column(name = "is_appeal_possible")
-    private boolean isAppealPossible;
-
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Appeal> appeals = new ArrayList<>();

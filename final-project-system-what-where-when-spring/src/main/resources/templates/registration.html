@@ -31,21 +31,21 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a th:text="#{navbar.label.home.page}" class="nav-link" th:href="@{/home}"></a>
+                <a th:text="#{navbar.link.home.page}" class="nav-link" th:href="@{/home}"></a>
             </li>
         </ul>
 
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item"
                 th:if="${lang.equals('en')}">
-                <a class="nav-link" th:text="#{navbar.label.ua}" href="?lang=ua"></a>
+                <a class="nav-link" th:text="#{navbar.link.ua}" href="?lang=ua"></a>
             </li>
             <li class="nav-item"
                 th:if="${lang.equals('ua')}">
-                <a class="nav-link" th:text="#{navbar.label.en}" href="?lang=en"></a>
+                <a class="nav-link" th:text="#{navbar.link.en}" href="?lang=en"></a>
             </li>
             <li class="nav-item">
-                <a th:text="#{navbar.label.login}" class="nav-link" th:href="@{/login}"></a>
+                <a th:text="#{navbar.link.login}" class="nav-link" th:href="@{/login}"></a>
             </li>
         </ul>
     </div>
