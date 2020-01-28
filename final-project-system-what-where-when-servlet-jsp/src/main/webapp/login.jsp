@@ -1,17 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<fmt:requestEncoding value="UTF-8"/>
 <fmt:setLocale value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
+
 
 <style>
     <%@ include file="/main.css" %>
 </style>
-
-<!DOCTYPE html>
-<html lang="en">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <title>
@@ -23,7 +18,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <%--    <link rel="stylesheet" type="text/css" href="/css/main.css">--%>
+    <%--        <link rel="stylesheet" href="/css/main.css">--%>
+
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">

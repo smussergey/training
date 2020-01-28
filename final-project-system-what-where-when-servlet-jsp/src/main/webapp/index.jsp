@@ -59,7 +59,7 @@
             <%--                            <a th:text="#{navbar.link.register}" class="nav-link" th:href="@{/registration}"></a>--%>
             <%--                        </li>--%>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/login">
+                <a class="nav-link" href="${pageContext.request.contextPath}/login.jsp">
                     <fmt:message key="navbar.link.login"/>
                 </a>
             </li>

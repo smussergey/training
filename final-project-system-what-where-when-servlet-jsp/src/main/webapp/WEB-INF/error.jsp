@@ -12,7 +12,7 @@
 </head>
     <body>
         <h2>
-           Error Page<br/>
+            WWW Error Page<br/>
             <i>Error </i>
         </h2>
 
