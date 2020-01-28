@@ -52,8 +52,7 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path ,
                 (r)->"/index.jsp");
         String page = command.execute(request);
-//        request.getRequestDispatcher(page).forward(request,response);
-        response.sendRedirect(page);
+        request.getRequestDispatcher(page).forward(request,response);
     }
 
 

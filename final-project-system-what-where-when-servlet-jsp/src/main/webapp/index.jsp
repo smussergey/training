@@ -71,10 +71,6 @@
     <h3>
         <fmt:message key="index.text.please.log.in.to.continue"/>
     </h3>
-    <h3>
-        INDEX PAGE
-    </h3>
-
 
 </div>
 
