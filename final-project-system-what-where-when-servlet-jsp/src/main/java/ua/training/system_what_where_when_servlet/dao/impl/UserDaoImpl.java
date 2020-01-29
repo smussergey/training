@@ -4,6 +4,7 @@ package ua.training.system_what_where_when_servlet.dao.impl;
 import org.apache.log4j.Logger;
 import ua.training.system_what_where_when_servlet.dao.UserDao;
 import ua.training.system_what_where_when_servlet.dao.mapper.UserMapper;
+import ua.training.system_what_where_when_servlet.entity.NotUniqueLoginException;
 import ua.training.system_what_where_when_servlet.entity.User;
 
 import java.sql.Connection;
@@ -17,13 +18,28 @@ public class UserDaoImpl implements UserDao {
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     private Connection connection;
 
-    public UserDaoImpl(Connection connection) {
+    UserDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public void create(User entity) {
+    public void create(User user) {
+        LOGGER.info(String.format("In UserDaoImpl, method create user: " + user));
 
+        try (PreparedStatement ps = connection.prepareStatement
+                ("INSERT INTO user (name_ua, name_en, email, password, role )" +
+                        " VALUES (?,?,?,?,?)")) {
+            ps.setString(1, user.getNameUa());
+            ps.setString(2, user.getNameEn());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getRole().name());
+            ps.executeUpdate();
+        } catch (Exception e) { //TODO check what exception to use
+            LOGGER.error("SQLException: " + e.toString());
+            throw new NotUniqueLoginException("Not Unique Login", user.getEmail());
+        }
+        LOGGER.info("User was saved");
     }
 
     @Override
@@ -45,6 +61,7 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    @Override
     public Optional<User> findByEmail(String email) {
 
         Optional<User> result = Optional.empty();
@@ -149,7 +166,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void close()  {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {

@@ -56,9 +56,8 @@ public class UserService {
     }
 
     private boolean isPasswordValid(User user, String password) {
-        //return BCrypt.checkpw(password, user.getPassword());
-
-        return user.getPassword().equals(password);
+        LOGGER.info(String.format("Previous password is: %s", user.getPassword()));
+        return BCrypt.checkpw(password, user.getPassword());
     }
 
 }

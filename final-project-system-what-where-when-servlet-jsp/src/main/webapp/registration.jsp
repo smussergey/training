@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="login.page.title"/>
+        <fmt:message key="registration.page.title"/>
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +57,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/registrationPage">
+                <a class="nav-link" href="${pageContext.request.contextPath}/loginPage">
                     <fmt:message key="navbar.link.register"/>
                 </a>
             </li>
@@ -74,17 +74,38 @@
     </div>
 
     <div class="panel-body">
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form action="${pageContext.request.contextPath}/registration" method="post">
+            <div class="form-group">
+                <label for="nameua">
+                    <fmt:message key="registartion.label.nameUa"/>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="nameua"
+                       name="nameua"
+                       placeholder='<fmt:message key="registartion.label.placeholder.nameUa"/>'>
+            </div>
+
+            <div class=" form-group">
+                <label for="nameen">
+                    <fmt:message key="registartion.label.nameEn"/>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="nameen"
+                       name="nameen"
+                       placeholder='<fmt:message key="registartion.label.placeholder.nameEn"/>'>
+            </div>
+
             <div class="form-group">
                 <label for="username">
-                    <fmt:message key="login.label.login"/>
+                    <fmt:message key="registartion.label.login"/>
                 </label>
                 <input type="text"
                        class="form-control"
                        id="username"
-                       value="ad"
                        name="username"
-                       value='<fmt:message key="login.label.placeholder.password"/>'>
+                       placeholder='<fmt:message key="registartion.label.placeholder.email"/>'>
             </div>
 
             <div class=" form-group">
@@ -94,12 +115,11 @@
                 <input type="password"
                        class="form-control"
                        id="password"
-                       value="adpas"
                        name="password"
-                       value='<fmt:message key="login.label.placeholder.password"/>'>
+                       placeholder='<fmt:message key="registartion.label.placeholder.password"/>'>
             </div>
             <button type="submit" class="btn btn-primary">
-                <fmt:message key="login.label.button"/>
+                <fmt:message key="registration.label.button"/>
             </button>
         </form>
     </div>

@@ -4,6 +4,7 @@ public class ServiceFactory {
     private static ServiceFactory serviceFactory;
 
     private final UserService userService = new UserService();
+    private final UserRegistrationService userRegistrationService = new UserRegistrationService();
 
     public static ServiceFactory getInstance() {
         if (serviceFactory == null) {
@@ -19,5 +20,9 @@ public class ServiceFactory {
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public UserRegistrationService getUserRegistrationService() {
+        return userRegistrationService;
     }
 }

@@ -1,7 +1,11 @@
 package ua.training.system_what_where_when_servlet.controller;
 
 import ua.training.system_what_where_when_servlet.controller.command.*;
+import ua.training.system_what_where_when_servlet.controller.command.page.LoginPageCommand;
+import ua.training.system_what_where_when_servlet.controller.command.page.RegistrationPageCommand;
+import ua.training.system_what_where_when_servlet.controller.command.referee.GamesStatistics;
 import ua.training.system_what_where_when_servlet.controller.command.referee.HistoryConsideration;
+import ua.training.system_what_where_when_servlet.controller.command.referee.MainReferee;
 import ua.training.system_what_where_when_servlet.controller.command.referee.NewGameCommand;
 
 import javax.servlet.ServletConfig;
@@ -17,19 +21,29 @@ import java.util.Map;
 public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
-    public void init(ServletConfig servletConfig){
+    public void init(ServletConfig servletConfig) {
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-        commands.put("logout",
-                new LogoutCommand());
+        commands.put("registrationPage",
+                new RegistrationPageCommand());
+        commands.put("loginPage",
+                new LoginPageCommand());
+        commands.put("registration",
+                new RegistrationCommand());
         commands.put("login",
                 new LoginCommand());
-        commands.put("exception" ,
+        commands.put("logout",
+                new LogoutCommand());
+        commands.put("exception",
                 new ExceptionCommand());
-        commands.put("newgame" ,
+        commands.put("mainReferee",
+                new MainReferee());
+        commands.put("newGame",
                 new NewGameCommand());
-        commands.put("historyConsideration" ,
+        commands.put("gamesStatistics",
+                new GamesStatistics());
+        commands.put("historyConsideration",
                 new HistoryConsideration());
     }
 
@@ -51,14 +65,13 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         System.out.println("request.getRequestURI(): " + path);
-        path = path.replaceAll(".*/" , "");
+        path = path.replaceAll(".*/", "");
         System.out.println("replaceAll(\".*/\" , \"\"): " + path);
-        Command command = commands.getOrDefault(path ,
-                (r)->"/index.jsp");
+        Command command = commands.getOrDefault(path,
+                (r) -> "/index.jsp");
         String page = command.execute(request);
-        request.getRequestDispatcher(page).forward(request,response);
+        request.getRequestDispatcher(page).forward(request, response);
     }
-
 
 
 }

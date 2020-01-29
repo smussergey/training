@@ -1,43 +1,10 @@
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>Referee</title>--%>
-
-<%--</head>--%>
-<%--<body>--%>
-
-<%--<h1>Hello Referee!</h1>--%>
-<%--<a href="${pageContext.request.contextPath}/logout">Logout</a>--%>
-<%--</body>--%>
-
-<%--</body>--%>
-<%--</html>--%>
-
-<%--<!DOCTYPE html>--%>
-<%--<html lang="en">--%>
-<%--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">--%>
-
-<%--<head>--%>
-<%--    <title th:text="#{index.page.title}"></title>--%>
-<%--    <meta charset="utf-8">--%>
-<%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
-<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">--%>
-<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--%>
-<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>--%>
-<%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
-<%--    <link rel="stylesheet" type="text/css" href="../css/main.css" th:href="@{/css/main.css}">--%>
-<%--</head>--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
 
 
-<style>
-    <%@ include file="/main.css" %>
-</style>
-
+<html>
 <head>
     <title>
         <fmt:message key="index.page.title"/>
@@ -48,8 +15,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <%--        <link rel="stylesheet" href="/css/main.css">--%>
-
+    <style>
+        <%@ include file="/main.css" %>
+    </style>
 </head>
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -73,7 +41,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newgame">
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newGame">
                     <fmt:message key="navbar.link.games.new"/>
                 </a>
             </li>
@@ -135,7 +103,7 @@
             <fmt:message key="home.text.please.make.your.choice"/>
         </h3>
         <h2>
-                Main Referee
+            Main Referee
         </h2>
     </div>
 </div>
