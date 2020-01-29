@@ -73,23 +73,23 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/referee/newGame">
-                        <fmt:message key="navbar.link.games.new"/>
-                    </a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newgame">
+                    <fmt:message key="navbar.link.games.new"/>
+                </a>
             </li>
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/statistics}"--%>
                 <%--                   th:text="#{navbar.link.games.statistics}"></a>--%>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/referee/gamesStatistics">
-                        <fmt:message key="navbar.link.games.statistics"/>
-                    </a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/gamesStatistics">
+                    <fmt:message key="navbar.link.games.statistics"/>
+                </a>
             </li>
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/history/consideration}"--%>
                 <%--                   th:text="#{navbar.link.history.consideration}"></a>--%>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/referee/historyConsideration">
-                        <fmt:message key="navbar.link.history.consideration"/>
-                    </a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/historyConsideration">
+                    <fmt:message key="navbar.link.history.consideration"/>
+                </a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
@@ -134,6 +134,9 @@
         <h3>
             <fmt:message key="home.text.please.make.your.choice"/>
         </h3>
+        <h2>
+                Main Referee
+        </h2>
     </div>
 </div>
 

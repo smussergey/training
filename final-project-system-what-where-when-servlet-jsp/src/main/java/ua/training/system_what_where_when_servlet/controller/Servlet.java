@@ -1,6 +1,7 @@
 package ua.training.system_what_where_when_servlet.controller;
 
 import ua.training.system_what_where_when_servlet.controller.command.*;
+import ua.training.system_what_where_when_servlet.controller.command.referee.HistoryConsideration;
 import ua.training.system_what_where_when_servlet.controller.command.referee.NewGameCommand;
 
 import javax.servlet.ServletConfig;
@@ -28,6 +29,8 @@ public class Servlet extends HttpServlet {
                 new ExceptionCommand());
         commands.put("newgame" ,
                 new NewGameCommand());
+        commands.put("historyConsideration" ,
+                new HistoryConsideration());
     }
 
     public void doGet(HttpServletRequest request,

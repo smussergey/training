@@ -1,5 +1,8 @@
 package ua.training.system_what_where_when_servlet.controller.filter;
 
+import org.apache.log4j.Logger;
+import ua.training.system_what_where_when_servlet.entity.Role;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,28 +10,81 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
+    private static final Logger LOGGER = Logger.getLogger(AuthFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
     @Override
-    public void doFilter(ServletRequest request,
-                         ServletResponse response,
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
+        final HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+        final HttpServletResponse httpResponce = (HttpServletResponse) servletResponse;
+        final HttpSession session = httpRequest.getSession();
 
-        final HttpServletRequest req = (HttpServletRequest) request;
-        final HttpServletResponse res = (HttpServletResponse) response;
+        String path = httpRequest.getRequestURI();
+        Role role = (Role) session.getAttribute("role");
 
-        HttpSession session = req.getSession();
-        ServletContext context = session.getServletContext();
+        boolean isLoggedIn = (session != null &&
+                session.getAttribute("username") != null &&
+                session.getAttribute("role") != null);
+        boolean isLoginRequest = path.contains("login");
+        boolean isLogoutRequest = path.contains("logout");
+        boolean isError = path.contains("error");
 
-        System.out.println("req.getSession(): " + session);
-        System.out.println("session.getAttribute(\"role\") " + session.getAttribute("role"));
-        System.out.println("context.getAttribute(\"loggedUsers\"): " + context.getAttribute("loggedUsers"));
+        LOGGER.info("in AuthFilter: request URI= " + httpRequest.getRequestURI());
 
+        if (isError) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
 
-        filterChain.doFilter(request, response);
+        if (!isLoggedIn && isLoginRequest) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+        if (isLoggedIn && isLoginRequest) {
+            httpResponce.sendRedirect("/logout");
+            return;
+        }
+
+        if (isLogoutRequest) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+        if (isLoggedIn && role.equals(Role.ROLE_REFEREE)) {
+            LOGGER.info("in AuthFilter:isLoggedIn && role.equals(Role.ROLE_REFEREE): " + (isLoggedIn && role.equals(Role.ROLE_REFEREE)));
+            if (isPathCorrect(path, Role.ROLE_REFEREE)) {
+                LOGGER.info("in AuthFilter:isPathCorrect(path, Role.ROLE_REFEREE): " + isPathCorrect(path, Role.ROLE_REFEREE));
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            } else {
+                LOGGER.info("in AuthFilter:isPathCorrect(path, Role.ROLE_REFEREE): " + isPathCorrect(path, Role.ROLE_REFEREE));
+                httpResponce.sendRedirect("error/denied.jsp");
+                return;
+            }
+
+        }
+        if (isLoggedIn && role.equals(Role.ROLE_PLAYER)) {
+            if (isPathCorrect(path, Role.ROLE_PLAYER)) {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                httpResponce.sendRedirect("error/denied.jsp");
+            }
+        }
+
+        filterChain.doFilter(servletRequest, servletResponse);
+
+    }
+
+    private boolean isPathCorrect(String path, Role role) {
+        System.out.println("Requested path: " + path + " by user with role " + role.name().toLowerCase());
+        System.out.println("isPathCorrect: " + path.contains(role.name().replaceAll("ROLE_", "").toLowerCase()));
+        return path.contains(role.name().replaceAll("ROLE_", "").toLowerCase());
     }
 
     @Override
