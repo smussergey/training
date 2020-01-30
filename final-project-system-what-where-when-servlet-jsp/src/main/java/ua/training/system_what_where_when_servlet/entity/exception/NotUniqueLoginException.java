@@ -1,4 +1,4 @@
-package ua.training.system_what_where_when_servlet.entity;
+package ua.training.system_what_where_when_servlet.entity.exception;
 
 public class NotUniqueLoginException extends RuntimeException {
     private String loginData;

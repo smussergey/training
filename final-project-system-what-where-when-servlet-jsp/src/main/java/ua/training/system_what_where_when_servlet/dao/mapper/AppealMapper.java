@@ -13,8 +13,8 @@ public class AppealMapper implements ObjectMapper<Appeal> {
     @Override
     public Appeal extractFromResultSet(ResultSet rs) throws SQLException {
         Appeal appeal = new Appeal();
-        appeal.setId(rs.getInt("appeal_id"));
-        appeal.setAppealStage(AppealStage.valueOf(rs.getString("appeal_stage")));
+        appeal.setId(rs.getInt("appeal.appeal_id"));
+        appeal.setAppealStage(AppealStage.valueOf(rs.getString("appeal.appeal_stage")));
         appeal.setDate(rs.getDate("appeal.date").toLocalDate());
         return appeal;
     }

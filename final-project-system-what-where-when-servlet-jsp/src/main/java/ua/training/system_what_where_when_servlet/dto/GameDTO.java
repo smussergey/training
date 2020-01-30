@@ -1,6 +1,8 @@
 package ua.training.system_what_where_when_servlet.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameDTO {
@@ -13,7 +15,7 @@ public class GameDTO {
     private String scores;
     private String appealStage;
     private boolean isAppealPossible;
-//    private List<AnsweredQuestionDTO> answeredQuestionDTOs = new ArrayList<>();
+    private List<AnsweredQuestionDTO> answeredQuestionDTOs = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -85,5 +87,13 @@ public class GameDTO {
 
     public void setAppealPossible(boolean appealPossible) {
         isAppealPossible = appealPossible;
+    }
+
+    public List<AnsweredQuestionDTO> getAnsweredQuestionDTOs() {
+        return answeredQuestionDTOs;
+    }
+
+    public void setAnsweredQuestionDTOs(List<AnsweredQuestionDTO> answeredQuestionDTOs) {
+        this.answeredQuestionDTOs = answeredQuestionDTOs;
     }
 }

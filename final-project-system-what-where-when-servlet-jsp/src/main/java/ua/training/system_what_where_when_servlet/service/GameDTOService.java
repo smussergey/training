@@ -1,5 +1,6 @@
 package ua.training.system_what_where_when_servlet.service;
 
+import org.apache.log4j.Logger;
 import ua.training.system_what_where_when_servlet.dto.GameDTO;
 import ua.training.system_what_where_when_servlet.entity.AppealStage;
 import ua.training.system_what_where_when_servlet.entity.Game;
@@ -7,14 +8,18 @@ import ua.training.system_what_where_when_servlet.entity.User;
 import ua.training.system_what_where_when_servlet.util.ResourceBundleUtil;
 
 public class GameDTOService {
+    private static final Logger LOGGER = Logger.getLogger(UserService.class);
     private static final String DELIMITER = ":";
 
     //TODO refactor this method
     public GameDTO toGameDTO(Game game) {
+        LOGGER.info(String.format("GameDTOService class, toGameDTO is executing on a game with id = %d", game.getId()));
         GameDTO gameDTO = new GameDTO();
 
         gameDTO.setId(game.getId());
         gameDTO.setDate(game.getDate());
+
+
         gameDTO.setPlayerNameUa(game.getUsers().get(0).getNameUa());//TODO improve
         gameDTO.setPlayerNameEn(game.getUsers().get(0).getNameEn());//TODO improve
 

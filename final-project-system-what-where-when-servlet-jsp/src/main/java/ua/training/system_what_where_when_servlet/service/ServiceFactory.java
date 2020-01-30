@@ -1,5 +1,6 @@
 package ua.training.system_what_where_when_servlet.service;
 
+// TODO implement correct serviceFactory
 public class ServiceFactory {
     private static ServiceFactory serviceFactory;
 
@@ -32,5 +33,9 @@ public class ServiceFactory {
 
     public GameDTOService getGameDTOService() {
         return new GameDTOService();
+    }
+
+    public AnsweredQuestionService getAnsweredQuestionService() {
+        return new AnsweredQuestionService();
     }
 }

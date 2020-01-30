@@ -16,7 +16,7 @@ public class GamesStatistics implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.debug("GamesStatistics class is executing");
+        LOGGER.info("GamesStatistics class is executing");
         GameStatisticsAndDetailsService service = ServiceFactory.getInstance().getGameStatisticsAndDetailsService();
         List<GameDTO> gameDTOs = service.getGameStatisticsByAllGamesAndPlayers();
         request.setAttribute("gameDTOs", gameDTOs);

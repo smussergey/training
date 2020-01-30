@@ -3,17 +3,21 @@ package ua.training.system_what_where_when_servlet.service;
 import org.apache.log4j.Logger;
 import ua.training.system_what_where_when_servlet.dao.DaoFactory;
 import ua.training.system_what_where_when_servlet.dao.GameDao;
+import ua.training.system_what_where_when_servlet.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when_servlet.dto.GameDTO;
 import ua.training.system_what_where_when_servlet.entity.Game;
+import ua.training.system_what_where_when_servlet.entity.exception.EntityNotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GameStatisticsAndDetailsService {
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
     private final DaoFactory daoFactory;
     private final GameDTOService gameDTOService = ServiceFactory.getInstance().getGameDTOService();
+    private final AnsweredQuestionService answeredQuestionService = ServiceFactory.getInstance().getAnsweredQuestionService();
 
     public GameStatisticsAndDetailsService() {
         this.daoFactory = DaoFactory.getInstance();
@@ -46,6 +50,42 @@ public class GameStatisticsAndDetailsService {
         }
         return null; //TODO correct
     }
+
+    //    TODO forbid logged user to see not his game results
+    public GameDTO getGameFullStatisticsById(int id) {
+        LOGGER.info("GameStatisticsAndDetailsService class, getGameFullStatisticsById method is executing");
+        Game game = null; //TODO
+        try (GameDao gameDao = daoFactory.createGameDao()) {
+            game = gameDao.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Game with id = %d was not found", id)));
+            LOGGER.info(String.format("GameStatisticsAndDetailsService class: getGameFullStatisticsById method: game with id = %d", game.getId()));
+        } catch (Exception e) { //TODO
+            LOGGER.error("GameStatisticsAndDetailsService class, getGameFullStatisticsById method: game was not found by id=" + id);
+        }
+        GameDTO gameDTO = gameDTOService.toGameDTO(game);
+
+        LOGGER.info(String.format("GameStatisticsAndDetailsService class, getGameFullStatisticsById method: game with id =  %d has %d answeredQuestions", id, game.getAnsweredQuestions().size()));
+        List<AnsweredQuestionDTO> answeredQuestions = game.getAnsweredQuestions().stream()
+                .map(answeredQuestionService::toAnsweredQuestionDTO)
+                .collect(Collectors.toList());
+
+        gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
+//            gameDTO.setAppealPossible(checkIfLoggedUserCanFileAppealAgainstGame(game));
+
+        return gameDTO;
+    }
+
+//        // TODO improve this method
+//        private boolean checkIfLoggedUserCanFileAppealAgainstGame(Game game) {
+//
+//            if (!game.getAppeals().isEmpty()) {
+//                return !game.getAppeals().stream()
+//                        .filter(appeal -> appeal.getUser().equals(userService.findLoggedIndUser()))
+//                        .findAny()
+//                        .isPresent();
+//            } else {
+//                return true;
+//            }
+//        }
 
 
 //    public Page<GameDTO> getGamesStatisticsByLoggedInPlayer(Principal principal, Pageable pageable) throws EntityNotFoundException {
@@ -108,5 +148,6 @@ public class GameStatisticsAndDetailsService {
 //        return gameRepository.findById(id)
 //                .orElseThrow(() -> new EntityNotFoundException("Can not fond games with id: " + id));
 //    }
+
 
 }

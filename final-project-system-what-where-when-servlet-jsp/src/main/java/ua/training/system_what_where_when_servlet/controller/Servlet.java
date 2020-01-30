@@ -3,10 +3,7 @@ package ua.training.system_what_where_when_servlet.controller;
 import ua.training.system_what_where_when_servlet.controller.command.*;
 import ua.training.system_what_where_when_servlet.controller.command.page.LoginPageCommand;
 import ua.training.system_what_where_when_servlet.controller.command.page.RegistrationPageCommand;
-import ua.training.system_what_where_when_servlet.controller.command.referee.GamesStatistics;
-import ua.training.system_what_where_when_servlet.controller.command.referee.HistoryConsideration;
-import ua.training.system_what_where_when_servlet.controller.command.referee.MainReferee;
-import ua.training.system_what_where_when_servlet.controller.command.referee.NewGameCommand;
+import ua.training.system_what_where_when_servlet.controller.command.referee.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -43,6 +40,8 @@ public class Servlet extends HttpServlet {
                 new NewGameCommand());
         commands.put("gamesStatistics",
                 new GamesStatistics());
+        commands.put("gameDetails",
+                new GameDetails());
         commands.put("historyConsideration",
                 new HistoryConsideration());
     }

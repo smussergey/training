@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="index.page.title"/>
+        <fmt:message key="games.statistics.page.title"/>
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +41,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newGame">
+                <a class="nav-link" href="${pageContext.request.contextPath}/newGame">
                     <fmt:message key="navbar.link.games.new"/>
                 </a>
             </li>

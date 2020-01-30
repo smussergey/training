@@ -1,7 +1,6 @@
 package ua.training.system_what_where_when_servlet.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class User {
     private Integer id;
@@ -10,7 +9,7 @@ public class User {
     private String email;
     private String password;
     private Role role;
-    private List<Game> games = new ArrayList<>();
+    private Set<Game> games = new HashSet<>();
 
 
     public User() {
@@ -64,15 +63,31 @@ public class User {
         this.role = role;
     }
 
+    public Set<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(Set<Game> games) {
+        this.games = games;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", nameUa='" + nameUa + '\'' +
-                ", nameEn='" + nameEn + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
+                "email='" + email + '\'' +
                 '}';
     }
 }

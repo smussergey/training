@@ -1,15 +1,14 @@
 package ua.training.system_what_where_when_servlet.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     private Integer id;
     private LocalDate date;
     private List<User> users = new ArrayList<>();
-    private List<Appeal> appeals = new ArrayList<>();
-    private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
+    private Set<Appeal> appeals = new HashSet<>();
+    private Set<AnsweredQuestion> answeredQuestions = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -35,19 +34,32 @@ public class Game {
         this.users = users;
     }
 
-    public List<Appeal> getAppeals() {
+    public Set<Appeal> getAppeals() {
         return appeals;
     }
 
-    public void setAppeals(List<Appeal> appeals) {
+    public void setAppeals(Set<Appeal> appeals) {
         this.appeals = appeals;
     }
 
-    public List<AnsweredQuestion> getAnsweredQuestions() {
+    public Set<AnsweredQuestion> getAnsweredQuestions() {
         return answeredQuestions;
     }
 
-    public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
+    public void setAnsweredQuestions(Set<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions = answeredQuestions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game)) return false;
+        Game game = (Game) o;
+        return Objects.equals(id, game.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

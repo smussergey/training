@@ -1,8 +1,7 @@
 package ua.training.system_what_where_when_servlet.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class Appeal {
@@ -11,7 +10,7 @@ public class Appeal {
     private AppealStage appealStage;
     private Game game;
     private User user;
-    private List<AnsweredQuestion> appealedQuestions = new ArrayList<>();
+    private Set<AnsweredQuestion> appealedQuestions = new HashSet<>();
 
     public Appeal() {
     }
@@ -56,12 +55,25 @@ public class Appeal {
         this.user = user;
     }
 
-    public List<AnsweredQuestion> getAppealedQuestions() {
+    public Set<AnsweredQuestion> getAppealedQuestions() {
         return appealedQuestions;
     }
 
-    public void setAppealedQuestions(List<AnsweredQuestion> appealedQuestions) {
+    public void setAppealedQuestions(Set<AnsweredQuestion> appealedQuestions) {
         this.appealedQuestions = appealedQuestions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Appeal)) return false;
+        Appeal appeal = (Appeal) o;
+        return Objects.equals(id, appeal.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

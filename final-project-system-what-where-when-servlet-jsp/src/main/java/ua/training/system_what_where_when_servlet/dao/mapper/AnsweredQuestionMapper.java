@@ -11,7 +11,7 @@ public class AnsweredQuestionMapper implements ObjectMapper<AnsweredQuestion> {
     @Override
     public AnsweredQuestion extractFromResultSet(ResultSet rs) throws SQLException {
         AnsweredQuestion answeredQuestion = new AnsweredQuestion();
-        answeredQuestion.setId(rs.getInt("answered_question_id"));
+        answeredQuestion.setId(rs.getInt("answered_question.answered_question_id"));
         return answeredQuestion;
     }
 

@@ -1,6 +1,8 @@
 package ua.training.system_what_where_when_servlet.entity;
 
 
+import java.util.Objects;
+
 public class AnsweredQuestion {
     private Integer id;
     private Game game;
@@ -40,5 +42,18 @@ public class AnsweredQuestion {
 
     public void setUserWhoGotPoint(User userWhoGotPoint) {
         this.userWhoGotPoint = userWhoGotPoint;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AnsweredQuestion)) return false;
+        AnsweredQuestion that = (AnsweredQuestion) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

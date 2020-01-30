@@ -4,7 +4,7 @@ package ua.training.system_what_where_when_servlet.dao.impl;
 import org.apache.log4j.Logger;
 import ua.training.system_what_where_when_servlet.dao.UserDao;
 import ua.training.system_what_where_when_servlet.dao.mapper.UserMapper;
-import ua.training.system_what_where_when_servlet.entity.NotUniqueLoginException;
+import ua.training.system_what_where_when_servlet.entity.exception.NotUniqueLoginException;
 import ua.training.system_what_where_when_servlet.entity.User;
 
 import java.sql.Connection;
