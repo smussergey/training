@@ -1,5 +1,8 @@
 package ua.training.system_what_where_when_servlet.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private Integer id;
     private String nameUa;
@@ -7,7 +10,7 @@ public class User {
     private String email;
     private String password;
     private Role role;
-//    private List<Game> games = new ArrayList<>();
+    private List<Game> games = new ArrayList<>();
 
 
     public User() {

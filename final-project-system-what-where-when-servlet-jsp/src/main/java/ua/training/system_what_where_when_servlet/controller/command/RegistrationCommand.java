@@ -7,6 +7,7 @@ import ua.training.system_what_where_when_servlet.service.ServiceFactory;
 import ua.training.system_what_where_when_servlet.service.UserRegistrationService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
@@ -18,7 +19,7 @@ public class RegistrationCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         String nameUa = request.getParameter("nameua");
         String nameEn = request.getParameter("nameen");
         String username = request.getParameter("username");

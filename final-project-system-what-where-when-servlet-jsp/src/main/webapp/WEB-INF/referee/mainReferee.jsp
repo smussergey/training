@@ -23,7 +23,7 @@
 <div class="jumbotron text-center" style="margin-bottom:0">
     <h1>
         <fmt:message key="text.header"/>
-    </h1>>
+    </h1>
 </div>
 
 <nav id="nav" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">

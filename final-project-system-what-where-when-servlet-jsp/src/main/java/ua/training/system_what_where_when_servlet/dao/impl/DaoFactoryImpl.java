@@ -6,13 +6,17 @@ import ua.training.system_what_where_when_servlet.dao.UserDao;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 public class DaoFactoryImpl extends DaoFactory {
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
     public UserDao createUserDao() {
         return new UserDaoImpl(getConnection());
+    }
+
+    @Override
+    public GameDaoImpl createGameDao() {
+        return new GameDaoImpl(getConnection());
     }
 
     private Connection getConnection() {

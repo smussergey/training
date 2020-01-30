@@ -22,6 +22,7 @@ public class UserMapper implements ObjectMapper<User> {
         return user;
     }
 
+    @Override
     public User makeUnique(Map<Integer, User> cache,
                            User user) {
         cache.putIfAbsent(user.getId(), user);

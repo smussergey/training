@@ -7,6 +7,7 @@ import ua.training.system_what_where_when_servlet.service.ServiceFactory;
 import ua.training.system_what_where_when_servlet.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ public class LoginCommand implements Command {
 
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -35,6 +36,7 @@ public class LoginCommand implements Command {
             setUserAndRoleToSession(request, Role.ROLE_REFEREE, username);
             LOGGER.info("Referee " + username + " logged successfully.");
             return "/WEB-INF/referee/mainReferee.jsp";
+//            return   response.sendRedirect("/WEB-INF/referee/mainReferee.jsp");
         } else if (Role.ROLE_PLAYER.equals(getRoleByUsernameAndPassword(username, password))) {
             setUserAndRoleToSession(request, Role.ROLE_PLAYER, username);
             LOGGER.info("Player " + username + " logged successfully.");

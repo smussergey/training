@@ -3,8 +3,8 @@ package ua.training.system_what_where_when_servlet.service;
 public class ServiceFactory {
     private static ServiceFactory serviceFactory;
 
-    private final UserService userService = new UserService();
-    private final UserRegistrationService userRegistrationService = new UserRegistrationService();
+    public ServiceFactory() {
+    }
 
     public static ServiceFactory getInstance() {
         if (serviceFactory == null) {
@@ -19,10 +19,18 @@ public class ServiceFactory {
     }
 
     public UserService getUserService() {
-        return userService;
+        return new UserService();
     }
 
     public UserRegistrationService getUserRegistrationService() {
-        return userRegistrationService;
+        return new UserRegistrationService();
+    }
+
+    public GameStatisticsAndDetailsService getGameStatisticsAndDetailsService() {
+        return new GameStatisticsAndDetailsService();
+    }
+
+    public GameDTOService getGameDTOService() {
+        return new GameDTOService();
     }
 }

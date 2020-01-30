@@ -68,9 +68,10 @@ public class Servlet extends HttpServlet {
         path = path.replaceAll(".*/", "");
         System.out.println("replaceAll(\".*/\" , \"\"): " + path);
         Command command = commands.getOrDefault(path,
-                (r) -> "/index.jsp");
-        String page = command.execute(request);
+                (req, res) -> "/index.jsp");
+        String page = command.execute(request, response);
         request.getRequestDispatcher(page).forward(request, response);
+
     }
 
 
