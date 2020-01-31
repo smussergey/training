@@ -38,4 +38,8 @@ public class ServiceFactory {
     public AnsweredQuestionService getAnsweredQuestionService() {
         return new AnsweredQuestionService();
     }
+
+    public NewGameService getNewGameService() {
+        return new NewGameService();
+    }
 }

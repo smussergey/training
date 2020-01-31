@@ -42,7 +42,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/mainReferee">
+                <a class="nav-link" href="${pageContext.request.contextPath}/mainReferee">
                     <fmt:message key="navbar.link.home.page"/>
                 </a>
             </li>

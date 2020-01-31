@@ -4,8 +4,12 @@ import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.training.system_what_where_when_servlet.dao.DaoFactory;
 import ua.training.system_what_where_when_servlet.dao.UserDao;
+import ua.training.system_what_where_when_servlet.dto.UserDTO;
+import ua.training.system_what_where_when_servlet.entity.Role;
 import ua.training.system_what_where_when_servlet.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserService {
@@ -17,13 +21,25 @@ public class UserService {
         this.daoFactory = DaoFactory.getInstance();
     }
 
+    public Optional<User> findById(int id) {
+        Optional<User> userOptional = Optional.empty();
+
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userOptional = userDao.findById(id);
+        }
+        catch (Exception e) {
+            e.printStackTrace(); //TODO Correct
+        }
+        return userOptional;
+    }
+
     public Optional<User> findByUserName(String username) {
         Optional<User> userOptional = Optional.empty();
-        try {
+
             try (UserDao userDao = daoFactory.createUserDao()) {
                 userOptional = userDao.findByUserName(username);
             }
-        } catch (Exception e) {
+        catch (Exception e) {
             e.printStackTrace(); //TODO Correct
         }
         return userOptional;
@@ -31,10 +47,9 @@ public class UserService {
 
     public Optional<User> findByUserNameAndPassword(String username, String password) {
         Optional<User> userOptional = Optional.empty();
-        try {
-            try (UserDao userDao = daoFactory.createUserDao()) {
-                userOptional = userDao.findByUserName(username);
-            }
+
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userOptional = userDao.findByUserName(username);
         } catch (Exception e) {
             e.printStackTrace(); //TODO Correct
         }
@@ -60,4 +75,13 @@ public class UserService {
         return BCrypt.checkpw(password, user.getPassword());
     }
 
+    public List<UserDTO> getAllUserDTOsByRole(Role role) {
+        List<UserDTO> userDTOs = new ArrayList<>();
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userDTOs = userDao.getAllUserDTOsByRole(role);
+        } catch (Exception e) {
+            e.printStackTrace(); //TODO Correct
+        }
+        return userDTOs;
+    }
 }

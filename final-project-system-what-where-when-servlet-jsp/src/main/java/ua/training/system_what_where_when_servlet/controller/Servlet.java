@@ -36,8 +36,10 @@ public class Servlet extends HttpServlet {
                 new ExceptionCommand());
         commands.put("mainReferee",
                 new MainReferee());
-        commands.put("newGame",
-                new NewGameCommand());
+        commands.put("newGamePrepare",
+                new NewGamePrepareCommand());
+        commands.put("generateNewGame",
+                new GenerateNewGameCommand());
         commands.put("gamesStatistics",
                 new GamesStatistics());
         commands.put("gameDetails",

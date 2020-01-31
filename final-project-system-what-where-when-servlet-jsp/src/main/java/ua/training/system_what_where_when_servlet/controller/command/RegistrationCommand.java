@@ -34,7 +34,7 @@ public class RegistrationCommand implements Command {
         userRegistrationDTO.setEmail(username);
         userRegistrationDTO.setPassword(password);
 
-        userRegistrationService.register(userRegistrationDTO);
+        ServiceFactory.getInstance().getUserRegistrationService().register(userRegistrationDTO);
         return "/login.jsp";
 
     }

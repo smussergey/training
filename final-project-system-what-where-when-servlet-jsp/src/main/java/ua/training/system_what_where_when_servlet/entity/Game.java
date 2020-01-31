@@ -8,7 +8,7 @@ public class Game {
     private LocalDate date;
     private List<User> users = new ArrayList<>();
     private Set<Appeal> appeals = new HashSet<>();
-    private Set<AnsweredQuestion> answeredQuestions = new HashSet<>();
+    private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -42,11 +42,11 @@ public class Game {
         this.appeals = appeals;
     }
 
-    public Set<AnsweredQuestion> getAnsweredQuestions() {
+    public List<AnsweredQuestion> getAnsweredQuestions() {
         return answeredQuestions;
     }
 
-    public void setAnsweredQuestions(Set<AnsweredQuestion> answeredQuestions) {
+    public void setAnsweredQuestions(List<AnsweredQuestion> answeredQuestions) {
         this.answeredQuestions = answeredQuestions;
     }
 
@@ -61,5 +61,12 @@ public class Game {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "date=" + date +
+                '}';
     }
 }

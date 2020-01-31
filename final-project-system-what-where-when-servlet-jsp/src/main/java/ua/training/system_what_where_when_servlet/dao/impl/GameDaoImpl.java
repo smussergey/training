@@ -10,8 +10,10 @@ import ua.training.system_what_where_when_servlet.entity.AnsweredQuestion;
 import ua.training.system_what_where_when_servlet.entity.Appeal;
 import ua.training.system_what_where_when_servlet.entity.Game;
 import ua.training.system_what_where_when_servlet.entity.User;
+import ua.training.system_what_where_when_servlet.entity.exception.NotUniqueLoginException;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class GameDaoImpl implements GameDao {
@@ -23,9 +25,84 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
-    public void create(Game entity) {
+    public void create(Game game) {
+        LOGGER.info(String.format("In GameDaoImpl, method create game: " + game));
+        ResultSet rs;
+        int gameId;
+
+        try {
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement psGame = connection.prepareStatement
+                    ("INSERT INTO game (date)" +
+                            " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+
+                 PreparedStatement psAnsweredQuestion = connection.prepareStatement
+                         ("INSERT INTO answered_question (game_id, user_id)" +
+                                 " VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+
+
+                 PreparedStatement psUserGame = connection.prepareStatement
+                         ("INSERT INTO user_game (game_id, user_id)" +
+                                 " VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
+
+
+                psGame.setDate(1, Date.valueOf(game.getDate()));
+
+                int rowAffected = psGame.executeUpdate();
+                LOGGER.info(String.format("In GameDaoImpl, method create game, after game insert: " + game));
+
+
+                if (rowAffected == 0) {
+                    throw new SQLException("Creating Game failed, no rows affected.");
+                }
+                rs = psGame.getGeneratedKeys();
+
+                if (rs.next()) {
+                    gameId = rs.getInt(1);
+
+                    List<User> users = game.getUsers();
+                    for (int i = 0; i < users.size(); i++) { //TODO improve
+                        LOGGER.info(String.format("In GameDaoImpl, method create game, for i (users) = %d", i));
+                        psUserGame.setInt(1, gameId);
+                        psUserGame.setInt(2, users.get(i).getId());
+                        LOGGER.info(String.format("In GameDaoImpl, method create game, before insert into user_game: %d, %d : ", gameId, users.get(i).getId()));
+                        psUserGame.executeUpdate();
+                        LOGGER.info(String.format("In GameDaoImpl, method create game, after insert into user_game: %d, %d : ", gameId, users.get(i).getId()));
+                    }
+
+                    List<AnsweredQuestion> answeredQuestions = game.getAnsweredQuestions();
+
+                    for (int i = 0; i < answeredQuestions.size(); i++) { //TODO improve
+                        LOGGER.info(String.format("In GameDaoImpl, method create game, aq size = %d", answeredQuestions.size()));
+                        LOGGER.info(String.format("In GameDaoImpl, method create game, for i(aq) = %d", i));
+                        psAnsweredQuestion.setInt(1, gameId);
+
+                        if (answeredQuestions.get(i).getUserWhoGotPoint() != null) { //TODO improve
+                            LOGGER.info(String.format("In GameDaoImpl, method create game, before insert into answeredQuestion: gameId = %d, adId = %d : ", gameId, answeredQuestions.get(i).getId()));
+                            psAnsweredQuestion.setInt(2, answeredQuestions.get(i).getUserWhoGotPoint().getId());
+                        } else {
+                            psAnsweredQuestion.setInt(2, Types.NULL);
+                            LOGGER.info(String.format("In GameDaoImpl, method create game, before insert into answeredQuestion: %d, user=null : ", gameId));
+                        }
+                        psAnsweredQuestion.executeUpdate();
+                    }
+                }
+                connection.commit();
+                LOGGER.info("Game was saved");
+            }
+            connection.rollback();
+        } catch (
+                SQLException ex) {
+
+//TODO implement
+            ex.printStackTrace();
+
+
+        }
 
     }
+
 
     @Override
     public Optional<Game> findById(int id) {
@@ -52,7 +129,7 @@ public class GameDaoImpl implements GameDao {
             ResultSet rs;
 
             rs = ps.executeQuery();
-            
+
             AnsweredQuestionMapper answeredQuestionMapper = new AnsweredQuestionMapper();
             AppealMapper appealMapper = new AppealMapper();
             GameMapper gameMapper = new GameMapper();
@@ -90,7 +167,11 @@ public class GameDaoImpl implements GameDao {
                 if (rs.getInt("answered_question.appeal_id") > 0)
                     answeredQuestion.setAppeal(appeal);
 
-                game.getAnsweredQuestions().add(answeredQuestion);
+                if (game.getAnsweredQuestions().contains(answeredQuestion)) {
+                } else {
+                    game.getAnsweredQuestions().add(answeredQuestion);
+                }
+//                game.getAnsweredQuestions().add(answeredQuestion);
 
                 if (game.getUsers().contains(user)) {
                 } else {
@@ -165,7 +246,11 @@ public class GameDaoImpl implements GameDao {
                 if (rs.getInt("answered_question.appeal_id") > 0)
                     answeredQuestion.setAppeal(appeal);
 
-                game.getAnsweredQuestions().add(answeredQuestion);
+                if (game.getAnsweredQuestions().contains(answeredQuestion)) {
+                } else {
+                    game.getAnsweredQuestions().add(answeredQuestion);
+                }
+//                game.getAnsweredQuestions().add(answeredQuestion);
 
                 if (game.getUsers().contains(user)) {
                 } else {
