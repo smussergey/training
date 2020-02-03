@@ -40,23 +40,10 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newGamePrepareReferee">
-                    <fmt:message key="navbar.link.games.new"/>
-                </a>
-            </li>
-            <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/statistics}"--%>
                 <%--                   th:text="#{navbar.link.games.statistics}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/gamesStatisticsReferee">
+                <a class="nav-link" href="${pageContext.request.contextPath}/player/gamesStatisticsPlayer">
                     <fmt:message key="navbar.link.games.statistics"/>
-                </a>
-            </li>
-            <li class="nav-item">
-                <%--                <a class="nav-link" th:href="@{/referee/history/consideration}"--%>
-                <%--                   th:text="#{navbar.link.history.consideration}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/historyConsiderationReferee">
-                    <fmt:message key="navbar.link.history.consideration"/>
                 </a>
             </li>
         </ul>
@@ -103,7 +90,7 @@
             <fmt:message key="home.text.please.make.your.choice"/>
         </h3>
         <h2>
-            Main Referee
+            Test Player
         </h2>
     </div>
 </div>

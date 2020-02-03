@@ -48,14 +48,14 @@
             </li>
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newGame">
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/newGameReferee">
                     <fmt:message key="navbar.link.games.new"/>
                 </a>
             </li>
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/statistics}"--%>
                 <%--                   th:text="#{navbar.link.games.statistics}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/referee/gamesStatistics">
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/gamesStatisticsReferee">
                     <fmt:message key="navbar.link.games.statistics"/>
                 </a>
             </li>

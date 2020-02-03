@@ -37,10 +37,13 @@ public class GameDaoImpl implements GameDao {
                     ("INSERT INTO game (date)" +
                             " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
 
-                 PreparedStatement psAnsweredQuestion = connection.prepareStatement
+                 PreparedStatement psAnsweredQuestionInGameWithTwoPlayers = connection.prepareStatement
                          ("INSERT INTO answered_question (game_id, user_id)" +
                                  " VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
 
+                 PreparedStatement psAnsweredQuestionInGameWithOnePlayer = connection.prepareStatement
+                         ("INSERT INTO answered_question (game_id)" +
+                                 " VALUES (?)", Statement.RETURN_GENERATED_KEYS);
 
                  PreparedStatement psUserGame = connection.prepareStatement
                          ("INSERT INTO user_game (game_id, user_id)" +
@@ -76,16 +79,18 @@ public class GameDaoImpl implements GameDao {
                     for (int i = 0; i < answeredQuestions.size(); i++) { //TODO improve
                         LOGGER.info(String.format("In GameDaoImpl, method create game, aq size = %d", answeredQuestions.size()));
                         LOGGER.info(String.format("In GameDaoImpl, method create game, for i(aq) = %d", i));
-                        psAnsweredQuestion.setInt(1, gameId);
 
                         if (answeredQuestions.get(i).getUserWhoGotPoint() != null) { //TODO improve
                             LOGGER.info(String.format("In GameDaoImpl, method create game, before insert into answeredQuestion: gameId = %d, adId = %d : ", gameId, answeredQuestions.get(i).getId()));
-                            psAnsweredQuestion.setInt(2, answeredQuestions.get(i).getUserWhoGotPoint().getId());
+                            psAnsweredQuestionInGameWithTwoPlayers.setInt(1, gameId);
+                            psAnsweredQuestionInGameWithTwoPlayers.setInt(2, answeredQuestions.get(i).getUserWhoGotPoint().getId());
+                            psAnsweredQuestionInGameWithTwoPlayers.executeUpdate();
                         } else {
-                            psAnsweredQuestion.setInt(2, Types.NULL);
+                            psAnsweredQuestionInGameWithOnePlayer.setInt(1, gameId);
+                            psAnsweredQuestionInGameWithOnePlayer.executeUpdate();
                             LOGGER.info(String.format("In GameDaoImpl, method create game, before insert into answeredQuestion: %d, user=null : ", gameId));
                         }
-                        psAnsweredQuestion.executeUpdate();
+
                     }
                 }
                 connection.commit();
@@ -113,7 +118,7 @@ public class GameDaoImpl implements GameDao {
 
 
         Optional<Game> result = Optional.empty();
-        try (PreparedStatement ps = connection.prepareCall("" +
+        try (PreparedStatement ps = connection.prepareStatement("" +
                 " select * from user " +
                 " left join user_game " +
                 " on  user.user_id = user_game.user_id " +
@@ -178,13 +183,11 @@ public class GameDaoImpl implements GameDao {
                     game.getUsers().add(user);
                 }
             }
-
-            result = games.values().stream().findFirst();
         } catch (SQLException ex) {
             LOGGER.error("Exception in class: UserDaoImpl, method: findById.", ex);
             throw new RuntimeException(ex); //TODO Correct
         }
-        return result;
+        return result = games.values().stream().findFirst();
     }
 
     @Override
@@ -257,12 +260,91 @@ public class GameDaoImpl implements GameDao {
                     game.getUsers().add(user);
                 }
             }
-
-            return new ArrayList<>(games.values());
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+        return new ArrayList<>(games.values());
+    }
+
+    @Override
+    public List<Game> findAllByUsername(String username) {
+        Map<Integer, AnsweredQuestion> answeredQuestions = new HashMap<>();
+        Map<Integer, Appeal> appeals = new HashMap<>();
+        Map<Integer, Game> games = new HashMap<>();
+        Map<Integer, User> users = new HashMap<>();
+
+
+        Optional<Game> result = Optional.empty();
+        try (PreparedStatement ps = connection.prepareStatement("" +
+                " select * from user " +
+                " left join user_game " +
+                " on  user.user_id = user_game.user_id " +
+                " left join game " +
+                " on user_game.game_id = game.game_id " +
+                " left join answered_question " +
+                " on game.game_id = answered_question.game_id " +
+                " left join appeal " +
+                " on answered_question.appeal_id = appeal.appeal_id " +
+                " where user.email = ?")) {
+
+            ps.setString(1, username);
+            ResultSet rs;
+
+            rs = ps.executeQuery();
+
+            AnsweredQuestionMapper answeredQuestionMapper = new AnsweredQuestionMapper();
+            AppealMapper appealMapper = new AppealMapper();
+            GameMapper gameMapper = new GameMapper();
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                Game game = gameMapper
+                        .extractFromResultSet(rs);
+                game = gameMapper
+                        .makeUnique(games, game);
+
+                User user = userMapper
+                        .extractFromResultSet(rs);
+                user = userMapper
+                        .makeUnique(users, user);
+
+
+                Appeal appeal = null;
+
+                if (rs.getInt("appeal.appeal_id") > 0) {
+                    appeal = appealMapper
+                            .extractFromResultSet(rs);
+                    appeal = appealMapper
+                            .makeUnique(appeals, appeal);
+                    game.getAppeals().add(appeal);
+                }
+
+                AnsweredQuestion answeredQuestion = answeredQuestionMapper
+                        .extractFromResultSet(rs);
+                answeredQuestion = answeredQuestionMapper
+                        .makeUnique(answeredQuestions, answeredQuestion);
+                answeredQuestion.setGame(game);
+                if (rs.getInt("answered_question.user_id") > 0)
+                    answeredQuestion.setUserWhoGotPoint(users.get(rs.getInt("answered_question.user_id")));
+                if (rs.getInt("answered_question.appeal_id") > 0)
+                    answeredQuestion.setAppeal(appeal);
+
+                if (game.getAnsweredQuestions().contains(answeredQuestion)) {
+                } else {
+                    game.getAnsweredQuestions().add(answeredQuestion);
+                }
+//                game.getAnsweredQuestions().add(answeredQuestion);
+
+                if (game.getUsers().contains(user)) {
+                } else {
+                    game.getUsers().add(user);
+                }
+            }
+        } catch (SQLException ex) {
+            LOGGER.error("Exception in class: UserDaoImpl, method: findById.", ex);
+            throw new RuntimeException(ex); //TODO Correct
+        }
+        return new ArrayList<>(games.values());
     }
 
     @Override

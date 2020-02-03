@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findById(int id) {
 
         Optional<User> result = Optional.empty();
-        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM user WHERE user_id = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?")) {
             ps.setInt(1, id);
             ResultSet rs;
             rs = ps.executeQuery();
@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findByEmail(String email) {
 
         Optional<User> result = Optional.empty();
-        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM user WHERE email = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ?")) {
             ps.setString(1, email);
             ResultSet rs;
             rs = ps.executeQuery();
@@ -91,7 +91,7 @@ public class UserDaoImpl implements UserDao {
     public List<UserDTO> getAllUserDTOsByRole(Role role) {
         List<UserDTO> userDTOs = new ArrayList<>();
 
-        try (PreparedStatement ps = connection.prepareCall(" select user_id, name_en, name_ua from user " +
+        try (PreparedStatement ps = connection.prepareStatement(" select user_id, name_en, name_ua from user " +
                 " where user.role = ?")) {
             ps.setString(1, role.name());
             ResultSet rs;

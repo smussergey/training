@@ -35,12 +35,12 @@ public class LoginCommand implements Command {
         if (Role.ROLE_REFEREE.equals(getRoleByUsernameAndPassword(username, password))) {
             setUserAndRoleToSession(request, Role.ROLE_REFEREE, username);
             LOGGER.info("Referee " + username + " logged successfully.");
-            return "/WEB-INF/referee/mainReferee.jsp";
+            return "/referee/mainReferee";
 //            return   response.sendRedirect("/WEB-INF/referee/mainReferee.jsp");
         } else if (Role.ROLE_PLAYER.equals(getRoleByUsernameAndPassword(username, password))) {
             setUserAndRoleToSession(request, Role.ROLE_PLAYER, username);
             LOGGER.info("Player " + username + " logged successfully.");
-            return "/WEB-INF/player/main_player.jsp";
+            return "/player/mainPlayer";
         } else {
             LOGGER.info("User with " + username + " can not log in, try another passworn or username");
             return "/login.jsp";

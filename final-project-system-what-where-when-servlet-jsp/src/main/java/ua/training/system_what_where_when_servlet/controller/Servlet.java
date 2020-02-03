@@ -3,6 +3,9 @@ package ua.training.system_what_where_when_servlet.controller;
 import ua.training.system_what_where_when_servlet.controller.command.*;
 import ua.training.system_what_where_when_servlet.controller.command.page.LoginPageCommand;
 import ua.training.system_what_where_when_servlet.controller.command.page.RegistrationPageCommand;
+import ua.training.system_what_where_when_servlet.controller.command.player.GameDetailsPlayerCommand;
+import ua.training.system_what_where_when_servlet.controller.command.player.GamesStatisticsPlayerCommand;
+import ua.training.system_what_where_when_servlet.controller.command.player.MainPlayerCommand;
 import ua.training.system_what_where_when_servlet.controller.command.referee.*;
 
 import javax.servlet.ServletConfig;
@@ -35,17 +38,23 @@ public class Servlet extends HttpServlet {
         commands.put("exception",
                 new ExceptionCommand());
         commands.put("mainReferee",
-                new MainReferee());
-        commands.put("newGamePrepare",
-                new NewGamePrepareCommand());
-        commands.put("generateNewGame",
-                new GenerateNewGameCommand());
-        commands.put("gamesStatistics",
-                new GamesStatistics());
-        commands.put("gameDetails",
-                new GameDetails());
-        commands.put("historyConsideration",
-                new HistoryConsideration());
+                new MainRefereeCommand());
+        commands.put("newGamePrepareReferee",
+                new NewGamePrepareRefereeCommand());
+        commands.put("generateNewGameReferee",
+                new GenerateNewGameRefereeCommand());
+        commands.put("gamesStatisticsReferee",
+                new GamesStatisticsRefereeCommand());
+        commands.put("gameDetailsReferee",
+                new GameDetailsRefereeCommand());
+        commands.put("historyConsiderationReferee",
+                new HistoryConsiderationRefereeCommand());
+        commands.put("mainPlayer",
+                new MainPlayerCommand());
+        commands.put("gamesStatisticsPlayer",
+                new GamesStatisticsPlayerCommand());
+        commands.put("gameDetailsPlayer",
+                new GameDetailsPlayerCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -71,6 +80,7 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path,
                 (req, res) -> "/index.jsp");
         String page = command.execute(request, response);
+
         request.getRequestDispatcher(page).forward(request, response);
 
     }

@@ -51,6 +51,23 @@ public class GameStatisticsAndDetailsService {
         return null; //TODO correct
     }
 
+
+    public List<GameDTO> getGamesStatisticsByLoggedInPlayer(String username) {
+        try (GameDao gameDao = daoFactory.createGameDao()) {
+            List<Game> games = gameDao.findAll();
+            LOGGER.info(String.format("GameStatisticsAndDetailsService class, getGamesStatisticsByLoggedInPlayer method, were found %s games", games.size()));
+
+            return games.stream()
+                    .map(gameDTOService::toGameDTO)
+                    .sorted(Comparator.comparing(GameDTO::getDate).reversed())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.error("Exception in GameStatisticsAndDetailsService class, getGamesStatisticsByLoggedInPlayer method.", e);
+        }
+        return null; //TODO correct
+    }
+
+
     //    TODO forbid logged user to see not his game results
     public GameDTO getGameFullStatisticsById(int id) {
         LOGGER.info("GameStatisticsAndDetailsService class, getGameFullStatisticsById method is executing");

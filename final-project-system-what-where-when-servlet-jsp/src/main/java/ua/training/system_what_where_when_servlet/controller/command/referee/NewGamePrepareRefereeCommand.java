@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class NewGamePrepareCommand implements Command {
+public class NewGamePrepareRefereeCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("NewGamePageCommand class is executing");
+        LOGGER.info("NewGamePrepareRefereeCommand class is executing");
 
         UserService userService = ServiceFactory.getInstance().getUserService();
         List<UserDTO> players = userService.getAllUserDTOsByRole(Role.ROLE_PLAYER);
         request.setAttribute("players", players);
-        return "/WEB-INF/referee/newGame.jsp";
+        return "/WEB-INF/referee/newGameReferee.jsp";
     }
 }

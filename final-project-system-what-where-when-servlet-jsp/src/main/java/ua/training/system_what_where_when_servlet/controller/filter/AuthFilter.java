@@ -58,22 +58,26 @@ public class AuthFilter implements Filter {
 
         if (isLoggedIn && role.equals(Role.ROLE_REFEREE)) {
             LOGGER.info("in AuthFilter:isLoggedIn && role.equals(Role.ROLE_REFEREE): " + (isLoggedIn && role.equals(Role.ROLE_REFEREE)));
-            if (isPathAllowed(path, Role.ROLE_REFEREE)) {
-                LOGGER.info("in AuthFilter:isPathCorrect(path, Role.ROLE_REFEREE): " + isPathAllowed(path, Role.ROLE_REFEREE));
+            if (isPathAllowedForRole(path, Role.ROLE_REFEREE)) {
+                LOGGER.info("in AuthFilter:isPathCorrect(path, Role.ROLE_REFEREE): " + isPathAllowedForRole(path, Role.ROLE_REFEREE));
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             } else {
-                LOGGER.info("in AuthFilter:isPathCorrect(path, Role.ROLE_REFEREE): " + isPathAllowed(path, Role.ROLE_REFEREE));
-                httpResponce.sendRedirect("error/denied.jsp");
+                LOGGER.warn("in AuthFilter:isPathCorrect(path, Role.ROLE_REFEREE): " + isPathAllowedForRole(path, Role.ROLE_REFEREE));
+                httpResponce.sendRedirect("/WEB-INF/error/denied.jsp");
                 return;
             }
 
         }
         if (isLoggedIn && role.equals(Role.ROLE_PLAYER)) {
-            if (isPathAllowed(path, Role.ROLE_PLAYER)) {
+            LOGGER.info("in AuthFilter:isLoggedIn && role.equals(Role.ROLE_PLAYER): " + (isLoggedIn && role.equals(Role.ROLE_PLAYER)));
+            if (isPathAllowedForRole(path, Role.ROLE_PLAYER)) {
+                LOGGER.info("in AuthFilter:isPathCorrect(path, Role.ROLE_PLAYER): " + isPathAllowedForRole(path, Role.ROLE_PLAYER));
                 filterChain.doFilter(servletRequest, servletResponse);
+                return;
             } else {
-                httpResponce.sendRedirect("error/denied.jsp");
+                LOGGER.warn("in AuthFilter:isPathCorrect(path, Role.ROLE_PLAYER): " + isPathAllowedForRole(path, Role.ROLE_PLAYER));
+                httpResponce.sendRedirect("/WEB-INF/error/denied.jsp");
             }
         }
 
@@ -81,7 +85,7 @@ public class AuthFilter implements Filter {
 
     }
 
-    private boolean isPathAllowed(String path, Role role) {
+    private boolean isPathAllowedForRole(String path, Role role) {
         System.out.println("Requested path: " + path + " by user with role " + role.name().toLowerCase());
         System.out.println("isPathCorrect: " + path.contains(role.name().replaceAll("ROLE_", "").toLowerCase()));
         return path.contains(role.name().replaceAll("ROLE_", "").toLowerCase());
