@@ -28,7 +28,7 @@ public class AppealService {
     }
 
 
-    public void  fileAppealAgainstGameAnsweredQuestions(int[] appealedQuestionsIds, String username) {
+    public void fileAppealAgainstGameAnsweredQuestions(int[] appealedQuestionsIds, String username) {
 
         LOGGER.info("AppealServise class: fileAppealAgainstGameAnsweredQuestions method: successfully were got in amount:" + appealedQuestionsIds.length);
         List<AnsweredQuestion> appealedQuestions = Arrays.stream(appealedQuestionsIds)
@@ -57,34 +57,42 @@ public class AppealService {
         daoFactory.createAppealDao().create(appeal);
     }
 
-//    public List<Appeal> approveAppealsAgainstGameAnsweredQuestions(String[] approvedQuestionStringIds) {
-//        log.info("in AppealServise: approveAppealAgainstGameAnsweredQuestions() - id: {} successfully was got", approvedQuestionStringIds[0]);
-//        List<AnsweredQuestion> answeredQuestionsWithApprovedAppeal = Arrays.stream(approvedQuestionStringIds)
-//                .mapToLong(Long::valueOf)
-//                .mapToObj(answeredQuestionService::findAnsweredQuestionById)// TODO improve this method: too many calls to db (use "IN")
-//                .collect(Collectors.toList());
-//
+    public void approveAppealsAgainstGameAnsweredQuestions(int[] aprovedQuestionsIds) {
+        LOGGER.info("AppealServise class: fileAppealAgainstGameAnsweredQuestions method: successfully were got in amount:" + aprovedQuestionsIds.length);
+        List<AnsweredQuestion> answeredQuestionsWithApprovedAppeal = Arrays.stream(aprovedQuestionsIds)
+                .mapToObj(answeredQuestionService::findAnsweredQuestionById)// TODO improve this method: too many calls to db (use "IN")
+                .collect(Collectors.toList());
+
 //        answeredQuestionService.saveAll(answeredQuestionsWithApprovedAppeal.stream()
 //                .peek(aq -> aq.setUserWhoGotPoint(aq.getAppeal().getUser()))
 //                .collect(Collectors.toList()));
-//
-//        Game appealedGame = answeredQuestionsWithApprovedAppeal.stream()
-//                .findAny()
-//                .get()
-//                .getGame();
-//
-//        // maybe move to separate method and update field through dirty checking
-//        return saveAll(appealedGame.getAppeals().stream()
-//                .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))
-//                .collect(Collectors.toList()));
-//    }
-//
-//    @Transactional
-//    public List<Appeal> saveAll(List<Appeal> appeals) {
-//        return appealRepository.saveAll(appeals);
-//    }
-//
-//    public List<Appeal> findAllByAppealStage(AppealStage appealStage) {
-//        return appealRepository.findAllByAppealStage(appealStage);
-//    }
+
+        List<AnsweredQuestion> approvedAnsweredQuestions = answeredQuestionsWithApprovedAppeal.stream()
+                .peek(aq -> aq.setUserWhoGotPoint(aq.getAppeal().getUser()))
+                .collect(Collectors.toList());
+
+        approvedAnsweredQuestions.stream() //TODO redo in transaction and batch
+                .forEach(aq -> DaoFactory.getInstance().createAnsweredQuestionDao().update(aq));
+
+
+        Game appealedGame = answeredQuestionsWithApprovedAppeal.stream()
+                .findAny()
+                .get()
+                .getGame();
+
+        // maybe move to separate method and update field through dirty checking
+
+        List<Appeal> consideredAppeals = (appealedGame.getAppeals().stream()
+                .peek(appeal -> appeal.setAppealStage(AppealStage.CONSIDERED))
+                .collect(Collectors.toList()));
+
+
+        //TODO redo in transaction and batch
+        consideredAppeals.stream()
+                .forEach(appeal -> DaoFactory.getInstance().createAppealDao().update(appeal));
+    }
 }
+
+
+
+

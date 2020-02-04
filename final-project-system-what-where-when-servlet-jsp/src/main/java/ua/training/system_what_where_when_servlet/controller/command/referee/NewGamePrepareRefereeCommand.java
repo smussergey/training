@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class NewGamePrepareRefereeCommand implements Command {
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
+    private static final Logger LOGGER = Logger.getLogger(NewGamePrepareRefereeCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

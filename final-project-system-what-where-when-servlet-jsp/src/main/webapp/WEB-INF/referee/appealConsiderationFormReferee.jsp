@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="games.game.details.page.title"/>
+        <fmt:message key="games.game.consideration.appeal.page.title"/>
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,13 +42,13 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <%--                <a class="nav-link" th:href="@{/referee/games/new}" th:text="#{navbar.link.games.new}"></a>--%>
-                <a class="nav-link" href="${pageContext.request.contextPath}/player/mainPlayer">
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/mainPlayer">
                     <fmt:message key="navbar.link.home.page"/>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/player/gamesStatisticsPlayer">
+                <a class="nav-link" href="${pageContext.request.contextPath}/referee/gamesStatisticsReferee">
                     <fmt:message key="navbar.link.games.statistics"/>
                 </a>
             </li>
@@ -114,7 +114,7 @@
     <%--        </div>--%>
 
     <%--        <div th:if=" ${!gameDTOs.empty}" id="statistics">--%>
-    <div id="statistics">
+        <div id="details">
         <table class="table table-striped table-hover table-bordered table-sm">
             <h1>
                 <fmt:message key="games.game.details.table.caption"/>
@@ -167,7 +167,7 @@
     <div id="qustions">
         <table class="table table-striped table-hover table-bordered table-sm">
             <h1>
-            <fmt:message key="games.game.questions.details.table.caption"/>
+                <fmt:message key="games.game.questions.details.table.caption"/>
             </h1>
             <thead class="thead-light">
             <tr>
@@ -208,21 +208,21 @@
 
     <div id="appeal" class="panel-body">
         <h1>
-        <fmt:message key="games.game.file.appeal.form.header"/>
+            <fmt:message key="games.game.approvement.appeal.form.header"/>
         </h1>
-        <form action="${pageContext.request.contextPath}/player/fileAppealAgainstAnsweredQuestions" method="get">
+        <form action="${pageContext.request.contextPath}/referee/considerAppealAgainstAnsweredQuestions" method="get">
             <div class="form-group">
                 <c:forEach items="${gameDTO.answeredQuestionDTOs}" var="answeredQuestionDTO">
                     <span>
-                      <c:if test="${answeredQuestionDTO.appealPossible}">
+                      <c:if test="${answeredQuestionDTO.getAppealStage().equals(appealStageFiled)}">
                         <input type="checkbox" name="ids"
-                           value="${answeredQuestionDTO.id}"/> ${answeredQuestionDTO.id}
+                               value="${answeredQuestionDTO.id}"/> ${answeredQuestionDTO.id}
                       </c:if>
                     </span>
                 </c:forEach>
             </div>
             <button type="submit" class="btn btn-primary">
-                <fmt:message key="games.game.file.appeal.label.button"/>
+                <fmt:message key="games.game.approve.appeal.label.button"/>
             </button>
         </form>
     </div>

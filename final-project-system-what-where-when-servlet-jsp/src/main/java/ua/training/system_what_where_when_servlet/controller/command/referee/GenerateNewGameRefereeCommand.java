@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GenerateNewGameRefereeCommand implements Command {
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
+    private static final Logger LOGGER = Logger.getLogger(GenerateNewGameRefereeCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

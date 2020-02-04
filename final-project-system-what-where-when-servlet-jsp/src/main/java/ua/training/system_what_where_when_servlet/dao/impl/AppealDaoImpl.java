@@ -87,9 +87,21 @@ public class AppealDaoImpl implements AppealDao {
     }
 
     @Override
-    public void update(Appeal entity) {
+    public void update(Appeal appeal) {
+        LOGGER.info(String.format("In AppealDaoImpl, method update appeal: "));
 
+        try (PreparedStatement ps = connection.prepareStatement
+                ("UPDATE  appeal set appeal_stage = ? where appeal_id = ?")) {
+
+            ps.setString(1, appeal.getAppealStage().name());
+            ps.setInt(2, appeal.getId());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); //TODO REDO
+        }
     }
+
 
     @Override
     public void delete(int id) {

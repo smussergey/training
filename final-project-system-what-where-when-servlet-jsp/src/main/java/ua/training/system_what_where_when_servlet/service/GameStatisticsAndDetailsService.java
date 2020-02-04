@@ -75,7 +75,7 @@ public class GameStatisticsAndDetailsService {
                 .map(answeredQuestionService::toAnsweredQuestionDTO)
                 .collect(Collectors.toList());
 
-//        gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
+        gameDTO.setAnsweredQuestionDTOs(answeredQuestions);
 //            gameDTO.setAppealPossible(checkIfLoggedUserCanFileAppealAgainstGame(game));
 
         return gameDTO;

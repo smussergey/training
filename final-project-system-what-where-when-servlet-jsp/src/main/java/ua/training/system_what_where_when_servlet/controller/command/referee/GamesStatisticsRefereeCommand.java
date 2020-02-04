@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class GamesStatisticsRefereeCommand implements Command {
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
+    private static final Logger LOGGER = Logger.getLogger(GamesStatisticsRefereeCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

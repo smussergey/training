@@ -22,6 +22,19 @@ public class UserMapper implements ObjectMapper<User> {
         return user;
     }
 
+    public User extractFromResultSetForAppeal(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("userappealed.user_id"));
+        user.setNameUa(rs.getString("userappealed.name_ua"));
+        user.setNameEn(rs.getString("userappealed.name_en"));
+        user.setEmail(rs.getString("userappealed.email"));
+        user.setPassword(rs.getString("userappealed.password"));
+        user.setRole(Role.valueOf(rs.getString("userappealed.role")));
+
+        return user;
+    }
+
+
     @Override
     public User makeUnique(Map<Integer, User> cache,
                            User user) {

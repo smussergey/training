@@ -174,6 +174,7 @@
 
     <div id="qustions">
         <table class="table table-striped table-hover table-bordered table-sm">
+            <h1>
             <fmt:message key="games.game.questions.details.table.caption"/>
             </h1>
             <thead class="thead-light">

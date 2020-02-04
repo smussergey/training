@@ -36,6 +36,16 @@ public class AnsweredQuestionDaoImpl implements AnsweredQuestionDao {
     public Optional<AnsweredQuestion> findById(int id) throws SQLException {
         LOGGER.info(String.format("In AnsweredQuestionDaoImpl, method findById: " + id));
         Optional<AnsweredQuestion> result = Optional.empty();
+//        try (PreparedStatement ps = connection.prepareStatement("" +
+//                " select * from answered_question " +
+//                " left join game " +
+//                " on answered_question.game_id = game.game_id " +
+//                " left join user " +
+//                " on answered_question.user_id=user.user_id " +
+//                " left join appeal " +
+//                " on answered_question.appeal_id = appeal.appeal_id " +
+//                " where answered_question.answered_question_id = ?")) {
+
         try (PreparedStatement ps = connection.prepareStatement("" +
                 " select * from answered_question " +
                 " left join game " +
@@ -44,6 +54,8 @@ public class AnsweredQuestionDaoImpl implements AnsweredQuestionDao {
                 " on answered_question.user_id=user.user_id " +
                 " left join appeal " +
                 " on answered_question.appeal_id = appeal.appeal_id " +
+                " left join user as userappealed " +
+                " on appeal.user_id =userappealed.user_id " +
                 " where answered_question.answered_question_id = ?")) {
 
             ps.setInt(1, id);
@@ -75,6 +87,10 @@ public class AnsweredQuestionDaoImpl implements AnsweredQuestionDao {
                 if (rs.getInt("answered_question.appeal_id") > 0) {
                     Appeal appeal = appealMapper
                             .extractFromResultSet(rs);
+                    User userWhoFiledAppeal = userMapper
+                            .extractFromResultSetForAppeal(rs);
+                    appeal.setUser(userWhoFiledAppeal);
+                    game.getAppeals().add(appeal);
                     answeredQuestion.setAppeal(appeal);
                 }
 
@@ -95,8 +111,19 @@ public class AnsweredQuestionDaoImpl implements AnsweredQuestionDao {
     }
 
     @Override
-    public void update(AnsweredQuestion entity) {
+    public void update(AnsweredQuestion answeredQuestion) {
+        LOGGER.info(String.format("In AnsweredQuestionDaoImpl, method update answeredQuestion: "));
 
+        try (PreparedStatement psAQ = connection.prepareStatement
+                ("UPDATE  answered_question set user_id = ? where answered_question_id = ?")) {
+
+            psAQ.setInt(1, answeredQuestion.getUserWhoGotPoint().getId());
+            psAQ.setInt(2, answeredQuestion.getId());
+            psAQ.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

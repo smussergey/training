@@ -111,7 +111,7 @@
     <%--        </div>--%>
 
     <%--        <div th:if=" ${!gameDTOs.empty}" id="statistics">--%>
-    <div id="gamestatistics">
+    <div id="statistics">
         <table class="table table-striped table-hover table-bordered table-sm">
             <h1>
                 <fmt:message key="games.game.details.table.caption"/>
@@ -163,7 +163,8 @@
 
     <div id="qustions">
         <table class="table table-striped table-hover table-bordered table-sm">
-            <fmt:message key="games.game.questions.details.table.caption"/>
+            <h1>
+                <fmt:message key="games.game.questions.details.table.caption"/>
             </h1>
             <thead class="thead-light">
             <tr>
@@ -201,6 +202,20 @@
             </tbody>
         </table>
     </div>
+
+
+        <c:if test="${gameDTO.appealStage.equals(appealStageFiled)}">
+            <div>
+                <form action="${pageContext.request.contextPath}/referee/getConsiderationAppealForm" method="post">
+                    <input type="hidden" name="gameid" value="${gameDTO.id}">
+                        <%--            TODO improve--%>
+                    <button class="button" type="submit">
+                        <fmt:message key="navbar.link.games.consider.appeal"/>
+                    </button>
+                </form>
+            </div>
+
+        </c:if>
 
 
 </div>

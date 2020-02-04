@@ -57,6 +57,10 @@ public class Servlet extends HttpServlet {
                 new GetFileAppealFormPlayerCommand());
         commands.put("fileAppealAgainstAnsweredQuestions",
                 new FileAppealAgainstAnsweredQuestionsPlayerCommand());
+        commands.put("getConsiderationAppealForm",
+                new GetConsiderationAppealFormRefereeCommand());
+        commands.put("considerAppealAgainstAnsweredQuestions",
+                new ConsiderAppealAgainstAnsweredQuestionsRefereeCommand());
     }
 
     public void doGet(HttpServletRequest request,
