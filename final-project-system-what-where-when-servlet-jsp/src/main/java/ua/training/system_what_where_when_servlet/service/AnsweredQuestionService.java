@@ -1,16 +1,20 @@
 package ua.training.system_what_where_when_servlet.service;
 
 import org.apache.log4j.Logger;
+import ua.training.system_what_where_when_servlet.dao.DaoFactory;
 import ua.training.system_what_where_when_servlet.dto.AnsweredQuestionDTO;
 import ua.training.system_what_where_when_servlet.entity.AnsweredQuestion;
 import ua.training.system_what_where_when_servlet.entity.AppealStage;
 import ua.training.system_what_where_when_servlet.util.ResourceBundleUtil;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AnsweredQuestionService {
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
-//    private final AnsweredQuestionRepository answeredQuestionRepository;
+    private static final Logger LOGGER = Logger.getLogger(AnsweredQuestionService.class);
+    private final DaoFactory daoFactory;
+    private final ServiceFactory serviceFactory;
+    //    private final AnsweredQuestionRepository answeredQuestionRepository;
 //
 //    public AnsweredQuestionService(AnsweredQuestionRepository answeredQuestionRepository) {
 //        this.answeredQuestionRepository = answeredQuestionRepository;
@@ -20,6 +24,21 @@ public class AnsweredQuestionService {
 //    public AnsweredQuestion findAnsweredQuestionById(Long id) {
 //        return answeredQuestionRepository.findById(id).get();
 //    }
+
+    public AnsweredQuestionService() {
+        this.daoFactory = DaoFactory.getInstance();
+        this.serviceFactory = ServiceFactory.getInstance();
+    }
+
+    public AnsweredQuestion findAnsweredQuestionById(int id) {
+        try {
+            return DaoFactory.getInstance().createAnsweredQuestionDao().findById(id).get();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    return null; // TODO correct
+    }
+
 
     public AnsweredQuestionDTO toAnsweredQuestionDTO(AnsweredQuestion answeredQuestion) {
         LOGGER.info(String.format("AnsweredQuestionService class, toAnsweredQuestionDTO method is executing on a answeredQuestionDTO with id = %d", answeredQuestion.getId()));

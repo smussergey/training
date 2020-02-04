@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="index.page.title"/>
+        <fmt:message key="games.game.details.page.title"/>
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,11 +47,28 @@
                 </a>
             </li>
 
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link" href="${pageContext.request.contextPath}/player/fileAppealPlayer">--%>
-<%--                    <fmt:message key="navbar.link.games.appeal"/>--%>
-<%--                </a>--%>
-<%--            </li>--%>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/player/gamesStatisticsPlayer">
+                    <fmt:message key="navbar.link.games.statistics"/>
+                </a>
+            </li>
+            <%--            <li class="nav-item">--%>
+            <%--                <c:if test="${gameDTO.appealPossible}">--%>
+            <%--                    <a class="nav-link"--%>
+            <%--                    <a class="nav-link" href="${pageContext.request.contextPath}/player/fileAppealPlayer/${gameDTO.id}">--%>
+            <%--                        <fmt:message key="navbar.link.games.appeal"/>--%>
+            <%--                    </a>--%>
+            <%--                </c:if>--%>
+            <%--            </li>--%>
+
+
+            <%--            <li class="nav-item">--%>
+            <%--                &lt;%&ndash;                <a class="nav-link" th:href="@{/referee/history/consideration}"&ndash;%&gt;--%>
+            <%--                &lt;%&ndash;                   th:text="#{navbar.link.history.consideration}"></a>&ndash;%&gt;--%>
+            <%--                <a class="nav-link" href="${pageContext.request.contextPath}/referee/historyConsiderationReferee">--%>
+            <%--                    <fmt:message key="navbar.link.history.consideration"/>--%>
+            <%--                </a>--%>
+            <%--            </li>--%>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item">
@@ -97,10 +114,10 @@
     <%--        </div>--%>
 
     <%--        <div th:if=" ${!gameDTOs.empty}" id="statistics">--%>
-    <div>
+    <div id="statistics">
         <table class="table table-striped table-hover table-bordered table-sm">
             <h1>
-                <fmt:message key="games.statistics.table.caption"/>
+                <fmt:message key="games.game.details.table.caption"/>
             </h1>
             <thead class="thead-light">
             <tr>
@@ -119,64 +136,95 @@
                 <th>
                     <fmt:message key="games.table.header.appeal.stage"/>
                 </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <td>
+                ${gameDTO.date}
+            </td>
+            <%--                    <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.playerNameEn}"></span>--%>
+            <%--                        <span th:if="${lang.equals('ua')}" th:text="${gameDTO.playerNameUa}"></span></td>--%>
+            <%--                    <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.opponentNameEn}"></span>--%>
+            <%--                        <span th:if="${lang.equals('ua')}" th:text="${gameDTO.opponentNameUa}"></span></td>--%>
+            <td>
+                ${gameDTO.playerNameEn}
+            </td>
+            <td>
+                ${gameDTO.opponentNameEn}
+            </td>
+            <td>
+                ${gameDTO.scores}
+            </td>
+            <td>
+                ${gameDTO.appealStage}
+            </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="qustions">
+        <table class="table table-striped table-hover table-bordered table-sm">
+            <fmt:message key="games.game.questions.details.table.caption"/>
+            </h1>
+            <thead class="thead-light">
+            <tr>
                 <th>
-                    <fmt:message key="games.statistics.table.header.game.statistics"/>
+                    <fmt:message key="games.game.table.header.question.id"/>
+                </th>
+                <th>
+                    <fmt:message key="games.game.table.header.name.who.got.point"/>
+                </th>
+                <th>
+                    <fmt:message key="games.table.header.appeal.stage"/>
                 </th>
             </tr>
             </thead>
 
             <tbody>
-            <c:forEach items="${gameDTOs}" var="gameDTO">
+
+            <c:forEach items="${gameDTO.answeredQuestionDTOs}" var="answeredQuestionDTO">
                 <tr>
                     <td>
-                        <c:out value="${gameDTO.date}"/>
+                        <c:out value="${answeredQuestionDTO.id}"/>
                     </td>
-                        <%--                    <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.playerNameEn}"></span>--%>
-                        <%--                        <span th:if="${lang.equals('ua')}" th:text="${gameDTO.playerNameUa}"></span></td>--%>
-                        <%--                    <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.opponentNameEn}"></span>--%>
-                        <%--                        <span th:if="${lang.equals('ua')}" th:text="${gameDTO.opponentNameUa}"></span></td>--%>
+                        <%--                        <td><span th:if="${lang.equals('en')}"--%>
+                        <%--                        th:text="${answeredQuestionDTO.nameWhoGotPointEn}"></span>--%>
+                        <%--                        <span th:if="${lang.equals('ua')}"--%>
+                        <%--                              th:text="${answeredQuestionDTO.nameWhoGotPointEn}"></span></td>--%>
                     <td>
-                        <c:out value="${gameDTO.playerNameEn}"/>
-                    </td>
-                    <td>
-                        <c:out value="${gameDTO.opponentNameEn}"/>
+                        <c:out value="${answeredQuestionDTO.nameWhoGotPointEn}"/>
                     </td>
                     <td>
-                        <c:out value="${gameDTO.scores}"/>
-                    </td>
-                    <td>
-                        <c:out value="${gameDTO.appealStage}"/>
-                    </td>
-                    <td>
-                        <form action="${pageContext.request.contextPath}/player/gameDetailsPlayer" method="post">
-                            <input type="hidden" name="gameid" value="${gameDTO.id}">
-                            <button class="button" type="submit">
-                                <fmt:message key="games.statistics.link.label.get"/>
-                            </button>
-                        </form>
+                        <c:out value="${answeredQuestionDTO.appealStage}"/>
                     </td>
                 </tr>
             </c:forEach>
-
-            <%--                <tr th:each="gameDTO: ${gameDTOs}">--%>
-            <%--                    <td th:text="${gameDTO.date}"></td>--%>
-            <%--                    <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.playerNameEn}"></span>--%>
-            <%--                        <span th:if="${lang.equals('ua')}" th:text="${gameDTO.playerNameUa}"></span></td>--%>
-            <%--                    <td><span th:if="${lang.equals('en')}" th:text="${gameDTO.opponentNameEn}"></span>--%>
-            <%--                        <span th:if="${lang.equals('ua')}" th:text="${gameDTO.opponentNameUa}"></span></td>--%>
-            <%--                    <td th:text="${gameDTO.scores}"></td>--%>
-            <%--                    <td th:text="${gameDTO.appealStage}"></td>--%>
-            <%--                    <td>--%>
-            <%--                        <a th:href="@{|/referee/games/${gameDTO.id}|}"--%>
-            <%--                           th:text="#{games.statistics.link.label.get}"></a>--%>
-            <%--                    </td>--%>
-            <%--                </tr>--%>
             </tbody>
         </table>
-
-        <!--pagination-->
-
     </div>
+
+    <div id="appeal" class="panel-body">
+        <fmt:message key="games.game.file.appeal.form.header"/>
+        </h2>
+        <form action="${pageContext.request.contextPath}/player/fileAppealAgainstAnsweredQuestions" method="get">
+            <div class="form-group">
+                <c:forEach items="${gameDTO.answeredQuestionDTOs}" var="answeredQuestionDTO">
+                    <span>
+                      <c:if test="${answeredQuestionDTO.appealPossible}">
+                        <input type="checkbox" name="ids"
+                           value="${answeredQuestionDTO.id}"/> ${answeredQuestionDTO.id}
+                      </c:if>
+                    </span>
+                </c:forEach>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <fmt:message key="games.game.file.appeal.label.button"/>
+            </button>
+        </form>
+    </div>
+
 </div>
 
 <footer>

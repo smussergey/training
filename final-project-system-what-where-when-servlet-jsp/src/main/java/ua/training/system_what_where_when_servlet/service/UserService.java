@@ -33,7 +33,7 @@ public class UserService {
         return userOptional;
     }
 
-    public Optional<User> findByUserName(String username) {
+    public Optional<User> findByUsername(String username) {
         Optional<User> userOptional = Optional.empty();
 
             try (UserDao userDao = daoFactory.createUserDao()) {
@@ -45,7 +45,7 @@ public class UserService {
         return userOptional;
     }
 
-    public Optional<User> findByUserNameAndPassword(String username, String password) {
+    public Optional<User> findByUsernameAndPassword(String username, String password) {
         Optional<User> userOptional = Optional.empty();
 
         try (UserDao userDao = daoFactory.createUserDao()) {

@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void create(User user) {
         LOGGER.info(String.format("In UserDaoImpl, method create user: " + user));
-
+//        boolean flag = false;
         try (PreparedStatement ps = connection.prepareStatement
                 ("INSERT INTO user (name_ua, name_en, email, password, role )" +
                         " VALUES (?,?,?,?,?)")) {
@@ -34,11 +34,13 @@ public class UserDaoImpl implements UserDao {
             ps.setString(4, user.getPassword());
             ps.setString(5, user.getRole().name());
             ps.executeUpdate();
+//            flag = true;
         } catch (Exception e) { //TODO check what exception to use
             LOGGER.error("SQLException: " + e.toString());
             throw new NotUniqueLoginException("Not Unique Login", user.getEmail());
         }
         LOGGER.info("User was saved");
+//    return flag;
     }
 
     @Override

@@ -159,6 +159,9 @@ public class GameDaoImpl implements GameDao {
                             .extractFromResultSet(rs);
                     appeal = appealMapper
                             .makeUnique(appeals, appeal);
+                    if (rs.getInt("appeal.user_id") == rs.getInt("user.user_id")) {
+                        appeal.setUser(user);
+                    }
                     game.getAppeals().add(appeal);
                 }
 
@@ -236,6 +239,9 @@ public class GameDaoImpl implements GameDao {
                             .extractFromResultSet(rs);
                     appeal = appealMapper
                             .makeUnique(appeals, appeal);
+                    if (rs.getInt("appeal.user_id") == rs.getInt("user.user_id")) {
+                        appeal.setUser(user);
+                    }
                     game.getAppeals().add(appeal);
                 }
 
@@ -316,6 +322,9 @@ public class GameDaoImpl implements GameDao {
                             .extractFromResultSet(rs);
                     appeal = appealMapper
                             .makeUnique(appeals, appeal);
+                    if (rs.getInt("appeal.user_id") == rs.getInt("user.user_id")) {
+                        appeal.setUser(user);
+                    }
                     game.getAppeals().add(appeal);
                 }
 

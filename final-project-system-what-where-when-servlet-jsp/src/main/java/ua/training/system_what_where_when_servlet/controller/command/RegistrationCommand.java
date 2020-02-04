@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationCommand implements Command {
-    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(RegistrationCommand.class);
 
     UserRegistrationService userRegistrationService;
 

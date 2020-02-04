@@ -10,7 +10,7 @@ public class Appeal {
     private AppealStage appealStage;
     private Game game;
     private User user;
-    private Set<AnsweredQuestion> appealedQuestions = new HashSet<>();
+    private List<AnsweredQuestion> appealedQuestions = new ArrayList<>();
 
     public Appeal() {
     }
@@ -55,11 +55,11 @@ public class Appeal {
         this.user = user;
     }
 
-    public Set<AnsweredQuestion> getAppealedQuestions() {
+    public List<AnsweredQuestion> getAppealedQuestions() {
         return appealedQuestions;
     }
 
-    public void setAppealedQuestions(Set<AnsweredQuestion> appealedQuestions) {
+    public void setAppealedQuestions(List<AnsweredQuestion> appealedQuestions) { // TODO change to list
         this.appealedQuestions = appealedQuestions;
     }
 

@@ -3,9 +3,7 @@ package ua.training.system_what_where_when_servlet.controller;
 import ua.training.system_what_where_when_servlet.controller.command.*;
 import ua.training.system_what_where_when_servlet.controller.command.page.LoginPageCommand;
 import ua.training.system_what_where_when_servlet.controller.command.page.RegistrationPageCommand;
-import ua.training.system_what_where_when_servlet.controller.command.player.GameDetailsPlayerCommand;
-import ua.training.system_what_where_when_servlet.controller.command.player.GamesStatisticsPlayerCommand;
-import ua.training.system_what_where_when_servlet.controller.command.player.MainPlayerCommand;
+import ua.training.system_what_where_when_servlet.controller.command.player.*;
 import ua.training.system_what_where_when_servlet.controller.command.referee.*;
 
 import javax.servlet.ServletConfig;
@@ -55,6 +53,10 @@ public class Servlet extends HttpServlet {
                 new GamesStatisticsPlayerCommand());
         commands.put("gameDetailsPlayer",
                 new GameDetailsPlayerCommand());
+        commands.put("getFileAppealFormPlayer",
+                new GetFileAppealFormPlayerCommand());
+        commands.put("fileAppealAgainstAnsweredQuestions",
+                new FileAppealAgainstAnsweredQuestionsPlayerCommand());
     }
 
     public void doGet(HttpServletRequest request,

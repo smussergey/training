@@ -26,6 +26,9 @@ public class NewGameService {
         this.serviceFactory = ServiceFactory.getInstance();
     }
 
+
+
+
     public void runNewGame(Integer playerId, Integer opponentId, int maxNumberOfScoresToFinishGame) {
         Game game = generateNewGameWithResults(playerId, opponentId, maxNumberOfScoresToFinishGame);
         daoFactory.createGameDao().create(game); //TODO catch exceptions

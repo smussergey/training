@@ -22,6 +22,6 @@ public class GenerateNewGameRefereeCommand implements Command {
 
         ServiceFactory.getInstance().getNewGameService().runNewGame(playerId, opponentId, maxscores);
 
-        return "/WEB-INF/referee/gamesStatistics"; // todo improve
+        return "/referee/gamesStatisticsReferee"; // todo improve
     }
 }

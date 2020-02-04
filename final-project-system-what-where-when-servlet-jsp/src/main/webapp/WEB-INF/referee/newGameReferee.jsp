@@ -106,7 +106,7 @@
     <h2 class="panel-title">
         <fmt:message key="new.game.form.header"/>
     </h2>
-    <form action="${pageContext.request.contextPath}/referee/generateNewGame" method="post">
+    <form action="${pageContext.request.contextPath}/referee/generateNewGameReferee" method="post">
         <div class="custom-control mb-3">
             <label for="player">
                 <fmt:message key="games.new.game.team.label"/>

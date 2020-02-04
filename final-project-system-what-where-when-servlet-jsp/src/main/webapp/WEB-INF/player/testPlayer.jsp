@@ -86,11 +86,8 @@
     <div>
         <%--        <h3 th:text="#{home.text.please.make.your.choice}"></h3>--%>
 
-        <h3>
-            <fmt:message key="home.text.please.make.your.choice"/>
-        </h3>
         <h2>
-            Test Player
+            Appeal form page test Player
         </h2>
     </div>
 </div>

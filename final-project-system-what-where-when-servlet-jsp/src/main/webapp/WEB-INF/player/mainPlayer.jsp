@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>
-        <fmt:message key="games.statistics.page.title"/>
+        <fmt:message key="index.page.title"/>
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,8 +40,6 @@
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <%--                <a class="nav-link" th:href="@{/referee/games/statistics}"--%>
-                <%--                   th:text="#{navbar.link.games.statistics}"></a>--%>
                 <a class="nav-link" href="${pageContext.request.contextPath}/player/gamesStatisticsPlayer">
                     <fmt:message key="navbar.link.games.statistics"/>
                 </a>

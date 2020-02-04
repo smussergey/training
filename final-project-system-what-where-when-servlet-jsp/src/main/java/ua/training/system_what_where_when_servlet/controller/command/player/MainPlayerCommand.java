@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class MainPlayerCommand implements Command {
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
+    private static final Logger LOGGER = Logger.getLogger(MainPlayerCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

@@ -50,7 +50,7 @@ public class LoginCommand implements Command {
     private Role getRoleByUsernameAndPassword(String username, String password) {
 
         UserService userService = ServiceFactory.getInstance().getUserService();
-        Optional<User> userOptional = userService.findByUserNameAndPassword(username, password);
+        Optional<User> userOptional = userService.findByUsernameAndPassword(username, password);
 
         if (userOptional.isPresent()) {
             return userOptional.get().getRole();
