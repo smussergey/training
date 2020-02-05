@@ -2,7 +2,6 @@ package ua.training.system_what_where_when_servlet.controller.command.referee;
 
 import org.apache.log4j.Logger;
 import ua.training.system_what_where_when_servlet.controller.command.Command;
-import ua.training.system_what_where_when_servlet.controller.command.player.GetFileAppealFormPlayerCommand;
 import ua.training.system_what_where_when_servlet.dto.GameDTO;
 import ua.training.system_what_where_when_servlet.entity.AppealStage;
 import ua.training.system_what_where_when_servlet.entity.exception.EntityNotFoundException;
@@ -13,8 +12,8 @@ import ua.training.system_what_where_when_servlet.util.ResourceBundleUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GetConsiderationAppealFormRefereeCommand implements Command {
-    private static final Logger LOGGER = Logger.getLogger(GetConsiderationAppealFormRefereeCommand.class);
+public class ConsiderationAppealFormRefereeCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(ConsiderationAppealFormRefereeCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

@@ -41,7 +41,7 @@ public class GameStatisticsAndDetailsService {
 
     public List<GameDTO> getGamesStatisticsByLoggedInPlayer(String username) {
         try (GameDao gameDao = daoFactory.createGameDao()) {
-            List<Game> games = gameDao.findAll().stream()
+            List<Game> games = gameDao.findAll().stream() //TODO improve query
                     .filter(game -> game.getUsers().stream()
                             .anyMatch(user -> user.getEmail().equals(username)))
                     .collect(Collectors.toList()); // improve query

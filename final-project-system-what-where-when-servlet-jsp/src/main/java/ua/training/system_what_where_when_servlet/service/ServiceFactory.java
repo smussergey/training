@@ -42,7 +42,12 @@ public class ServiceFactory {
     public NewGameService getNewGameService() {
         return new NewGameService();
     }
+
     public AppealService getAppealService() {
         return new AppealService();
+    }
+
+    public HistoryService getHistoryService() {
+        return new HistoryService();
     }
 }

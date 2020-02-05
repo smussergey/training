@@ -53,14 +53,20 @@ public class Servlet extends HttpServlet {
                 new GamesStatisticsPlayerCommand());
         commands.put("gameDetailsPlayer",
                 new GameDetailsPlayerCommand());
-        commands.put("getFileAppealFormPlayer",
-                new GetFileAppealFormPlayerCommand());
+        commands.put("fileAppealFormPlayer",
+                new FileAppealFormPlayerCommand());
         commands.put("fileAppealAgainstAnsweredQuestions",
                 new FileAppealAgainstAnsweredQuestionsPlayerCommand());
-        commands.put("getConsiderationAppealForm",
-                new GetConsiderationAppealFormRefereeCommand());
+        commands.put("considerationAppealForm",
+                new ConsiderationAppealFormRefereeCommand());
         commands.put("considerAppealAgainstAnsweredQuestions",
                 new ConsiderAppealAgainstAnsweredQuestionsRefereeCommand());
+        commands.put("historyGamesStatistics",
+                new HistoryGamesStatisticsRefereeCommand());
+        commands.put("historyConsiderationReferee",
+                new HistoryConsiderationRefereeCommand());
+        commands.put("moveToHistory",
+                new MoveToHistoryRefereeCommand());
     }
 
     public void doGet(HttpServletRequest request,

@@ -29,6 +29,11 @@ public class DaoFactoryImpl extends DaoFactory {
         return new AppealDaoImpl(getConnection());
     }
 
+    @Override
+    public HistoryDao createHistoryDao() {
+        return new HistoryDaoImpl(getConnection());
+    }
+
     private Connection getConnection() {
         try {
             return dataSource.getConnection();

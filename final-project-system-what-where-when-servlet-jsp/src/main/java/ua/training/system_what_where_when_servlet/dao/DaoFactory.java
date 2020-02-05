@@ -13,6 +13,7 @@ public abstract class DaoFactory {
     public abstract GameDao createGameDao();
     public abstract AnsweredQuestionDao createAnsweredQuestionDao();
     public abstract AppealDao createAppealDao();
+    public abstract HistoryDao createHistoryDao();
 
     public static DaoFactory getInstance() {
         if (daoFactory == null) {

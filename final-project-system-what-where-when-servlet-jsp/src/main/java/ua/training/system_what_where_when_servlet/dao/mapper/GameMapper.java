@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public class GameMapper implements ObjectMapper<Game> {
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(GameMapper.class);
 
     @Override
     public Game extractFromResultSet(ResultSet rs) throws SQLException {

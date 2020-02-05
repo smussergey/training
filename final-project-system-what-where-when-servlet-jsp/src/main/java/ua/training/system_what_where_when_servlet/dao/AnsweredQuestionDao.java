@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AnsweredQuestionDao extends GenericDao<AnsweredQuestion> {
     void updateAppealField(AnsweredQuestion entity);
+    void deleteByGameId(int gameId);
 }

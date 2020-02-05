@@ -105,7 +105,21 @@ public class AppealDaoImpl implements AppealDao {
 
     @Override
     public void delete(int id) {
+    }
 
+    @Override
+    public void deleteByGameId(int gameId) {
+        LOGGER.info(String.format("method deleteByGameId id = %d", gameId));
+
+        try (PreparedStatement ps = connection.prepareStatement
+                ("DELETE  FROM appeal where game_id = ?")) {
+
+            ps.setInt(1, gameId);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); //TODO redo
+        }
     }
 
     @Override

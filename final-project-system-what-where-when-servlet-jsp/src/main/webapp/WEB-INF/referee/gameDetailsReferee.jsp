@@ -206,7 +206,7 @@
 
         <c:if test="${gameDTO.appealStage.equals(appealStageFiled)}">
             <div>
-                <form action="${pageContext.request.contextPath}/referee/getConsiderationAppealForm" method="post">
+                <form action="${pageContext.request.contextPath}/referee/considerationAppealForm" method="post">
                     <input type="hidden" name="gameid" value="${gameDTO.id}">
                         <%--            TODO improve--%>
                     <button class="button" type="submit">

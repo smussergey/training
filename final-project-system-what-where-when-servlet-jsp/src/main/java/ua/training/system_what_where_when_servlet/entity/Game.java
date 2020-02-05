@@ -10,6 +10,9 @@ public class Game {
     private Set<Appeal> appeals = new HashSet<>();
     private List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
 
+    public Game() {
+    }
+
     public Integer getId() {
         return id;
     }

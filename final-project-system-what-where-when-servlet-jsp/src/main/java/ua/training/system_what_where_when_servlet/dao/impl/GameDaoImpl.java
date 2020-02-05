@@ -6,18 +6,16 @@ import ua.training.system_what_where_when_servlet.dao.mapper.AnsweredQuestionMap
 import ua.training.system_what_where_when_servlet.dao.mapper.AppealMapper;
 import ua.training.system_what_where_when_servlet.dao.mapper.GameMapper;
 import ua.training.system_what_where_when_servlet.dao.mapper.UserMapper;
-import ua.training.system_what_where_when_servlet.entity.AnsweredQuestion;
-import ua.training.system_what_where_when_servlet.entity.Appeal;
-import ua.training.system_what_where_when_servlet.entity.Game;
-import ua.training.system_what_where_when_servlet.entity.User;
+import ua.training.system_what_where_when_servlet.entity.*;
 import ua.training.system_what_where_when_servlet.entity.exception.NotUniqueLoginException;
 
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 public class GameDaoImpl implements GameDao {
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(GameDaoImpl.class);
     private Connection connection;
 
     public GameDaoImpl(Connection connection) {
@@ -356,6 +354,91 @@ public class GameDaoImpl implements GameDao {
         return new ArrayList<>(games.values());
     }
 
+//TODO implement query for date too
+    @Override
+    public List<Game> findAllByAppealStageAndDateLaterThan(AppealStage appealStage, LocalDate localDate) {
+        Map<Integer, AnsweredQuestion> answeredQuestions = new HashMap<>();
+        Map<Integer, Appeal> appeals = new HashMap<>();
+        Map<Integer, Game> games = new HashMap<>();
+        Map<Integer, User> users = new HashMap<>();
+
+
+        Optional<Game> result = Optional.empty();
+        try (PreparedStatement ps = connection.prepareStatement("" +
+                " select * from user " +
+                " left join user_game " +
+                " on  user.user_id = user_game.user_id " +
+                " left join game " +
+                " on user_game.game_id = game.game_id " +
+                " left join answered_question " +
+                " on game.game_id = answered_question.game_id " +
+                " left join appeal " +
+                " on answered_question.appeal_id = appeal.appeal_id " +
+                " where appeal.appeal_stage = ?")) {
+
+            ps.setString(1, appealStage.name());
+            ResultSet rs;
+
+            rs = ps.executeQuery();
+
+            AnsweredQuestionMapper answeredQuestionMapper = new AnsweredQuestionMapper();
+            AppealMapper appealMapper = new AppealMapper();
+            GameMapper gameMapper = new GameMapper();
+            UserMapper userMapper = new UserMapper();
+
+            while (rs.next()) {
+                Game game = gameMapper
+                        .extractFromResultSet(rs);
+                game = gameMapper
+                        .makeUnique(games, game);
+
+                User user = userMapper
+                        .extractFromResultSet(rs);
+                user = userMapper
+                        .makeUnique(users, user);
+
+
+                Appeal appeal = null;
+
+                if (rs.getInt("appeal.appeal_id") > 0) {
+                    appeal = appealMapper
+                            .extractFromResultSet(rs);
+                    appeal = appealMapper
+                            .makeUnique(appeals, appeal);
+                    if (rs.getInt("appeal.user_id") == rs.getInt("user.user_id")) {
+                        appeal.setUser(user);
+                    }
+                    game.getAppeals().add(appeal);
+                }
+
+                AnsweredQuestion answeredQuestion = answeredQuestionMapper
+                        .extractFromResultSet(rs);
+                answeredQuestion = answeredQuestionMapper
+                        .makeUnique(answeredQuestions, answeredQuestion);
+                answeredQuestion.setGame(game);
+                if (rs.getInt("answered_question.user_id") > 0)
+                    answeredQuestion.setUserWhoGotPoint(users.get(rs.getInt("answered_question.user_id")));
+                if (rs.getInt("answered_question.appeal_id") > 0)
+                    answeredQuestion.setAppeal(appeal);
+
+                if (game.getAnsweredQuestions().contains(answeredQuestion)) {
+                } else {
+                    game.getAnsweredQuestions().add(answeredQuestion);
+                }
+//                game.getAnsweredQuestions().add(answeredQuestion);
+
+                if (game.getUsers().contains(user)) {
+                } else {
+                    game.getUsers().add(user);
+                }
+            }
+        } catch (SQLException ex) {
+            LOGGER.error("Exception in class: GameDaoImpl, method: findAllByAppealStageAndDateLaterThan.", ex);
+            throw new RuntimeException(ex); //TODO Correct
+        }
+        return new ArrayList<>(games.values());
+    }
+
     @Override
     public void update(Game entity) {
 
@@ -363,7 +446,17 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public void delete(int id) {
+        LOGGER.info(String.format("method delete by id = %d", id));
 
+        try (PreparedStatement ps = connection.prepareStatement
+                ("DELETE  FROM game where game_id = ?")) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); //TODO redo
+        }
     }
 
     @Override

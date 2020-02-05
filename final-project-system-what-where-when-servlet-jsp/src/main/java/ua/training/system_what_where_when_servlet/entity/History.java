@@ -3,7 +3,7 @@ package ua.training.system_what_where_when_servlet.entity;
 import java.time.LocalDate;
 
 public class History {
-    private Long id;
+    private Integer id;
     private LocalDate date;
     private String playerNameUa;
     private String playerNameEn;
@@ -12,11 +12,14 @@ public class History {
     private String scores;
     private String appealStage;
 
-    public Long getId() {
+    public History() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
